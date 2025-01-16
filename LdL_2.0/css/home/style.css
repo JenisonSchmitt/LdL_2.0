@@ -1,0 +1,150 @@
+.banner-section {
+    height: 60vh;
+    overflow: hidden;
+  }
+  
+  .img-fluid-slider {
+    height: 50vh; /* A altura vai se ajustar automaticamente para a altura do container */
+    width: auto; /* A largura vai se ajustar automaticamente para manter a proporção da imagem */
+  }
+  
+  .carousel-control-next {
+    right: 0px;
+    top: 50%;
+  }
+  
+  .carousel-control-prev {
+    left: 0px;
+    top: 50%;
+  }
+  
+  .carousel-control-next,
+  .carousel-control-prev {
+    width: 45px;
+    height: 45px;
+    background: rgb(242, 222, 172, 0.80);
+    opacity: 1;
+    font-size: 20px;
+    color: #000;
+    border-radius: 100px;
+  }
+  
+  .carousel-control-next:focus,
+  .carousel-control-next:hover,
+  .carousel-control-prev:focus,
+  .carousel-control-prev:hover {
+    color: #919191;
+  }
+
+  .display-on-mobile{
+    display: none;
+  }
+
+  .bg-personality {
+    background-image: linear-gradient( to bottom, #FFA4DB 5% , #603F8B 70%, #F9F3EC 15%);
+  }
+
+  .menu-sup-carts{
+    max-height: 12vh;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .banner-section {
+      height: 40vh;
+    }
+  
+    .img-fluid-slider {
+        height: 30vh;
+        width: auto;
+      }
+  
+    .carousel-control-next,
+    .carousel-control-prev {
+      width: 35px;
+      height: 35px;
+      top: 40%;
+      font-size: 18px;
+    }
+  
+    .banner-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .text-content {
+      font-size: 12px;
+    }
+  
+    .img-wrapper, .content-wrapper {
+      flex: 1;
+    }
+  
+    .display-on-mobile {
+      display: block;
+      order: 2;
+    }
+    .display-content-none{
+        display: none;
+    }
+
+    .your-cart-in-mobile{
+        max-width: 90%;
+    }
+
+    .menu-sup-carts{
+        max-height: 12vh;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .banner-section {
+      height: 40vh;
+    }
+  
+    .img-fluid-slider {
+      height: 30vh;
+      width: auto;
+    }
+  
+    .carousel-control-next,
+    .carousel-control-prev {
+      width: 30px;
+      height: 30px;
+      top: 40%;
+      font-size: 16px;
+    }
+  
+    .banner-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .text-content {
+      font-size: 10px;
+    }
+  
+    .img-wrapper, .content-wrapper {
+      flex: 1;
+    }
+  
+    .display-on-mobile {
+      display: block;
+      order: 2;
+    }
+
+    .display-content-none{
+        display: none;
+    }
+
+    .your-cart-in-mobile{
+        max-width: 90%;
+    }
+
+    .menu-sup-carts{
+        max-height: 10vh;
+    }
+  }
+  
