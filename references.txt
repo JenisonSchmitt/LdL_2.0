@@ -1,0 +1,8 @@
+#603F8B - roxo
+#FFA4DB - rosa
+#F9F3EC - creme
+
+.bg-personality_0 {
+  background-image: linear-gradient( to bottom, white 5%, #603F8B 70%, #FFA4DB );
+}
+/*roxo*/

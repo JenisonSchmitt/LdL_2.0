@@ -7,6 +7,10 @@
     height: 50vh; /* A altura vai se ajustar automaticamente para a altura do container */
     width: auto; /* A largura vai se ajustar automaticamente para manter a proporção da imagem */
   }
+
+  .img-fluid-log{
+    height: 8vh;
+  }
   
   .carousel-control-next {
     right: 0px;
@@ -22,7 +26,7 @@
   .carousel-control-prev {
     width: 45px;
     height: 45px;
-    background: rgb(242, 222, 172, 0.80);
+    background: #FFA4DB;
     opacity: 1;
     font-size: 20px;
     color: #000;
@@ -33,7 +37,7 @@
   .carousel-control-next:hover,
   .carousel-control-prev:focus,
   .carousel-control-prev:hover {
-    color: #919191;
+    color: #603F8B;
   }
 
   .display-on-mobile{
@@ -47,17 +51,47 @@
   .menu-sup-carts{
     max-height: 12vh;
   }
+
+  .color-circle{
+    color: black;
+    background-color: black;
+  }
+
+  .img-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   
   
   @media (max-width: 768px) {
+    .img-wrapper {
+      flex-direction: row; /* Alinha imagem e texto lado a lado */
+      justify-content: center; /* Centraliza o conteúdo */
+      align-items: center;
+    }
+  
+    .img-wrapper img {
+      max-width: 50%; /* Limita o tamanho da imagem */
+      height: auto;
+    }
+  
+    .img-wrapper p {
+      margin-left: 10px; /* Espaçamento entre a imagem e o texto */
+      font-size: 14px; /* Ajusta o tamanho do texto para mobile */
+      white-space: nowrap; /* Evita quebra de linha no texto */
+    }
+
     .banner-section {
       height: 40vh;
     }
   
     .img-fluid-slider {
-        height: 30vh;
-        width: auto;
-      }
+      margin-left: 4vh;
+      height: 30vh;
+      width: auto;
+      margin-bottom: 6vh;
+    }
   
     .carousel-control-next,
     .carousel-control-prev {
@@ -96,6 +130,10 @@
     .menu-sup-carts{
         max-height: 12vh;
     }
+
+    iconify-icon.category-icon {
+      font-size: 7vh;
+    }
   }
   
   @media (max-width: 480px) {
@@ -104,8 +142,10 @@
     }
   
     .img-fluid-slider {
-      height: 30vh;
+      margin-left: 4vh;
+      height: 20vh;
       width: auto;
+      margin-bottom: 6vh;
     }
   
     .carousel-control-next,
@@ -140,11 +180,15 @@
     }
 
     .your-cart-in-mobile{
-        max-width: 90%;
+        max-width: 80%;
     }
 
     .menu-sup-carts{
         max-height: 10vh;
+    }
+
+    iconify-icon.category-icon {
+      font-size: 7vh;
     }
   }
   

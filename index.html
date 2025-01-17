@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Waggy - Free eCommerce Pet Shop HTML Website Template</title>
+    <title>LDL - Lujinha de Luxo</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="author" content="">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+    <meta name="author" content="LDL">
+    <meta name="keywords" content='Sua "Lujinha" virtual'>
+    <meta name="description" content='Sua "Lujinha" virtual'>
+    <link rel="shortcut icon" type="imagex/png" href="images/geral/icone.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/vendor.css">
@@ -21,6 +22,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="js/home/next_prev_button.js"></script>
+    <script src="js/home/select_value_category.js"></script>
   </head>
   <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -63,6 +65,7 @@
     <div class="offcanvas-header justify-content-center">
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="margin-left: 95%;"></button>
     </div>
+    <!-- Carrinho -->
     <div class="offcanvas-body">
       <div class="order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -129,7 +132,7 @@
         <div class="col-sm-4 col-lg-3 text-center text-sm-start">
           <div class="main-logo">
             <a href="index.html">
-              <img src="images/logo.png" alt="logo" class="img-fluid">
+              <img src="images/geral/logo_.png" alt="logo" class="img-fluid-log">
             </a>
           </div>
         </div>
@@ -138,7 +141,7 @@
           <div class="search-bar border rounded-2 px-3 border-dark-subtle">
             <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
               <input type="text" class="form-control border-0 bg-transparent"
-                placeholder="Search for more than 10,000 products" />
+                placeholder="Buscar Produtos" />
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path fill="currentColor"
                   d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
@@ -209,67 +212,36 @@
           </div>
 
           <div class="offcanvas-body justify-content-between">
-            <select class="filter-categories border-0 mb-0 me-5">
-              <option>Shop by Category</option>
-              <option>Clothes</option>
-              <option>Food</option>
-              <option>Food</option>
-              <option>Toy</option>
-            </select>
+            <select class="filter-categories border-0 mb-0 me-5" id="categorySelect">
+              <option value="" selected>Compre Por Categorias</option>
+              <option value="skincare.html">Skincare</option>
+              <option value="maquiagem.html">Maquiagem</option>
+              <option value="#maisvendidosskincare">Mais Vendidos</option>
+              <option value="#novidades">Novidades</option>
+            </select>            
 
             <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
               <li class="nav-item">
-                <a href="index.html" class="nav-link active">Home</a>
+                <a href="index.html" class="nav-link active">Início</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown"
-                  aria-expanded="false">Pages</a>
+                  aria-expanded="false">Páginas</a>
                 <ul class="dropdown-menu" aria-labelledby="pages">
-                  <li><a href="about.html" class="dropdown-item">About Us<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="shop.html" class="dropdown-item">Shop<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="single-product.html" class="dropdown-item">Single Product<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="cart.html" class="dropdown-item">Cart<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="wishlist.html" class="dropdown-item">Wishlist<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="checkout.html" class="dropdown-item">Checkout<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="blog.html" class="dropdown-item">Blog<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="single-post.html" class="dropdown-item">Single Post<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="contact.html" class="dropdown-item">Contact<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="faqs.html" class="dropdown-item">FAQs<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="account.html" class="dropdown-item">Account<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="thank-you.html" class="dropdown-item">Thankyou<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="error.html" class="dropdown-item">Error 404<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                  <li><a href="styles.html" class="dropdown-item">Styles<span
-                        class="badge bg-success text-dark ms-2">PRO</span></a></li>
+                  <li><a href="about.html" class="dropdown-item">Sobre Nós</a></li>
+                  <li><a href="single-product.html" class="dropdown-item">Onde Estamos Localizados</a></li>
+                  <li><a href="cart.html" class="dropdown-item">Quem Somos</a></li>
+                  <li><a href="wishlist.html" class="dropdown-item">Onde Comprar</a></li>
                 </ul>
               </li>
               <li class="nav-item">
-                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="skincare.html" class="nav-link">Skincare</a>
               </li>
               <li class="nav-item">
-                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="maquiagem.html" class="nav-link">Maquiagem</a>
               </li>
               <li class="nav-item">
-                <a href="contact.html" class="nav-link">Contact</a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">Others</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://templatesjungle.gumroad.com/l/waggy-pet-shop-ecommerce-html-website-template"
-                  class="nav-link fw-bold text-dark" target="_blank">GET PRO</a>
+                <a href="contato.html" class="nav-link">Contatos</a>
               </li>
             </ul>
 
@@ -287,8 +259,7 @@
                 </li>
 
                 <li class="">
-                  <a href="#" class="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                    aria-controls="offcanvasCart">
+                  <a href="#" class="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"aria-controls="offcanvasCart">
                     <iconify-icon icon="mdi:cart" class="fs-4 position-relative"></iconify-icon>
                     <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
                       03
@@ -319,14 +290,12 @@
             <div class="row banner-content align-items-center">
               <div class="img-wrapper col-md-5">
                 <img src="images/home/home1.png" class="img-fluid-slider">
-                <h1 class="display-on-mobile"><span class="text-primary">your pets</span></h1>
+                <h4 class="display-on-mobile"><span class="text-primary">Sua pele merece ser tratada com amor</span></h4>
               </div>
               <div class="display-content-none content-wrapper col-md-7 p-5 mb-5">
-                <div class="secondary-font text-primary text-uppercase mb-4">Save 10 - 20 % off</div>
-                <h2 class="banner-title display-1 fw-normal">Best destination for <span class="text-primary">your
-                    pets</span></h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                  shop now
+                <div class="secondary-font text-primary text-uppercase mb-4">LDL</div>
+                <h2 class="banner-title display-1 fw-normal">Sua pele merece ser tratada <span class="text-primary">com amor</span></h2>
+                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
                   <svg width="15" height="15" viewBox="0 0 18 18" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
                   </svg>
@@ -338,14 +307,12 @@
             <div class="row banner-content align-items-center">
               <div class="img-wrapper col-md-5">
                 <img src="images/home/home2.png" class="img-fluid-slider">
-                <h1 class="display-on-mobile"><span class="text-primary">your pets</span></h1>
+                <h1 class="display-on-mobile"><span class="text-primary">Cuidar da pele é investir na sua beleza</span></h1>
               </div>
               <div class="display-content-none content-wrapper col-md-7 p-5 mb-5">
-                <div class="secondary-font text-primary text-uppercase mb-4">Save 10 - 20 % off</div>
-                <h2 class="banner-title display-1 fw-normal">Best destination for <span class="text-primary">your
-                    pets</span></h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                  shop now
+                <div class="secondary-font text-primary text-uppercase mb-4">LDL</div>
+                <h2 class="banner-title display-1 fw-normal">Cuidar da pele é investir <span class="text-primary">na sua beleza</span></h2>
+                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
                   <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
                   </svg>
@@ -357,14 +324,12 @@
             <div class="row banner-content align-items-center">
               <div class="img-wrapper col-md-5">
                 <img src="images/home/home3.png" class="img-fluid-slider">
-                <h1 class="display-on-mobile"><span class="text-primary">your pets</span></h1>
+                <h1 class="display-on-mobile"><span class="text-primary">Cuide-se hoje para brilhar ainda mais amanhã</span></h1>
               </div>
               <div class="display-content-none content-wrapper col-md-7 p-5 mb-5">
-                <div class="secondary-font text-primary text-uppercase mb-4">Save 10 - 20 % off</div>
-                <h2 class="banner-title display-1 fw-normal">Best destination for <span class="text-primary">your
-                    pets</span></h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                  shop now
+                <div class="secondary-font text-primary text-uppercase mb-4">LDL</div>
+                <h2 class="banner-title display-1 fw-normal">Cuide-se hoje para  <span class="text-primary">brilhar ainda mais amanhã</span></h2>
+                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
                   <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
                   </svg>
@@ -389,47 +354,40 @@
     <div class="container my-3 py-5">
       <div class="row my-5">
         <div class="col text-center">
-          <a href="#" class="categories-item">
-            <iconify-icon class="category-icon" icon="ph:bowl-food"></iconify-icon>
-            <h5>Foodies</h5>
+          <a href="skincare.html" class="categories-item">
+            <iconify-icon class="category-icon" icon="covid:personal-hygiene-hand-sanitizer-liquid-2"></iconify-icon>
+            <h5>Skincare</h5>
           </a>
         </div>
         <div class="col text-center">
-          <a href="#" class="categories-item">
-            <iconify-icon class="category-icon" icon="ph:bird"></iconify-icon>
-            <h5>Bird Shop</h5>
+          <a href="maquiagem.html" class="categories-item">
+            <iconify-icon class="category-icon" icon="streamline:make-up-brush"></iconify-icon>
+            <h5>Maquiagem</h5>
           </a>
         </div>
         <div class="col text-center">
-          <a href="#" class="categories-item">
-            <iconify-icon class="category-icon" icon="ph:dog"></iconify-icon>
-            <h5>Dog Shop</h5>
+          <a href="#maisvendidosskincare" class="categories-item">
+            <iconify-icon class="category-icon" icon="fluent:shopping-bag-add-16-regular"></iconify-icon>
+            <h5>Mais Vendidos</h5>
           </a>
         </div>
         <div class="col text-center">
-          <a href="#" class="categories-item">
-            <iconify-icon class="category-icon" icon="ph:fish"></iconify-icon>
-            <h5>Fish Shop</h5>
-          </a>
-        </div>
-        <div class="col text-center">
-          <a href="#" class="categories-item">
-            <iconify-icon class="category-icon" icon="ph:cat"></iconify-icon>
-            <h5>Cat Shop</h5>
+          <a href="#novidades" class="categories-item">
+            <iconify-icon class="category-icon" icon="clarity:new-line"></iconify-icon>
+            <h5>Novidades</h5>
           </a>
         </div>
       </div>
     </div>
   </section>
-
-  <section id="clothing" class="my-5 overflow-hidden">
+<!-- MAIS VENDIDOS SKINCARE -->
+  <section id="maisvendidosskincare" class="my-5 overflow-hidden">
     <div class="container pb-5">
 
       <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
-        <h2 class="display-3 fw-normal">Pet Clothing</h2>
+        <h2 class="display-3 fw-normal">Mais Vendidos Skincare</h2>
         <div>
-          <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-            shop now
+          <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Ver Mais
             <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
               <use xlink:href="#arrow-right"></use>
             </svg></a>
@@ -440,9 +398,6 @@
         <div class="swiper-wrapper">
 
           <div class="swiper-slide">
-            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div>
             <div class="card position-relative">
               <a href="single-product.html"><img src="images/item1.jpg" class="img-fluid rounded-4" alt="image"></a>
               <div class="card-body p-0">
@@ -463,7 +418,7 @@
 
                   <div class="d-flex flex-wrap mt-3">
                     <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                      <h5 class="text-uppercase m-0">Add to Cart</h5>
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
                     </a>
                     <a href="#" class="btn-wishlist px-4 pt-3 ">
                       <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -477,9 +432,6 @@
             </div>
           </div>
           <div class="swiper-slide">
-            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
             <div class="card position-relative">
               <a href="single-product.html"><img src="images/item2.jpg" class="img-fluid rounded-4" alt="image"></a>
               <div class="card-body p-0">
@@ -500,7 +452,7 @@
 
                   <div class="d-flex flex-wrap mt-3">
                     <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                      <h5 class="text-uppercase m-0">Add to Cart</h5>
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
                     </a>
                     <a href="#" class="btn-wishlist px-4 pt-3 ">
                       <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -513,16 +465,10 @@
             </div>
           </div>
           <div class="swiper-slide">
-            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              -10%
-            </div>
             <div class="card position-relative">
               <a href="single-product.html"><img src="images/item3.jpg" class="img-fluid rounded-4" alt="image"></a>
               <div class="card-body p-0">
-                <a href="single-product.html">
-                  <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                </a>
-
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
                 <div class="card-text">
                   <span class="rating secondary-font">
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
@@ -531,21 +477,12 @@
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                     5.0</span>
-
                   <h3 class="secondary-font text-primary">$18.00</h3>
-
                   <div class="d-flex flex-wrap mt-3">
-                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                      <h5 class="text-uppercase m-0">Add to Cart</h5>
-                    </a>
-                    <a href="#" class="btn-wishlist px-4 pt-3 ">
-                      <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                    </a>
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
                   </div>
-
-
                 </div>
-
               </div>
             </div>
           </div>
@@ -556,10 +493,7 @@
             <div class="card position-relative">
               <a href="single-product.html"><img src="images/item4.jpg" class="img-fluid rounded-4" alt="image"></a>
               <div class="card-body p-0">
-                <a href="single-product.html">
-                  <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                </a>
-
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
                 <div class="card-text">
                   <span class="rating secondary-font">
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
@@ -568,21 +502,12 @@
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                     5.0</span>
-
                   <h3 class="secondary-font text-primary">$18.00</h3>
-
                   <div class="d-flex flex-wrap mt-3">
-                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                      <h5 class="text-uppercase m-0">Add to Cart</h5>
-                    </a>
-                    <a href="#" class="btn-wishlist px-4 pt-3 ">
-                      <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                    </a>
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
                   </div>
-
-
                 </div>
-
               </div>
             </div>
           </div>
@@ -593,10 +518,7 @@
             <div class="card position-relative">
               <a href="single-product.html"><img src="images/item7.jpg" class="img-fluid rounded-4" alt="image"></a>
               <div class="card-body p-0">
-                <a href="single-product.html">
-                  <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                </a>
-
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
                 <div class="card-text">
                   <span class="rating secondary-font">
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
@@ -605,30 +527,82 @@
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                     5.0</span>
-
                   <h3 class="secondary-font text-primary">$18.00</h3>
-
                   <div class="d-flex flex-wrap mt-3">
-                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                      <h5 class="text-uppercase m-0">Add to Cart</h5>
-                    </a>
-                    <a href="#" class="btn-wishlist px-4 pt-3 ">
-                      <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                    </a>
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
                   </div>
-
-
                 </div>
-
               </div>
             </div>
           </div>
           <div class="swiper-slide">
-            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
             <div class="card position-relative">
               <a href="single-product.html"><img src="images/item8.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0"><a href="single-product.html"> <h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- MAIS VENDIDOS MAQUIAGEM -->
+  <section id="maisvendidosmaquiagem" class="my-5 overflow-hidden">
+    <div class="container pb-5">
+
+      <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
+        <h2 class="display-3 fw-normal">Mais Vendidos Maquiagem</h2>
+        <div>
+          <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Ver Mais
+            <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
+              <use xlink:href="#arrow-right"></use>
+            </svg></a>
+        </div>
+      </div>
+
+      <div class="products-carousel swiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item8.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0"><a href="single-product.html"> <h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item1.jpg" class="img-fluid rounded-4" alt="image"></a>
               <div class="card-body p-0">
                 <a href="single-product.html">
                   <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
@@ -647,7 +621,7 @@
 
                   <div class="d-flex flex-wrap mt-3">
                     <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                      <h5 class="text-uppercase m-0">Add to Cart</h5>
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
                     </a>
                     <a href="#" class="btn-wishlist px-4 pt-3 ">
                       <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -660,20 +634,290 @@
               </div>
             </div>
           </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item2.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html">
+                  <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                </a>
 
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 ">
+                      <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                    </a>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item3.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item4.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item7.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- / products-carousel -->
-
-
     </div>
   </section>
+  <!-- NOVIDADE -->
+  <section id="novidades" class="my-5 overflow-hidden">
+    <div class="container pb-5">
 
+      <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
+        <h2 class="display-3 fw-normal">Novidades</h2>
+        <div>
+          <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Ver Mais
+            <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
+              <use xlink:href="#arrow-right"></use>
+            </svg></a>
+        </div>
+      </div>
+
+      <div class="products-carousel swiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item8.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0"><a href="single-product.html"> <h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item1.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html">
+                  <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                </a>
+
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 ">
+                      <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                    </a>
+                  </div>
+
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item2.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html">
+                  <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                </a>
+
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 ">
+                      <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                    </a>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item3.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item4.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="single-product.html"><img src="images/item7.jpg" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0">
+                <a href="single-product.html"><h3 class="card-title pt-4 m-0">Grey hoodie</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">$18.00</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3"><h5 class="text-uppercase m-0">+ Carrinho</h5></a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- PRODUTOS(TODOS OS PRODUTOS COM FILTRO) -->
   <section id="foodies" class="my-5">
     <div class="container my-5 py-5">
 
       <div class="section-header d-md-flex justify-content-between align-items-center">
-        <h2 class="display-3 fw-normal">Pet Foodies</h2>
+        <h2 class="display-3 fw-normal">Produtos</h2>
         <div class="mb-4 mb-md-0">
           <p class="m-0">
             <button class="filter-button me-4  active" data-filter="*">ALL</button>
@@ -1559,7 +1803,7 @@
 
         <div class="col-md-3">
           <div class="footer-menu">
-            <img src="images/logo.png" alt="logo">
+            <img src="images/geral/logo_.png" alt="logo">
             <p class="blog-paragraph fs-6 mt-3">Subscribe to our newsletter to get updates about our grand offers.</p>
             <div class="social-links">
               <ul class="d-flex list-unstyled gap-2">
