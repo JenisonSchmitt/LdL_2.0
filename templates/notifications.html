@@ -1,0 +1,54 @@
+<div class="modal fade" id="clearCartModal" tabindex="-1" aria-labelledby="clearCartModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="clearCartModalLabel">Confirmação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza de que deseja limpar o carrinho? Esta ação não pode ser desfeita.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirm-clear-cart">Limpar Carrinho</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="successCartClearModal" tabindex="-1" aria-labelledby="successCartClearModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successCartClearModalLabel">Carrinho Limpo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Seu carrinho foi limpo com sucesso!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="successCartAddModal" tabindex="-1" aria-labelledby="successCartAddModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successCartAddModalLabel">Produto Adicionado ao Carrinho</h5>
+                <button type="button" class="btn-close" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                O produto foi adicionado ao seu carrinho com sucesso!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="goToCart()">Ir para o Carrinho</button>
+                <button type="button" class="btn btn-primary" onclick="afterclick()">Continuar Comprando</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/cart/clicks-notifications.js"></script>

@@ -4,12 +4,20 @@
   }
   
   .img-fluid-slider {
-    height: 50vh; /* A altura vai se ajustar automaticamente para a altura do container */
-    width: auto; /* A largura vai se ajustar automaticamente para manter a proporção da imagem */
+    height: 50vh; 
+    width: auto;
   }
 
   .img-fluid-log{
     height: 8vh;
+  }
+
+  .img-fluid-products{
+    height: 50vh;
+  }
+
+  .img-fluid-log-footer{
+    height: 12vh;
   }
   
   .carousel-control-next {
@@ -61,6 +69,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .margin-top-feedback{
+    margin-top: 10vh;
   }
   
   
@@ -134,6 +146,14 @@
     iconify-icon.category-icon {
       font-size: 7vh;
     }
+
+    .margin-top-feedback{
+      margin-top: 15vh;
+    }
+
+    .img-fluid-products{
+      height: 30vh;
+    }
   }
   
   @media (max-width: 480px) {
@@ -189,6 +209,14 @@
 
     iconify-icon.category-icon {
       font-size: 7vh;
+    }
+
+    .margin-top-feedback{
+      margin-top: 15vh;
+    }
+
+    .img-fluid-products{
+      height: 30vh;
     }
   }
   

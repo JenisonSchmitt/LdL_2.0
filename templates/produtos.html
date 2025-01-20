@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}LDL - Maquiagem{% endblock %}
+{% block content %}
+<section id="produto" class="my-5">
+    <div class="container my-5 py-5">
+
+        <div class="section-header d-md-flex justify-content-between align-items-center">
+            <h2 class="display-3 fw-normal">Maquiagens</h2>
+            <div class="mb-4 mb-md-0">
+                <p class="m-0">
+                    {% for produtos in produtos %}
+                    <button class="filter-button me-4">{{produtos[1]}}</button>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+
+        <div class="isotope-container row">
+            {% for produtos in produtos %}
+            <div class="item {{produtos[5]}}">
+
+                <div class="card position-relative d-flex">
+                    <div class="row w-100">
+                        <div class="col-md-6">
+                            <a>
+                            {% if produtos[4] == "Maquiagem" %}
+                            <img src="../static/images/maquiagem/{{ produtos[1]|lower|replace(' ', '') }}.png"
+                                    class="img-fluid-products rounded-4" alt="image">
+                            {% else %}
+                            <img src="../static/images/skincare/{{ produtos[1]|lower|replace(' ', '') }}.png"
+                                    class="img-fluid rounded-4" alt="image">
+                            {% endif %}
+                            </a>
+                        </div>
+                        <div class="col-md-6 card-body">
+                            <a style="text-align: left;">
+                                <h3 class="card-title pt-4 m-0 color-text">{{ produtos[1] }}</h3><br>
+                            </a>
+                            <div class="col-md-12 mt-3" style="text-align: left;">
+                                <h3>{{produtos[2]}}</h3><br>
+                            </div>
+                            <div class="card-text">
+
+                                <h3 class="secondary-font text-primary" style="text-align: left;">R$ {{produtos[3]}}</h3><br>
+                                <div style="text-align: left;">
+                                    <span class="rating secondary-font">
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        5.0</span>
+                                </div><br>
+                                <div class="d-flex" style="justify-content: center; margin: auto;">
+                                    <a class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ produtos[0] }}"
+                                        data-name="{{ produtos[1] }}" data-price="{{ produtos[3] }}">
+                                        <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                                    </a>
+                                    <a class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled"
+                                            class="fs-5"></iconify-icon></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>        
+    </div>
+</section>
+{% endblock %}

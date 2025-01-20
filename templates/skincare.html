@@ -1,5 +1,59 @@
-<!DOCTYPE html>
-<html>
-    <h1>HELLO WORD</h1>
-    <a href="/">INDEX.HTML</a>
-</html>
+{% extends "base.html" %}
+{% block title %}LDL - Maquiagem{% endblock %}
+{% block content %}
+    <!-- PRODUTOS(TODOS OS PRODUTOS COM FILTRO) -->
+<section id="skincare" class="my-5">
+<div class="container my-5 py-5">
+
+    <div class="section-header d-md-flex justify-content-between align-items-center">
+    <h2 class="display-3 fw-normal">Skincare</h2>
+    <div class="mb-4 mb-md-0">
+        <p class="m-0">
+        <button class="filter-button me-4  active" data-filter="*">Todos</button>
+        {% for tipos_produtos in tipos_produtos %}
+        <button class="filter-button me-4 " data-filter=".{{ tipos_produtos[1] | replace(' ', '-') }}">{{tipos_produtos[1]}}</button>
+        {% endfor %}
+        </p>
+    </div>
+    </div>
+
+    <div class="isotope-container row">
+    {% for skincare in skincare %}
+    <div class="item {{ skincare[3] | replace(' ', '-') }} col-md-4 col-lg-3 my-4">
+        <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+        New
+        </div> -->
+        <div class="card position-relative">
+
+            <a href="/produtos/{{skincare[0]}}#produto"><img src="../static/images/skincare/{{ skincare[1]|lower|replace(' ', '') }}.png" class="img-fluid rounded-4" alt="image"></a>
+            <div class="card-body p-0">
+            <a href="/produtos/{{skincare[0]}}#produto">
+                <h3 class="card-title pt-4 m-0">{{ skincare[1] }}</h3>
+            </a>
+
+            <div class="card-text">
+                <span class="rating secondary-font">
+                <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                5.0</span>
+
+                <h3 class="secondary-font text-primary">R$ {{skincare[2]}}</h3>
+                <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ skincare[0] }}" data-name="{{ skincare[1] }}" data-price="{{ skincare[2] }}">
+                        <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+</section>
+
+{% endblock %}
