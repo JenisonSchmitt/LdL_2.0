@@ -6,15 +6,15 @@ from produtos_routes import Produtos_Routes
 from users_routes import Users_Routes
 import logging
 
-# logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
-# logging.info('Iniciando o app.py...')
+logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
+logging.info('Iniciando o app.py...')
 
 
 skincareproducts = Skincare_Routes
 maquiagemproducts = Maquiagem_Routes
 products = Produtos_Routes
 
-template_dir = os.path.abspath("templates")
+template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=template_dir)
 app.secret_key = os.urandom(24)
 
@@ -64,7 +64,7 @@ def insert_user():
 
     users_routes = Users_Routes()
 
-    users_routes.insert_user()
+    users_routes.insert_user(CPF, nome, telefone, email, nascimento, rua , numero ,complemento, cep, cidade, estado, senha)
 
     return redirect(url_for('index'))
 
