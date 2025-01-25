@@ -1,37 +1,37 @@
 .banner-section {
     height: 60vh;
     overflow: hidden;
-  }
-  
-  .img-fluid-slider {
+}
+
+.img-fluid-slider {
     height: 50vh; 
     width: auto;
-  }
+}
 
-  .img-fluid-log{
+.img-fluid-log{
     height: 8vh;
-  }
+}
 
-  .img-fluid-products{
+.img-fluid-products{
     height: 50vh;
-  }
+}
 
-  .img-fluid-log-footer{
+.img-fluid-log-footer{
     height: 12vh;
-  }
-  
-  .carousel-control-next {
+}
+
+.carousel-control-next {
     right: 0px;
     top: 50%;
-  }
-  
-  .carousel-control-prev {
+}
+
+.carousel-control-prev {
     left: 0px;
     top: 50%;
-  }
-  
-  .carousel-control-next,
-  .carousel-control-prev {
+}
+
+.carousel-control-next,
+.carousel-control-prev {
     width: 45px;
     height: 45px;
     background: #FFA4DB;
@@ -39,41 +39,86 @@
     font-size: 20px;
     color: #000;
     border-radius: 100px;
-  }
-  
-  .carousel-control-next:focus,
-  .carousel-control-next:hover,
-  .carousel-control-prev:focus,
-  .carousel-control-prev:hover {
+}
+
+.carousel-control-next:focus,
+.carousel-control-next:hover,
+.carousel-control-prev:focus,
+.carousel-control-prev:hover {
     color: #603F8B;
-  }
+}
 
-  .display-on-mobile{
+.display-on-mobile{
     display: none;
-  }
+}
 
-  .bg-personality {
+.bg-personality {
     background-image: linear-gradient( to bottom, #FFA4DB 5% , #603F8B 70%, #F9F3EC 15%);
-  }
+}
 
-  .menu-sup-carts{
+.menu-sup-carts{
     max-height: 12vh;
-  }
+}
 
-  .color-circle{
+.color-circle{
     color: black;
     background-color: black;
-  }
+}
 
-  .img-wrapper {
+.img-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+}
 
-  .margin-top-feedback{
+.margin-top-feedback{
     margin-top: 10vh;
-  }
+}
+
+.swiper-slide {
+    width: 3000px;
+}
+
+.products-carousel .swiper-slide {
+    width: 220px; /* Reduz o tamanho da largura do produto */
+    margin: 0 10px; /* Adiciona um espaço entre os produtos */
+}
+
+.products-carousel .swiper-slide .card {
+    transform: scale(0.9); /* Reduz o tamanho do cartão para 90% */
+    transition: transform 0.3s ease; /* Adiciona uma transição suave */
+}
+
+.products-carousel .swiper-slide:hover .card {
+    transform: scale(1); /* Restaura o tamanho original ao passar o mouse */
+}
+
+.products-carousel .swiper-slide .card img {
+    max-height: 250px; /* Reduz a altura máxima das imagens */
+    object-fit: cover; /* Mantém a proporção e preenche a área */
+}
+
+.products-carousel .swiper-slide .card-body h3 {
+  font-size: 1.5rem; /* Ajusta o tamanho da fonte do nome do produto */
+}
+
+.products-carousel .swiper-slide .card-text .rating {
+  font-size: 0.8rem; /* Ajusta o tamanho da avaliação */
+}
+
+.products-carousel .swiper-slide .card-text h3 {
+  font-size: 1.1rem; /* Ajusta o tamanho do preço */
+}
+
+.products-carousel .swiper-slide .d-flex .btn-cart {
+  font-size: 0.9rem; /* Ajusta o tamanho do texto no botão de carrinho */
+  margin-left: 35px;
+}
+
+.products-carousel .swiper-slide .d-flex .btn-wishlist {
+  font-size: 1.2rem; /* Ajusta o tamanho do ícone de wishlist */
+}
+
   
   
   @media (max-width: 768px) {
@@ -154,6 +199,20 @@
     .img-fluid-products{
       height: 30vh;
     }
+    
+    .products-carousel .swiper-slide .card-text .rating {
+      font-size: 1rem; 
+    }
+    
+    .products-carousel .swiper-slide .card-text h3 {
+      font-size: 1.8rem;
+    }
+    
+    .products-carousel .swiper-slide .d-flex .btn-cart {
+      font-size: 0.9rem;
+      margin-left: 65px;
+    }
+    
   }
   
   @media (max-width: 480px) {
@@ -217,6 +276,19 @@
 
     .img-fluid-products{
       height: 30vh;
+    }
+    
+    .products-carousel .swiper-slide .card-text .rating {
+      font-size: 1rem; 
+    }
+    
+    .products-carousel .swiper-slide .card-text h3 {
+      font-size: 1.8rem;
+    }
+    
+    .products-carousel .swiper-slide .d-flex .btn-cart {
+      font-size: 0.9rem;
+      margin-left: 65px;
     }
   }
   

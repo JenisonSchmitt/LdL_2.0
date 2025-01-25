@@ -1,0 +1,99 @@
+.isotope-container .item {
+    width: 310px; /* Reduz o tamanho da largura do produto */
+    margin: 0 10px; /* Adiciona um espaço entre os produtos */
+}
+
+.isotope-container .item .card {
+    transform: scale(0.9); /* Reduz o tamanho do cartão para 90% */
+    transition: transform 0.3s ease; /* Adiciona uma transição suave */
+}
+
+.isotope-container .item:hover .card {
+    transform: scale(1); /* Restaura o tamanho original ao passar o mouse */
+}
+
+.isotope-container .item .card img {
+    max-height: 250px; /* Reduz a altura máxima das imagens */
+    min-height: 249px;
+    object-fit: cover; /* Mantém a proporção e preenche a área */
+}
+
+.isotope-container .item .card-body h3 {
+    font-size: 1.5rem; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    min-height: 8vh;
+    max-height: 8vh;
+}
+
+
+.isotope-container .item .card-text .rating {
+    font-size: 0.8rem; /* Ajusta o tamanho da avaliação */
+}
+
+.isotope-container .item .card-text h3 {
+    font-size: 1.5rem; /* Ajusta o tamanho do preço */
+}
+
+.isotope-container .item .d-flex .btn-cart {
+    font-size: 0.9rem; /* Ajusta o tamanho do texto no botão de carrinho */
+    margin-left: 15px;
+}
+
+.isotope-container .item .d-flex .btn-wishlist {
+    font-size: 1.2rem; /* Ajusta o tamanho do ícone de wishlist */
+}
+
+
+@media (max-width: 768px) {
+    .isotope-container .item {
+        max-width: 20vh; /* Reduz o tamanho da largura do produto */
+        margin: 20px 10px; /* Adiciona um espaço entre os produtos */
+    }
+    .isotope-container .item .card img {
+        max-height: 200px; /* Reduz a altura máxima das imagens */
+        min-height: 199px;
+        object-fit: cover; /* Mantém a proporção e preenche a área */
+    }
+    .isotope-container .item .card-body h3 {
+        min-height: 10vh;
+        max-height: 10vh;
+    }
+    .isotope-container .item .d-flex .btn-cart {
+        margin: auto;
+        transform: scale(0.7);
+    }
+    .isotope-container .item .d-flex .btn-wishlist {
+        margin: auto;
+        transform: scale(0.7);
+        margin-left: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .isotope-container .item {
+        max-width: 20vh; /* Reduz o tamanho da largura do produto */
+        margin: 20px 10px; /* Adiciona um espaço entre os produtos */
+    }
+    .isotope-container .item .card img {
+        max-height: 200px; /* Reduz a altura máxima das imagens */
+        min-height: 199px;
+        object-fit: cover; /* Mantém a proporção e preenche a área */
+    }
+    .isotope-container .item .card-body h3 {
+        min-height: 10vh;
+        max-height: 10vh;
+    }
+    .isotope-container .item .d-flex .btn-cart {
+        margin: auto;
+        transform: scale(0.7);
+    }
+    .isotope-container .item .d-flex .btn-wishlist {
+        margin: auto;
+        transform: scale(0.7);
+        margin-left: 40px;
+    }
+}

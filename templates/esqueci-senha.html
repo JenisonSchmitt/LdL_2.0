@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Recuperar Senha{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="../static/css/user/style.css">
+<section id="cadastro" class="my-5">
+    <div  id="rec"  class="container my-5 py-5">
+
+        <div class="section-header d-md-flex justify-content-between align-items-center">
+            <h2 class="display-3 fw-normal">Recuperar Senha</h2>
+        </div>
+
+        <form action="/submit_rec_user" method="POST" class="row g-3 justify-content-center" onsubmit="return validarFormulario()">
+            <div class="p-4 rounded shadow bg-light" style="justify-items: center; min-width: 95%; max-width: 98%;">
+                <br><br>
+                <div class="col-10 p-4 rounded shadow bg-light" style="min-width: 95%;">
+                    <h4 class="mb-3 color-pink">Recuperar Senha</h4>
+                    <div class="col-md-6 mx-auto">
+                        <label for="cpf" class="form-label color-purple color-purple">CPF</label>
+                        <input type="text" class="form-control" id="cpf" name="CPF" required>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <label for="email" class="form-label color-purple">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <label for="senha" class="form-label color-purple">Nova Senha</label>
+                        <input type="password" class="form-control" id="senha" name="senha" required>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <label for="confirme-senha" class="form-label color-purple">Confirme sua Nova Senha</label>
+                        <input type="password" class="form-control" id="confirme-senha" name="confirme-senha" required>
+                    </div>
+                    <br>
+                    <div class="col-12 text-center mt-4">
+                    <button type="submit" class="btn btn-primary px-4 pt-3 pb-3">Recuperar Senha</button>
+                </div>
+                </div>
+                <br><br>
+                <a href="/account#login"><h6 class="color-purple">Já possuo Conta</h6></a><br>
+                <a href="/create-user#cadastro"><h5 class="color-pink">Criar Conta</h5></a>
+            </div>
+        </form>
+    </div>
+</section>
+<script src="../static/js/user/create_new_user.js"></script>
+{% endblock %}

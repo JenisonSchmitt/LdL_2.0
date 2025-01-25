@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Perfil de Usuário{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="../static/css/user/style.css">
+
+<section id="login" class="my-5">
+    <div class="container my-5 py-5">
+
+        <div class="section-header d-md-flex justify-content-between align-items-center">
+            <h2 class="display-3 fw-normal">Perfil de Usuário</h2>
+        </div>
+
+        <form action="/submit_update_user" method="POST" class="row g-3 justify-content-center" onsubmit="return validarFormulario()">
+            <div class="p-4 rounded shadow bg-light" style="justify-items: center; min-width: 95%; max-width: 98%;">
+
+                <div class="col-10 p-4 rounded shadow bg-light" style="min-width: 95%;">
+                    <h4 class="mb-3 color-pink">Informações Pessoais</h4>
+                    <div class="col-md-6 mx-auto">
+                        <label for="nome" class="form-label color-purple">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" value="{{ usuario[2] }}" readonly>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <label for="email" class="form-label color-purple">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ usuario[4] }}">
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <label for="telefone" class="form-label color-purple">Telefone</label>
+                        <input type="text" class="form-control" id="telefone" name="telefone" value="{{ usuario[3] }}">
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <label for="nascimento" class="form-label color-purple">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="nascimento" name="nascimento" value="{{ usuario[5] }}" readonly>
+                    </div>
+                    <input type="hidden" name="cpf" value="{{ usuario[1] }}">
+                </div>
+
+                <!-- Endereço -->
+                <div class="col-10 p-4 rounded shadow bg-light mt-4" style="min-width: 95%;">
+                    <h4 class="mb-3 color-pink">Endereço</h4>
+                    <div class="row">
+                        <div class="col-md-4 mx-auto">
+                            <label for="rua" class="form-label color-purple">Rua</label>
+                            <input type="text" class="form-control" id="rua" name="rua" value="{{ usuario[6] or 'Sem Registro' }}">
+                        </div>
+                        <div class="col-md-4 mx-auto">
+                            <label for="numero" class="form-label color-purple">Número</label>
+                            <input type="number" class="form-control" id="numero" name="numero" value="{{ usuario[7] or 'Sem Registro' }}">
+                        </div>
+                        <div class="col-md-4 mx-auto">
+                            <label for="complemento" class="form-label color-purple">Complemento</label>
+                            <input type="text" class="form-control" id="complemento" name="complemento" value="{{ usuario[8] or 'Sem Registro' }}">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4 mx-auto">
+                            <label for="cep" class="form-label color-purple">CEP</label>
+                            <input type="text" class="form-control" id="cep" name="cep" value="{{ usuario[9] or 'Sem Registro' }}">
+                        </div>
+                        <div class="col-md-4 mx-auto">
+                            <label for="cidade" class="form-label color-purple">Cidade</label>
+                            <input type="text" class="form-control" id="cidade" name="cidade" value="{{ usuario[10] or 'Sem Registro' }}">
+                        </div>
+                        <div class="col-md-4 mx-auto">
+                            <label for="estado" class="form-label color-purple">Estado</label>
+                            <input type="text" class="form-control" id="estado" name="estado" value="{{ usuario[11] or 'Sem Registro' }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center mt-4">
+                    <button type="submit" class="btn btn-primary px-4 pt-3 pb-3">Salvar Alterações</button>
+                </div>
+                <br><br>
+                <a href="/esqueci-senha#rec"><h6 class="color-purple">Esqueci a Senha</h6></a><br><br>
+                <a href="/logout"><h6 style="color: red; font-size: 15px">Sair</h6></a><br>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script src="../static/js/user/create_new_user.js"></script>
+{% endblock %}

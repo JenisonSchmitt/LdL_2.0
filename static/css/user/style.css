@@ -5,3 +5,11 @@
 .color-purple{
     color: #603F8B
 }
+
+.color-pink:hover{
+    color: #603F8B
+}
+
+.color-purple:hover{
+    color:#FFA4DB;
+}

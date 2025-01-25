@@ -1,14 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint
 import os
 from skincare_routes import Skincare_Routes
 from maquiagem_routes import Maquiagem_Routes
 from produtos_routes import Produtos_Routes
-from users_routes import Users_Routes
+from users_routes import users, Users_Routes
+from login_required import login_required
 import logging
 
 logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
 logging.info('Iniciando o app.py...')
-
 
 skincareproducts = Skincare_Routes
 maquiagemproducts = Maquiagem_Routes
@@ -17,11 +17,12 @@ products = Produtos_Routes
 template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=template_dir)
 app.secret_key = os.urandom(24)
+app.register_blueprint(users)
 
 @app.route("/")
 def index():
-    skincare = skincareproducts.obter_produtos_skincare() 
-    maquiagem = maquiagemproducts.obter_produtos_maquiagem()
+    skincare = skincareproducts.obter_produtos_skincare_mais_vendidos() 
+    maquiagem = maquiagemproducts.obter_produtos_maquiagem_mais_vendidos()
     novidades = products.obter_produtos()
     return render_template("index.html", skincare=skincare, maquiagem=maquiagem, novidades=novidades)
 
@@ -42,31 +43,34 @@ def produtos(id):
     produtos = products.mostrar_detalhes_produtos(id)
     return render_template("produtos.html", produtos=produtos)
 
-@app.route("/create_user")
+@app.route("/create-user")
 def create_user():
-    return render_template("create_user.html")
+    return render_template("create-user.html")
+    
+@app.route("/account")
+def account():
+    if 'user_email' not in session:
+        return render_template("account.html") 
+    else:
+        return redirect('https://testeecommerce.shop/acess-account')
+        
+@app.route("/esqueci-senha")
+def rec_senha():
+    return render_template("esqueci-senha.html")
 
-@app.route("/submit_create_user", methods=["POST"])
-def insert_user():
-    CPF = request.form['CPF']
-    nome = request.form['nome']
-    telefone = request.form['telefone']
-    email = request.form['email']
-    nascimento = request.form['nascimento']
-    rua = request.form['rua']
-    numero = request.form['numero']
-    complemento = request.form['complemento']
-    cep = request.form['cep']
-    cidade = request.form['cidade']
-    estado = request.form['estado']
-    senha = request.form['confirme-senha']
-    print(senha)
-
+@app.route("/acess-account")
+@login_required
+def acess_account():
     users_routes = Users_Routes()
-
-    users_routes.insert_user(CPF, nome, telefone, email, nascimento, rua , numero ,complemento, cep, cidade, estado, senha)
-
-    return redirect(url_for('index'))
+    
+    usuario = users_routes.get_usuario_from_db(session.get('user_email'))
+    return render_template('acess-account.html', usuario=usuario)
+        
+@app.route("/logout")
+def logout():
+    session.pop('user_email', None)
+    flash("Você foi desconectado com sucesso.", "success")
+    return redirect('https://testeecommerce.shop')
 
 
 def application(environ, start_response):

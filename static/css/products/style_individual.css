@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+
+    .isotope-container .item .card img {
+        max-height: 200px; /* Reduz a altura máxima das imagens */
+        min-height: 199px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .isotope-container .item .card img {
+        max-height: 200px; /* Reduz a altura máxima das imagens */
+        min-height: 199px;
+    }
+}

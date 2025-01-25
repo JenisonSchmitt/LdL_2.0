@@ -28,8 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
         const successCartClearModal = new bootstrap.Modal(document.getElementById('successCartClearModal'));
         successCartClearModal.show();
+        setTimeout(function() {
+            location.reload();
+        }, 2000);
 
-        location.reload();
       });
     }
   });

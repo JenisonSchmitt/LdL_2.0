@@ -21,8 +21,7 @@
   <link rel="stylesheet" type="text/css" href="../static/css/cart/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="../static/js/home/next_prev_button.js"></script>
@@ -31,6 +30,8 @@
   <script src="../static/js/cart/finish_cart.js"></script>
   <script src="../static/js/cart/view_cart_itens.js"></script>
   <script src="../static/js/cart/delete_from_cart.js"></script>
+  {% block styles %} 
+  {% endblock %}
 </head>
 
 <body>
@@ -191,7 +192,7 @@
         <div class="d-flex d-lg-none align-items-end mt-3">
           <ul class="d-flex justify-content-end list-unstyled m-0">
             <li>
-              <a href="account.html" class="mx-3">
+              <a href="/account#login" class="mx-3">
                 <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
               </a>
             </li>
@@ -271,7 +272,7 @@
             <div class="d-none d-lg-flex align-items-end">
               <ul class="d-flex justify-content-end list-unstyled m-0">
                 <li>
-                  <a href="account.html" class="mx-3">
+                  <a href="/account#login" class="mx-3">
                     <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
                   </a>
                 </li>
@@ -301,9 +302,27 @@
         </div>
 
       </nav>
-
-
-
+      {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        <div id="flash-messages">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} fade show" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+        <script>
+          setTimeout(function() {
+            let flashMessages = document.getElementById('flash-messages');
+            if (flashMessages) {
+              flashMessages.style.transition = "opacity 0.5s ease";
+              flashMessages.style.opacity = "0";
+              setTimeout(() => flashMessages.remove(), 500); // Remove completamente após o efeito
+            }
+          }, 3000);
+        </script>
+      {% endif %}
+    {% endwith %}    
     </div>
   </header>
 
@@ -323,7 +342,7 @@
                 <div class="secondary-font text-primary text-uppercase mb-4">LDL</div>
                 <h2 class="banner-title display-1 fw-normal">Sua pele merece ser tratada <span class="text-primary">com
                     amor</span></h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
+                <a href="/skincare#skincare" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
                   <svg width="15" height="15" viewBox="0 0 18 18" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
                   </svg>
@@ -342,7 +361,7 @@
                 <div class="secondary-font text-primary text-uppercase mb-4">LDL</div>
                 <h2 class="banner-title display-1 fw-normal">Cuidar da pele é investir <span class="text-primary">na sua
                     beleza</span></h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
+                <a href="/maquiagem#maquiagem" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
                   <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
                   </svg>
@@ -361,7 +380,7 @@
                 <div class="secondary-font text-primary text-uppercase mb-4">LDL</div>
                 <h2 class="banner-title display-1 fw-normal">Cuide-se hoje para <span class="text-primary">brilhar ainda
                     mais amanhã</span></h2>
-                <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
+                <a href="/skincare#skincare" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Comprar Agora
                   <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                     <use xlink:href="#arrow-right"></use>
                   </svg>
@@ -382,7 +401,6 @@
           </svg></div>
 
         <!-- Paginação -->
-        <div class="swiper-pagination mb-5"></div>
       </div>
     </div>
   </section>

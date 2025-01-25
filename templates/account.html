@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="../static/css/user/style.css">
+<section id="cadastro" class="my-5">
+    <div  id="login"  class="container my-5 py-5">
+
+        <div class="section-header d-md-flex justify-content-between align-items-center">
+            <h2 class="display-3 fw-normal">Login</h2>
+        </div>
+
+        <form action="/submit_login_user" method="POST" class="row g-3 justify-content-center">
+            <div class="p-4 rounded shadow bg-light" style="justify-items: center; min-width: 95%; max-width: 98%;">
+                <br><br>
+                <div class="col-10 p-4 rounded shadow bg-light" style="min-width: 95%;">
+                    <br>
+                    <h4 class="mb-3 color-pink">Logar na Sua Conta</h4>
+                    <br>
+                    <div class="col-md-6 mx-auto">
+                        <label for="email" class="form-label color-purple">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <label for="senha" class="form-label color-purple">Senha</label>
+                        <input type="password" class="form-control" id="senha" name="senha" required>
+                    </div>
+                    <br>
+                    <div class="col-12 text-center mt-4">
+                    <button type="submit" class="btn btn-primary px-4 pt-3 pb-3">Logar</button>
+                </div>
+                </div>
+                <br><br>
+                <a href="/esqueci-senha#rec"><h6 class="color-purple">Esqueci a Senha</h6></a><br>
+                <a href="/create-user#cadastro"><h5 class="color-pink">Criar Conta</h5></a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

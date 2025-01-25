@@ -376,9 +376,10 @@ a.btn-wishlist {
 
 /* pet foodies style  */
 button.filter-button {
+  color: #603F8B;
   letter-spacing: 0.02125rem;
   border: none;
-  border-bottom: 2px solid #D9D9D8;
+  border-bottom: 1px solid #FFA4DB;
   background: transparent;
   text-transform: uppercase;
   font-size: 1.0625rem;

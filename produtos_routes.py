@@ -7,7 +7,7 @@ class Produtos_Routes:
         db = conectar_db()
         cursor = db.cursor()
 
-        query = "SELECT id, nome, valor, tipo_produto, imagem FROM produtos WHERE dt_cadastro >= '2025-01-01 00:00:00' ORDER BY dt_cadastro DESC LIMIT 10"
+        query = "SELECT id, nome, valor, tipo_produto, imagem FROM produtos WHERE dt_cadastro >= '2025-01-01 00:00:00' ORDER BY dt_cadastro DESC LIMIT 8"
         cursor.execute(query)
         
         produtos = cursor.fetchall()
@@ -22,7 +22,7 @@ class Produtos_Routes:
             tipo_produto = produto[3].decode('utf-8') if isinstance(produto[3], bytearray) else produto[3]
             imagem_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
 
-            produtos_decodificados.append((id_produto, nome_produto, valor_produto, imagem_produto))
+            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto))
         
         return produtos_decodificados
     
