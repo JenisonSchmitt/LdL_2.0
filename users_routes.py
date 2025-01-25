@@ -1,6 +1,6 @@
-from flask import flash, Blueprint, request, redirect, url_for, session
+from flask import flash, Blueprint, request, redirect, session
 import mysql.connector
-from conection import conectar_db
+from conection import conectar_db, define_rota
 from login_required import login_required
 
 users = Blueprint('users_routes', __name__)
@@ -141,7 +141,7 @@ def submit_create_user():
     users_routes = Users_Routes()
     sucesso = users_routes.insert_user(CPF, nome, telefone, email, nascimento, rua, numero, complemento, cep, cidade, estado, senha)
     
-    return redirect('https://testeecommerce.shop')
+    return redirect(define_rota('/'))
 
 @users.route("/submit_update_user", methods=["POST"])
 @login_required
@@ -164,10 +164,10 @@ def update_user():
     
     if sucesso:
         flash("Dados atualizados com sucesso!", "success")
-        return redirect('https://testeecommerce.shop/acess-account')
+        return redirect(define_rota('/acess-account'))
     else:
         flash("Erro ao atualizar dados!", "danger")
-        return redirect('https://testeecommerce.shop/acess-account')
+        return redirect(define_rota('/acess-account'))
         
 @users.route("/submit_rec_user", methods=["POST"])
 @login_required
@@ -183,10 +183,10 @@ def submit_rec_user():
     if sucesso:
         session['user_email'] = email
         flash("Senha recuperada com sucesso!", "success")
-        return redirect('https://testeecommerce.shop')
+        return redirect(define_rota('/'))
     else:
         flash("Erro ao recuperar senha, tente novamente.", "danger")
-        return redirect('https://testeecommerce.shop/esqueci-senha')
+        return redirect(define_rota('/rec-senha'))
         
 @users.route("/submit_login_user", methods=["POST"])
 def submit_login_user():
@@ -200,7 +200,7 @@ def submit_login_user():
     if sucesso:
         session['user_email'] = email
         flash("Login realizado com sucesso!", "success")
-        return redirect('https://testeecommerce.shop')
+        return redirect(define_rota('/'))
     else:
         flash("Email ou senha incorretos.", "danger")
-        return redirect('https://testeecommerce.shop/account')
+        return redirect(define_rota('/account'))

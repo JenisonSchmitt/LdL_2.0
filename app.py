@@ -1,14 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint
+from flask import Flask, render_template, request, redirect, flash, session, Blueprint
 import os
 from skincare_routes import Skincare_Routes
 from maquiagem_routes import Maquiagem_Routes
-from produtos_routes import Produtos_Routes
+from produtos_routes import produtos, Produtos_Routes
 from users_routes import users, Users_Routes
 from login_required import login_required
+from conection import define_rota
 import logging
 
-logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
-logging.info('Iniciando o app.py...')
+# logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
+# logging.info('Iniciando o app.py...')
 
 skincareproducts = Skincare_Routes
 maquiagemproducts = Maquiagem_Routes
@@ -18,6 +19,7 @@ template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templat
 app = Flask(__name__, template_folder=template_dir)
 app.secret_key = os.urandom(24)
 app.register_blueprint(users)
+app.register_blueprint(produtos)
 
 @app.route("/")
 def index():
@@ -52,7 +54,7 @@ def account():
     if 'user_email' not in session:
         return render_template("account.html") 
     else:
-        return redirect('https://testeecommerce.shop/acess-account')
+        return redirect(define_rota('/acess-account'))
         
 @app.route("/esqueci-senha")
 def rec_senha():
@@ -70,8 +72,7 @@ def acess_account():
 def logout():
     session.pop('user_email', None)
     flash("Você foi desconectado com sucesso.", "success")
-    return redirect('https://testeecommerce.shop')
-
+    return redirect(define_rota('/'))
 
 def application(environ, start_response):
     status = '200 OK'

@@ -27,7 +27,6 @@
   <script src="../static/js/home/next_prev_button.js"></script>
   <script src="../static/js/home/select_value_category.js"></script>
   <script src="../static/js/cart/add_cart.js"></script>
-  <script src="../static/js/cart/finish_cart.js"></script>
   <script src="../static/js/cart/view_cart_itens.js"></script>
   <script src="../static/js/cart/delete_from_cart.js"></script>
   {% block styles %} 
@@ -102,28 +101,33 @@
   <div class="preloader-wrapper">
     <div class="preloader"></div>
   </div>
-  <div class="offcanvas offcanvas-end your-cart-in-mobile" data-bs-scroll="true" tabindex="-1" id="offcanvasCart"
-    aria-labelledby="My Cart">
+  <div class="offcanvas offcanvas-end your-cart-in-mobile" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart">
     <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
-        style="margin-left: 95%;"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="margin-left: 95%;"></button>
     </div>
     <!-- Carrinho -->
     <div class="offcanvas-body">
       <div class="order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Carrinho</span>
-          <span class="badge bg-primary rounded-circle pt-2">0</span>
+          <span class="badge bg-primary rounded-circle pt-2" id="cart-count">0</span>
         </h4>
-        <ul class="list-group mb-3">
+        <ul class="list-group mb-3" id="cart-items-list">
+          <!-- Itens do carrinho serão inseridos aqui -->
         </ul>
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Finalizar Pedido</button>
+        <!-- Formulário para envio -->
+        <form id="checkout-form" action="/cart#cart" method="POST">
+          <input type="hidden" name="product_ids" id="product-ids">
+          <input type="hidden" name="product_quantities" id="product-quantities">
+          <button type="submit" class="w-100 btn btn-primary btn-lg">Finalizar Pedido</button>
+        </form>
+        <button id="clear-cart" class="btn btn-danger mb-3 delete-for-cart">
+          <iconify-icon icon="fluent:trash-28-filled" class="fs-4"></iconify-icon> Limpar Carrinho
+        </button>
       </div>
     </div>
-    <button id="clear-cart" class="btn btn-danger mb-3 delete-for-cart">
-      <iconify-icon icon="fluent:trash-28-filled" class="fs-4"></iconify-icon> Limpar Carrinho
-    </button>
   </div>
+  
 
   <div class="offcanvas offcanvas-end mobile-max-width" data-bs-scroll="true" tabindex="-1" id="offcanvasSearch"
     aria-labelledby="Search">
