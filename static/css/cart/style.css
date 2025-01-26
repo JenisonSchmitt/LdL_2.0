@@ -78,6 +78,47 @@
     background-color: #5a2e75;
 }
 
+.cart-align-itens-name{
+    text-align: left;
+}
+
+.cart-align-img{
+    max-width: 8vh;
+}
+
+.cart-align-name{
+    max-width: 10vh;
+}
+
+.cart-align-qtd{
+    max-width: 5vh;
+}
+
+.cart-align-qtd2::before {
+    max-width: 5vh;
+    content: "Quantidade";
+}
+
+
+.cart-align-itens-quantity {
+    text-align: center;
+}
+
+.cart-align-itens-quantity .quantity-input {
+    display: block;
+    margin: 0 auto; 
+    width: 80px; 
+    height: 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 2px solid #d1d1d1;
+    border-radius: 8px;
+    text-align: center;
+    outline: none;
+}
+
+
+
 @media (max-width: 768px) {
     .modal-dialog {
         max-width: 90%;
@@ -100,5 +141,68 @@
         margin-top: 20%;
         max-width: 50%;
     }
+
+    .cart-align-itens-name{
+        text-align: left;
+    }
+    
+    .cart-align-img{
+        max-width: 8vh;
+    }
+    
+    .cart-align-name{
+        max-width: 10vh;
+    }
+    
+    .cart-align-qtd{
+        font-size: 11px;
+        max-width: 5vh;
+    }
+
+    .cart-align-qtd2::before {
+        font-size: 11px;
+        max-width: 5vh;
+        content: "Qtd.";
+    }
+
+    .cart-align-price{
+        font-size: 11px;
+        max-width: 5vh;
+    }
+    
+    .cart-align-itens-quantity {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .cart-align-itens-price {
+        font-size: 13px;
+        text-align: center;
+    }
+    
+    .cart-align-itens-quantity .quantity-input {
+        max-width: 40px; 
+        max-height: 10px;
+        font-size: 0.8rem;
+    }
+
+    .total-price{
+        font-size: 12px;
+    }
+
+    .remove-item{
+        transform: scale(0.8);
+    }
+
+    .btn-primary{
+        transform: scale(0.8);
+    }
+
+    .btn-outline-dark{
+        margin-right: 7px;
+        transform: scale(0.7);
+    }
+
+
 }
 

@@ -1,7 +1,10 @@
 from conection import conectar_db, define_rota
-from flask import flash, Blueprint, request, redirect, session, render_template, jsonify
+from flask import flash, Blueprint, request, redirect, session, render_template, url_for
 from login_required import login_required
 import json
+from users_routes import Users_Routes
+
+usersRoutes = Users_Routes()
 
 produtos = Blueprint('produtos_routes', __name__)
 
@@ -91,6 +94,58 @@ class Produtos_Routes:
             ))
 
         return produtos_decodificados
+    
+    def save_first_data_cart(self, id_produto, qtd_produto, valor_total_produto, email):
+        db = conectar_db()
+        cursor = db.cursor()
+
+        idUser = usersRoutes.getIdUserByEmail(email)
+
+        if idUser is None:
+            print("Erro: Usuário não encontrado.")
+            return False
+
+        query = """
+            INSERT INTO vendas (id_produto, id_usuario, qtd_produto, dt_registro, valor_total_produto, temporario)
+            VALUES (%s, %s, %s, NOW(), %s, 1)
+        """
+
+        try:
+            cursor.execute(query, (id_produto, idUser, qtd_produto, valor_total_produto))
+            db.commit()
+            return True
+        except Exception as e:
+            db.rollback()
+            print(f"Erro ao salvar no banco: {e}")
+            return False
+        finally:
+            cursor.close()
+            db.close()
+    
+    def save_shipping_data(self, cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete):
+        db = conectar_db()
+        cursor = db.cursor()
+
+        # Define a query para inserir os dados de envio
+        query = """
+            INSERT INTO vendas (cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete, dt_registro)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())
+        """
+
+        try:
+            # Executa a query com os parâmetros
+            cursor.execute(query, (cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete))
+            db.commit()
+            return True
+        except Exception as e:
+            db.rollback()
+            print(f"Erro ao salvar no banco: {e}")
+            return False
+        finally:
+            cursor.close()
+            db.close()
+
+
 
 @produtos.route("/cart", methods=['POST'])
 @login_required
@@ -99,6 +154,7 @@ def cart():
     product_quantities = json.loads(request.form['product_quantities'])
 
     produtoRouter = Produtos_Routes()
+
     produtos_decodificados = produtoRouter.get_products_cart(product_ids)
 
     produtos_dict = {produto[0]: produto for produto in produtos_decodificados}
@@ -110,3 +166,66 @@ def cart():
         produtos_com_quantidade.append((*produto, quantidade))
 
     return render_template('cart.html', product_cart=produtos_com_quantidade)
+
+@produtos.route('/continue-purchase', methods=['POST'])
+@login_required
+def continue_purchase():
+    produtos = []
+    email = session.get('user_email')
+    
+    for key in request.form:
+        if key.startswith("id_produto_"):
+            produto_id = request.form[key]
+            quantidade = request.form.get(f"quantidade_{produto_id}")
+            valor_total = request.form.get(f"valor_total_{produto_id}")
+            
+            produtos.append({
+                "id_produto": produto_id,
+                "quantidade": quantidade,
+                "valor_total": valor_total
+            })
+
+    produtoRoute = Produtos_Routes()
+    
+    for produto in produtos:
+        resultado = produtoRoute.save_first_data_cart(produto['id_produto'], produto['quantidade'], produto['valor_total'], email)
+        
+        if not resultado:
+            flash("Houve um problema ao salvar os dados, tente novamente!", "danger")
+            return redirect(define_rota('/cart'))
+
+    return render_template("shipping-method.html")
+
+@produtos.route('/shipping-method', methods=['POST'])
+@login_required
+def shipping_method():
+    # Obter os dados do formulário
+    cep = request.form.get('cep')
+    rua = request.form.get('rua')  # Presumindo que você irá capturar rua também (não no HTML atual)
+    bairro = request.form.get('bairro')  # O mesmo para bairro
+    cidade = request.form.get('cidade')  # E cidade
+    estado = request.form.get('estado')  # E estado
+    numero = request.form.get('numero')
+    complemento = request.form.get('complemento')
+    forma_envio = request.form.get('forma_envio')
+    valor_total_compra = request.form.get('valor_total_compra')
+    valor_frete = request.form.get('valor_frete')
+
+    produtoRoute = Produtos_Routes()
+    # Processar e salvar os dados no banco de dados
+    # Você pode agora salvar esses dados em seu banco de dados como fez anteriormente
+    try:
+        # Chame a função que vai salvar os dados, passando as variáveis coletadas do formulário
+        # Exemplo:
+        resultado = produtoRoute.save_shipping_data(cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete)
+        
+        if resultado:
+            flash("TUDO CERTO!", "sucess")
+            return redirect(define_rota('/'))  # Altere o nome para o da sua próxima rota
+        else:
+            flash("Houve um erro ao processar sua solicitação, tente novamente!", "danger")
+            return redirect(define_rota('/'))  # Altere o nome para o da sua próxima rota
+
+    except Exception as e:
+        flash(f"Erro: {str(e)}", "danger")
+        return redirect(define_rota('/'))  # Altere o nome para o da sua próxima rota

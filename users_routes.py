@@ -75,7 +75,6 @@ class Users_Routes:
         finally:
             db.close()
 
-
     def rec_user(self, CPF, email, senha):
         db = conectar_db()
         cursor = db.cursor()
@@ -116,6 +115,30 @@ class Users_Routes:
             else:
                 return False
                 
+        except Exception as e:
+            print(f"Erro ao consultar o banco de dados: {str(e)}")
+            return None
+        finally:
+            db.close()
+
+    def getIdUserByEmail(self, email):
+        db = conectar_db()
+        cursor = db.cursor()
+        try:
+            query = '''
+                SELECT id FROM usuarios WHERE email = %s
+            '''
+            
+            parameters = (email,)
+            cursor.execute(query, parameters)
+            result = cursor.fetchone()
+    
+            if result:
+                result = tuple([x.decode('utf-8') if isinstance(x, bytearray) else x for x in result])
+                return result[0]
+            else:
+                return None
+            
         except Exception as e:
             print(f"Erro ao consultar o banco de dados: {str(e)}")
             return None
