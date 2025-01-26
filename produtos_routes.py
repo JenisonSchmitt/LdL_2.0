@@ -92,24 +92,21 @@ class Produtos_Routes:
 
         return produtos_decodificados
 
-
-
-
 @produtos.route("/cart", methods=['POST'])
 @login_required
 def cart():
     product_ids = json.loads(request.form['product_ids'])
     product_quantities = json.loads(request.form['product_quantities'])
 
-    print(f"IDs recebidos: {product_ids}")
-    print(f"Quantidades recebidas: {product_quantities}")
-
     produtoRouter = Produtos_Routes()
     produtos_decodificados = produtoRouter.get_products_cart(product_ids)
 
-    # Combina os produtos com suas respectivas quantidades
+    produtos_dict = {produto[0]: produto for produto in produtos_decodificados}
+
+    produtos_ordenados = [produtos_dict[int(id)] for id in product_ids]
+
     produtos_com_quantidade = []
-    for produto, quantidade in zip(produtos_decodificados, product_quantities):
+    for produto, quantidade in zip(produtos_ordenados, product_quantities):
         produtos_com_quantidade.append((*produto, quantidade))
 
     return render_template('cart.html', product_cart=produtos_com_quantidade)
