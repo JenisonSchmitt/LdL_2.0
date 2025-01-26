@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let finalTotal = parseFloat(totalCartValue) + shippingValue;
         document.getElementById('final-total').textContent = formatCurrency(finalTotal);
+
+        document.getElementById('shipping-value-input').value = shippingValue.toFixed(2);
+        document.getElementById('final-total-input').value = finalTotal.toFixed(2);
     });
 });
 
@@ -46,6 +49,10 @@ document.getElementById('cep').addEventListener('blur', function() {
                         <p class="color-pink"><strong>Bairro:</strong> ${data.bairro}</p>
                         <p class="color-pink"><strong>Cidade:</strong> ${data.localidade}</p>
                         <p class="color-pink"><strong>Estado:</strong> ${data.uf}</p>
+                        <input type="hidden" name="rua" value="${data.logradouro}">
+                        <input type="hidden" name="bairro" value="${data.bairro}">
+                        <input type="hidden" name="cidade" value="${data.localidade}">
+                        <input type="hidden" name="estado" value="${data.uf}">
                     `;
 
                     showShippingFields(true);
@@ -94,15 +101,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const isFormValid = cep.length === 9 && numero !== '' && complemento !== '' && shippingOption;
 
-        // Habilita ou desabilita o botão 'Prosseguir'
         document.getElementById('btn-prosseguir').disabled = !isFormValid;
     }
 
-    // Verifica o formulário a cada alteração
     document.getElementById('cep').addEventListener('input', checkFormCompletion);
     document.getElementById('numero').addEventListener('input', checkFormCompletion);
     document.getElementById('complemento').addEventListener('input', checkFormCompletion);
     document.getElementById('shipping-options').addEventListener('change', checkFormCompletion);
 
-    checkFormCompletion();  // Verifica ao carregar a página
+    checkFormCompletion(); 
 });

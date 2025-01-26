@@ -1,0 +1,171 @@
+.img-fluid {
+    max-width: 50px;
+}
+
+#pagamento {
+    font-family: Arial, sans-serif;
+}
+
+#pagamento h2 {
+    font-size: 2.5rem; 
+}
+
+#pagamento h4.color-pink {
+    font-size: 1.5rem; 
+}
+
+#produtos .card-title {
+    font-size: 1.1rem;
+}
+
+#produtos h3.secondary-font {
+    font-size: 1rem;
+}
+
+#produtos h3.pt-4 {
+    font-size: 0.9rem; 
+}
+
+#produtos h3.text-primary {
+    font-size: 1rem; 
+}
+
+#pagamento .form-label {
+    font-size: 0.9rem;
+}
+
+#pagamento .form-control {
+    font-size: 0.9rem; 
+}
+
+#pagamento .btn {
+    font-size: 1rem;
+}
+
+#pagamento .col-12.text-center button {
+    font-size: 1rem; 
+}
+
+#produtos img {
+    max-width: 60px;
+    height: auto;
+}
+
+#produtos .card {
+    margin-bottom: 15px;
+}
+
+#produtos .d-flex {
+    justify-content: space-between;
+}
+
+.max-width-div {
+    max-width: 40vh;
+}
+
+.div-row-div {
+    flex-wrap: wrap;
+    gap: 10px; 
+    margin-top: 20px;
+    align-items: flex-start;
+    background-color: white; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+#frete, #valor-final {
+    font-size: 1.5rem;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+}
+
+
+@media (max-width: 768px) {
+    .img-fluid {
+        max-width: 50px;
+    }
+
+    #pagamento h2 {
+        font-size: 2rem; 
+    }
+
+    #pagamento h4.color-pink {
+        font-size: 1.2rem; 
+    }
+
+    #produtos .card-title {
+        font-size: 1rem;
+    }
+
+    #produtos h3.secondary-font {
+        font-size: 0.9rem;
+    }
+
+    #produtos h3.pt-4 {
+        font-size: 0.8rem; 
+    }
+
+    #produtos h3.text-primary {
+        font-size: 0.9rem; 
+    }
+
+    #pagamento .form-label {
+        font-size: 0.8rem;
+    }
+
+    #pagamento .form-control {
+        font-size: 0.8rem; 
+    }
+
+    #pagamento .btn {
+        font-size: 0.9rem;
+    }
+
+    #pagamento .col-12.text-center button {
+        font-size: 0.9rem; 
+    }
+
+    .div-row-div {
+        display: block;
+        padding: 15px;
+    }
+
+    .max-width-div {
+        max-width: 100%;
+        min-height: 100vh;
+    }
+
+    #produtos img {
+        max-width: 50px;
+        margin-right: 10px;
+    }
+
+    #produtos .isotope-container {
+        display: block;
+    }
+
+    #produtos .d-flex {
+        justify-content: flex-start;
+    }
+
+    #produtos .d-flex > div {
+        margin-bottom: 10px;
+    }
+
+    .col-md-4 {
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .form-control, .form-label {
+        width: 100%;
+    }
+
+    .margin-top-mobile{
+        margin-top:50%
+    }
+}

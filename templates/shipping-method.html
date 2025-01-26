@@ -8,11 +8,14 @@
         </div>
 
         <form action="{{ url_for('produtos_routes.shipping_method') }}" method="POST">
+            {% for id in ids_gerados %}
+            <input type="hidden" name="id_tabela[]" value="{{ id }}">
+            {% endfor %}    
             <div class="row">
                 <div class="col-md-6">
                     <label for="cep" class="form-label">Digite seu CEP:</label>
                     <div class="input-group">
-                        <input type="text" id="cep" class="form-control" placeholder="00000-000" required>
+                        <input type="text" id="cep" name="cep" class="form-control" placeholder="00000-000" required>
                         <button class="btn btn-outline-secondary" type="button" id="cep-btn">
                             <iconify-icon icon="ic:outline-search"></iconify-icon>
                         </button>
@@ -29,11 +32,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="Número" id="numero-label" class="form-label" style="display: none;">Número</label>
-                    <input type="text" id="numero" class="form-control" placeholder="*" required style="display: none;">
+                    <input type="text" id="numero" name="numero" class="form-control" placeholder="*" required style="display: none;">
                 </div>
                 <div class="col-md-6">
                     <label for="Complemento" id="complemento-label" class="form-label" style="display: none;">Complemento:</label>
-                    <input type="text" id="complemento" class="form-control" placeholder="*" required style="display: none;">
+                    <input type="text" id="complemento" name="complemento" class="form-control" placeholder="*" required style="display: none;">
                 </div>
             </div>            
             
@@ -42,7 +45,7 @@
             <div class="row">
                 <div style="max-width: 50vh; margin: auto;">
                     <label for="cep" id="shipping-options-label" class="form-label" style="display: none;">Informe a forma de envio:</label>
-                    <select id="shipping-options" class="form-control" disabled required style="display: none;">
+                    <select id="shipping-options" class="form-control" name="forma_envio" disabled required style="display: none;">
                         <option>Selecione a forma de envio</option>
                         <option value="100.00">Selecionar envio R$100,00</option>
                         <option value="0.00">Combinar retirada (Tubarão/SC - Centro)</option>
@@ -52,6 +55,9 @@
             
             <div class="row mt-4">
                 <div class="col-12">
+                    <input type="hidden" id="shipping-value-input" name="shipping_value" value="0.00">
+                    <input type="hidden" id="final-total-input" name="final_total" value="0.00">
+                    
                     <table class="table table-hover shadow rounded bg-light">
                         <thead>
                             <tr>
@@ -73,7 +79,7 @@
                                 <td id="final-total"><strong>R$ 0,00</strong></td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table>                    
                 </div>
             </div>
         

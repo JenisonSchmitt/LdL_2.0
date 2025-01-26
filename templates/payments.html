@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Pagamento{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="../static/css/cart/style.css">
+<link rel="stylesheet" type="text/css" href="../static/css/cart/stylespayments.css">
+
+<div class="container my-5 py-5">
+
+    <div class="section-header d-md-flex justify-content-between align-items-center">
+        <h2 class="display-3 fw-normal">Pagamento</h2>
+    </div>
+
+    <form action="/submit_payment" method="POST" class="row g-3 justify-content-center">
+        <div id= "pagamento" class="div-row-div">
+
+            <div class="col-12 mb-4 text-center">
+                <h4 class="color-pink">Resumo da Compra</h4>
+            </div>
+
+            <div class="row">
+                <!-- Primeira Coluna - Produtos -->
+                <div class="col-12 mb-3 max-width-div">
+                    <h5 class="color-purple">Produtos</h5>
+                    <div id="produtos" class="isotope-container row">
+                        {% for produto in produtos %}
+                            <div class="d-flex align-items-center mb-3 w-100">
+                                <div class="col-2">
+                                    <img src="../static/images/maquiagem/{{ produto.nome_produto | replace(' ', '') | lower }}.png" class="img-fluid rounded-4" alt="imagem do produto">
+                                </div>
+                                <div class="col-3">
+                                    <h3 class="card-title pt-4 m-0">{{ produto.nome_produto }}</h3>
+                                </div>
+                                <div class="col-2">
+                                    <h3 class="pt-4 m-0">{{ produto.qtd_produto }} X</h3>
+                                </div>
+                                <div class="col-3">
+                                    <h3 class="secondary-font text-primary pt-4 m-0">R$ {{ produto.valor_total_produto }}</h3>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-md-4 margin-top-mobile">
+                    <div class="p-4 border rounded shadow-sm">
+                        <h5 class="color-purple mb-4 font-weight-bold">Informações de envio</h5>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">Forma de envio:</label>
+                                <p class="form-control-plaintext">{{produtos[0].forma_envio.decode('utf-8')}}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">Valor do frete:</label>
+                                <p class="form-control-plaintext">{{produtos[0].valor_frete}}</p>
+                            </div>
+                        </div>
+                
+                        <div class="row mt-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">CEP:</label>
+                                <p class="form-control-plaintext">{{produtos[0].cep.decode('utf-8')}}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">Rua:</label>
+                                <p class="form-control-plaintext">{{produtos[0].rua.decode('utf-8')}}</p>
+                            </div>
+                        </div>
+                
+                        <div class="row mt-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">Número:</label>
+                                <p class="form-control-plaintext">{{produtos[0].numero.decode('utf-8')}}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">Complemento:</label>
+                                <p class="form-control-plaintext">{{produtos[0].complemento.decode('utf-8')}}</p>
+                            </div>
+                        </div>
+                
+                        <div class="row mt-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">Bairro:</label>
+                                <p class="form-control-plaintext">{{produtos[0].bairro.decode('utf-8')}}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">Cidade:</label>
+                                <p class="form-control-plaintext">{{produtos[0].cidade.decode('utf-8')}}</p>
+                            </div>
+                        </div>
+                
+                        <div class="row mt-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="frete" class="form-label color-purple font-weight-semibold">Estado:</label>
+                                <p class="form-control-plaintext">{{produtos[0].estado.decode('utf-8')}}</p>
+                            </div>
+                        </div>
+                
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label for="valor-final" class="form-label color-purple font-weight-semibold">Valor Total:
+                                <input type="text" class="form-control text-center font-weight-bold" id="valor-final" name="valor-final" value="{{produtos[0].valor_total_compra}}" readonly></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded">
+                        <h5 class="color-purple">Forma de Pagamento</h5>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <select class="form-control" id="forma-pagamento" name="forma-pagamento" required>
+                                    <option value="cartao_credito">Cartão de Crédito</option>
+                                    <option value="pix">PIX</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão de Finalizar Compra -->
+            <div class="col-12 text-center mt-4">
+                <button type="submit" class="btn btn-primary px-4 pt-3 pb-3" style="margin-top: 10%;">Finalizar Compra</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="../static/js/cart/payments.js"></script>
+
+{% endblock %}

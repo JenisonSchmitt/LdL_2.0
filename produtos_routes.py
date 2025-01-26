@@ -113,7 +113,10 @@ class Produtos_Routes:
         try:
             cursor.execute(query, (id_produto, idUser, qtd_produto, valor_total_produto))
             db.commit()
-            return True
+
+            # Obtendo o ID gerado pela última inserção
+            id_gerado = cursor.lastrowid
+            return id_gerado  # Retorna o ID gerado
         except Exception as e:
             db.rollback()
             print(f"Erro ao salvar no banco: {e}")
@@ -122,19 +125,19 @@ class Produtos_Routes:
             cursor.close()
             db.close()
     
-    def save_shipping_data(self, cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete):
+    def save_shipping_data(self, cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete, id_tabela):
         db = conectar_db()
         cursor = db.cursor()
-
-        # Define a query para inserir os dados de envio
         query = """
-            INSERT INTO vendas (cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete, dt_registro)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())
+            UPDATE vendas 
+            SET cep = %s, rua = %s, bairro = %s, cidade = %s, estado = %s, numero = %s, complemento = %s, forma_envio = %s, 
+                valor_total_compra = %s, valor_frete = %s, dt_registro = NOW()
+            WHERE id = %s
         """
-
         try:
-            # Executa a query com os parâmetros
-            cursor.execute(query, (cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete))
+            for id in id_tabela:
+                cursor.execute(query, (cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete, id))
+            
             db.commit()
             return True
         except Exception as e:
@@ -145,6 +148,83 @@ class Produtos_Routes:
             cursor.close()
             db.close()
 
+    def get_products_for_payments(self, id_tabela):
+        db = conectar_db()
+        cursor = db.cursor()
+
+        query = """
+            SELECT p.nome, p.tipo_produto, v.qtd_produto, v.forma_envio, v.cep, v.rua, v.bairro, v.cidade, v.estado, v.numero, v.complemento, v.valor_total_produto, v.valor_frete, v.valor_total_compra
+            FROM vendas v
+            JOIN produtos p ON v.id_produto = p.id
+            WHERE v.id = %s
+        """
+
+        produtos_decodificados = []
+
+        for id in id_tabela:
+            cursor.execute(query, (id,))
+            produtos = cursor.fetchall()
+
+            for produto in produtos:
+                nome_produto = produto[0].decode('utf-8') 
+                tipo_produto = produto[1]
+                qtd_produto = produto[2]
+                forma_envio = produto[3]
+                cep = produto[4]
+                rua = produto[5]
+                bairro = produto[6]
+                cidade = produto[7]
+                estado = produto[8]
+                numero = produto[9]
+                complemento = produto[10]
+                valor_total_produto = produto[11]
+                valor_frete = produto[12]
+                valor_total_compra = produto[13]
+
+                produto_decodificado = {
+                    'nome_produto': nome_produto,
+                    'tipo_produto': tipo_produto,
+                    'qtd_produto': qtd_produto,
+                    'forma_envio': forma_envio,
+                    'cep': cep,
+                    'rua': rua,
+                    'bairro': bairro,
+                    'cidade': cidade,
+                    'estado': estado,
+                    'numero': numero,
+                    'complemento': complemento,
+                    'valor_total_produto': valor_total_produto,
+                    'valor_frete': valor_frete,
+                    'valor_total_compra': valor_total_compra
+                }
+                produtos_decodificados.append(produto_decodificado)
+
+        cursor.close()
+        db.close()
+
+        return produtos_decodificados
+
+    def set_payment_cart(self, id_tabela, forma_pgmt):
+        db = conectar_db()
+        cursor = db.cursor()
+        query = """
+            UPDATE vendas
+            SET forma_pagamento = %s, temporario = 0, dt_registro = NOW()
+            WHERE id = %s
+        """
+        try:
+            for id in id_tabela:
+                cursor.execute(query, (forma_pgmt, id))
+            
+            db.commit()
+            return True
+        except Exception as e:
+            db.rollback()
+            print(f"Erro ao salvar no banco: {e}")
+            return False
+        finally:
+            cursor.close()
+            db.close()
 
 
 @produtos.route("/cart", methods=['POST'])
@@ -172,6 +252,7 @@ def cart():
 def continue_purchase():
     produtos = []
     email = session.get('user_email')
+    ids_gerados = []
     
     for key in request.form:
         if key.startswith("id_produto_"):
@@ -193,39 +274,94 @@ def continue_purchase():
         if not resultado:
             flash("Houve um problema ao salvar os dados, tente novamente!", "danger")
             return redirect(define_rota('/cart'))
+        
+        ids_gerados.append(resultado)
 
-    return render_template("shipping-method.html")
+    return render_template("shipping-method.html", ids_gerados=ids_gerados)
 
 @produtos.route('/shipping-method', methods=['POST'])
 @login_required
-def shipping_method():
-    # Obter os dados do formulário
+def shipping_method(): 
+    id_tabela = request.form.getlist('id_tabela[]')
     cep = request.form.get('cep')
-    rua = request.form.get('rua')  # Presumindo que você irá capturar rua também (não no HTML atual)
-    bairro = request.form.get('bairro')  # O mesmo para bairro
-    cidade = request.form.get('cidade')  # E cidade
-    estado = request.form.get('estado')  # E estado
+    rua = request.form.get('rua')
+    bairro = request.form.get('bairro')
+    cidade = request.form.get('cidade')
+    estado = request.form.get('estado')
     numero = request.form.get('numero')
     complemento = request.form.get('complemento')
     forma_envio = request.form.get('forma_envio')
-    valor_total_compra = request.form.get('valor_total_compra')
-    valor_frete = request.form.get('valor_frete')
+    valor_total_compra = request.form.get('final_total') 
+    valor_frete = request.form.get('shipping_value')
+
+    if float(forma_envio) > 0:
+        forma_envio = "Envio"
+    else:
+        forma_envio = "Retirada"
 
     produtoRoute = Produtos_Routes()
-    # Processar e salvar os dados no banco de dados
-    # Você pode agora salvar esses dados em seu banco de dados como fez anteriormente
     try:
-        # Chame a função que vai salvar os dados, passando as variáveis coletadas do formulário
-        # Exemplo:
-        resultado = produtoRoute.save_shipping_data(cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete)
+        resultado = produtoRoute.save_shipping_data(cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete, id_tabela)
         
         if resultado:
-            flash("TUDO CERTO!", "sucess")
-            return redirect(define_rota('/'))  # Altere o nome para o da sua próxima rota
+            session['id_tabela'] = id_tabela
+            return redirect(define_rota('/payments')) 
         else:
             flash("Houve um erro ao processar sua solicitação, tente novamente!", "danger")
-            return redirect(define_rota('/'))  # Altere o nome para o da sua próxima rota
+            return redirect(define_rota('/')) 
 
     except Exception as e:
         flash(f"Erro: {str(e)}", "danger")
-        return redirect(define_rota('/'))  # Altere o nome para o da sua próxima rota
+        return redirect(define_rota('/'))
+    
+@produtos.route('/payments')
+@login_required
+def payments_forms():
+    id_tabela = session.get('id_tabela')
+    
+    if not id_tabela:
+        flash("Erro: Nenhum ID de tabela encontrado na sessão.", "danger")
+        return redirect(define_rota('/'))
+    
+    produtoRoute = Produtos_Routes()
+
+    try:
+        produtos = produtoRoute.get_products_for_payments(id_tabela)
+        
+        if produtos:
+            return render_template('payments.html', produtos=produtos)
+        else:
+            flash("Nenhum produto encontrado para o pagamento.", "danger")
+            return redirect(define_rota('/'))
+
+    except Exception as e:
+        flash(f"Erro ao carregar os produtos: {str(e)}", "danger")
+        return redirect(define_rota('/'))
+
+@produtos.route('/submit_payment', methods=['POST'])
+@login_required
+def submit_payment():
+    id_tabela = session.get('id_tabela')
+
+    if not id_tabela:
+        flash("Erro: Nenhum ID de tabela encontrado na sessão.", "danger")
+        return redirect(define_rota('/'))
+    
+    forma_pgmt = request.form.get('forma-pagamento')
+
+    produtoRoute = Produtos_Routes()
+
+    try:
+        pagamento_concluído = produtoRoute.set_payment_cart(id_tabela, forma_pgmt)
+        
+        if pagamento_concluído:
+            flash("Compra Finalizada com Sucesso!", "success")
+            session['id_tabela'] = None
+            return redirect(define_rota('/'))
+        else:
+            flash("Erro ao finalizar compra!", "danger")
+            return redirect(define_rota('/'))
+
+    except Exception as e:
+        flash(f"Erro ao carregar os produtos: {str(e)}", "danger")
+        return redirect(define_rota('/'))
