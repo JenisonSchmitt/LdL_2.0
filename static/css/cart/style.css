@@ -117,6 +117,12 @@
     outline: none;
 }
 
+.list-group-item .text-body-secondary {
+  min-width: 15vh;
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
     .modal-dialog {
         max-width: 90%;
@@ -200,7 +206,9 @@
         margin-right: 7px;
         transform: scale(0.7);
     }
-
-
+    
+    .list-group-item .text-body-secondary {
+      min-width: 10vh;
+    }
 }
 

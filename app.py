@@ -4,6 +4,7 @@ from skincare_routes import Skincare_Routes
 from maquiagem_routes import Maquiagem_Routes
 from produtos_routes import produtos, Produtos_Routes
 from users_routes import users, Users_Routes
+from payments_routes import payments
 from login_required import login_required
 from conection import define_rota
 import logging
@@ -20,6 +21,7 @@ app = Flask(__name__, template_folder=template_dir)
 app.secret_key = os.urandom(24)
 app.register_blueprint(users)
 app.register_blueprint(produtos)
+app.register_blueprint(payments)
 
 @app.route("/")
 def index():

@@ -1,21 +1,21 @@
 .isotope-container .item {
-    width: 310px; /* Reduz o tamanho da largura do produto */
-    margin: 0 10px; /* Adiciona um espaço entre os produtos */
+    width: 310px;
+    margin: 0 10px; 
 }
 
 .isotope-container .item .card {
-    transform: scale(0.9); /* Reduz o tamanho do cartão para 90% */
-    transition: transform 0.3s ease; /* Adiciona uma transição suave */
+    transform: scale(0.9); 
+    transition: transform 0.3s ease; 
 }
 
 .isotope-container .item:hover .card {
-    transform: scale(1); /* Restaura o tamanho original ao passar o mouse */
+    transform: scale(1); 
 }
 
 .isotope-container .item .card img {
-    max-height: 250px; /* Reduz a altura máxima das imagens */
+    max-height: 250px; 
     min-height: 249px;
-    object-fit: cover; /* Mantém a proporção e preenche a área */
+    object-fit: cover; 
 }
 
 .isotope-container .item .card-body h3 {
@@ -31,32 +31,31 @@
 
 
 .isotope-container .item .card-text .rating {
-    font-size: 0.8rem; /* Ajusta o tamanho da avaliação */
+    font-size: 0.8rem; 
 }
 
 .isotope-container .item .card-text h3 {
-    font-size: 1.5rem; /* Ajusta o tamanho do preço */
+    font-size: 1.5rem; 
 }
 
 .isotope-container .item .d-flex .btn-cart {
-    font-size: 0.9rem; /* Ajusta o tamanho do texto no botão de carrinho */
+    font-size: 0.9rem; 
     margin-left: 15px;
 }
 
 .isotope-container .item .d-flex .btn-wishlist {
-    font-size: 1.2rem; /* Ajusta o tamanho do ícone de wishlist */
+    font-size: 1.2rem; 
 }
-
 
 @media (max-width: 768px) {
     .isotope-container .item {
-        max-width: 20vh; /* Reduz o tamanho da largura do produto */
-        margin: 20px 10px; /* Adiciona um espaço entre os produtos */
+        max-width: 45%; 
+        margin: 5px 5px;
     }
     .isotope-container .item .card img {
-        max-height: 200px; /* Reduz a altura máxima das imagens */
+        max-height: 200px;
         min-height: 199px;
-        object-fit: cover; /* Mantém a proporção e preenche a área */
+        object-fit: cover; 
     }
     .isotope-container .item .card-body h3 {
         min-height: 10vh;
@@ -75,13 +74,13 @@
 
 @media (max-width: 480px) {
     .isotope-container .item {
-        max-width: 20vh; /* Reduz o tamanho da largura do produto */
-        margin: 20px 10px; /* Adiciona um espaço entre os produtos */
+        max-width: 45%; 
+        margin: 5px 5px; 
     }
     .isotope-container .item .card img {
-        max-height: 200px; /* Reduz a altura máxima das imagens */
+        max-height: 200px; 
         min-height: 199px;
-        object-fit: cover; /* Mantém a proporção e preenche a área */
+        object-fit: cover; 
     }
     .isotope-container .item .card-body h3 {
         min-height: 10vh;

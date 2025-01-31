@@ -260,6 +260,10 @@ def continue_purchase():
             quantidade = request.form.get(f"quantidade_{produto_id}")
             valor_total = request.form.get(f"valor_total_{produto_id}")
             
+            # Converter valor_total para o formato correto
+            if valor_total:
+                valor_total = float(valor_total.replace(',', '.'))  # Transforma "75,60" em 75.60
+
             produtos.append({
                 "id_produto": produto_id,
                 "quantidade": quantidade,
@@ -268,7 +272,7 @@ def continue_purchase():
 
     produtoRoute = Produtos_Routes()
     
-    for produto in produtos:
+    for produto in produtos:        
         resultado = produtoRoute.save_first_data_cart(produto['id_produto'], produto['quantidade'], produto['valor_total'], email)
         
         if not resultado:
@@ -278,6 +282,7 @@ def continue_purchase():
         ids_gerados.append(resultado)
 
     return render_template("shipping-method.html", ids_gerados=ids_gerados)
+
 
 @produtos.route('/shipping-method', methods=['POST'])
 @login_required
@@ -332,34 +337,6 @@ def payments_forms():
             return render_template('payments.html', produtos=produtos)
         else:
             flash("Nenhum produto encontrado para o pagamento.", "danger")
-            return redirect(define_rota('/'))
-
-    except Exception as e:
-        flash(f"Erro ao carregar os produtos: {str(e)}", "danger")
-        return redirect(define_rota('/'))
-
-@produtos.route('/submit_payment', methods=['POST'])
-@login_required
-def submit_payment():
-    id_tabela = session.get('id_tabela')
-
-    if not id_tabela:
-        flash("Erro: Nenhum ID de tabela encontrado na sessão.", "danger")
-        return redirect(define_rota('/'))
-    
-    forma_pgmt = request.form.get('forma-pagamento')
-
-    produtoRoute = Produtos_Routes()
-
-    try:
-        pagamento_concluído = produtoRoute.set_payment_cart(id_tabela, forma_pgmt)
-        
-        if pagamento_concluído:
-            flash("Compra Finalizada com Sucesso!", "success")
-            session['id_tabela'] = None
-            return redirect(define_rota('/'))
-        else:
-            flash("Erro ao finalizar compra!", "danger")
             return redirect(define_rota('/'))
 
     except Exception as e:

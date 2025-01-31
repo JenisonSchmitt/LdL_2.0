@@ -10,7 +10,7 @@
         <h2 class="display-3 fw-normal">Pagamento</h2>
     </div>
 
-    <form action="/submit_payment" method="POST" class="row g-3 justify-content-center">
+    <form action="/make-payment" method="POST" class="row g-3 justify-content-center">
         <div id= "pagamento" class="div-row-div">
 
             <div class="col-12 mb-4 text-center">
@@ -25,7 +25,11 @@
                         {% for produto in produtos %}
                             <div class="d-flex align-items-center mb-3 w-100">
                                 <div class="col-2">
+                                    {% if produto.tipo_produto.decode('utf-8') == 'Skincare' %}
+                                    <img src="../static/images/skincare/{{ produto.nome_produto | replace(' ', '') | lower }}.png" class="img-fluid rounded-4" alt="imagem do produto">
+                                    {% else %}
                                     <img src="../static/images/maquiagem/{{ produto.nome_produto | replace(' ', '') | lower }}.png" class="img-fluid rounded-4" alt="imagem do produto">
+                                    {% endif %}
                                 </div>
                                 <div class="col-3">
                                     <h3 class="card-title pt-4 m-0">{{ produto.nome_produto }}</h3>
@@ -46,51 +50,51 @@
                         <h5 class="color-purple mb-4 font-weight-bold">Informações de envio</h5>
                         
                         <div class="row mt-3">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">Forma de envio:</label>
                                 <p class="form-control-plaintext">{{produtos[0].forma_envio.decode('utf-8')}}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">Valor do frete:</label>
                                 <p class="form-control-plaintext">{{produtos[0].valor_frete}}</p>
                             </div>
                         </div>
                 
                         <div class="row mt-3">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">CEP:</label>
                                 <p class="form-control-plaintext">{{produtos[0].cep.decode('utf-8')}}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">Rua:</label>
                                 <p class="form-control-plaintext">{{produtos[0].rua.decode('utf-8')}}</p>
                             </div>
                         </div>
                 
                         <div class="row mt-3">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">Número:</label>
                                 <p class="form-control-plaintext">{{produtos[0].numero.decode('utf-8')}}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">Complemento:</label>
                                 <p class="form-control-plaintext">{{produtos[0].complemento.decode('utf-8')}}</p>
                             </div>
                         </div>
                 
                         <div class="row mt-3">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">Bairro:</label>
                                 <p class="form-control-plaintext">{{produtos[0].bairro.decode('utf-8')}}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">Cidade:</label>
                                 <p class="form-control-plaintext">{{produtos[0].cidade.decode('utf-8')}}</p>
                             </div>
                         </div>
                 
                         <div class="row mt-3">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 col-6 mb-3">
                                 <label for="frete" class="form-label color-purple font-weight-semibold">Estado:</label>
                                 <p class="form-control-plaintext">{{produtos[0].estado.decode('utf-8')}}</p>
                             </div>
@@ -99,7 +103,7 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label for="valor-final" class="form-label color-purple font-weight-semibold">Valor Total:
-                                <input type="text" class="form-control text-center font-weight-bold" id="valor-final" name="valor-final" value="{{produtos[0].valor_total_compra}}" readonly></label>
+                                <input type="hidden" class="form-control text-center font-weight-bold" id="valor-final" name="valor-final" value="{{produtos[0].valor_total_compra}}" readonly></label>
                             </div>
                         </div>
                     </div>

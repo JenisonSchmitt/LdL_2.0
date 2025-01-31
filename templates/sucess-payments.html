@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Recuperação de Senha{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="../static/css/user/style.css">
+
+<section id="sucesso" class="my-5">
+    <div class="container text-center my-5 py-5">
+        <div class="card shadow-lg p-4 rounded bg-success bg-opacity-25" style="max-width: 500px; margin: 0 auto;">
+            <h1 style="color: green; font-size: 2rem;">Pagamento confirmado com Sucesso!</h1>
+            <p class="mt-3 fs-5 text-muted">Sua solicitação foi processada com sucesso.</p>
+            <p class="fs-5 text-muted">Você pode continuar navegando ou voltar à página inicial.</p>
+            <a href="/" class="btn btn-outline-dark mt-4 px-3 py-2 fs-5">Voltar para a Página Inicial</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

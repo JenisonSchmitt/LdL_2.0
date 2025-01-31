@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Erro na Recuperação{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="../static/css/user/style.css">
+
+<section id="erro" class="my-5">
+    <div class="container text-center my-5 py-5">
+        <div class="card shadow-lg p-4 rounded bg-danger bg-opacity-25" style="max-width: 500px; margin: 0 auto;">
+            <h1 style="color: red; font-size: 2rem;">ERRO!</h1>
+            <p class="mt-3 fs-5 text-muted">Ocorreu um erro ao processar sua solicitação.</p>
+            <p class="fs-5 text-muted">Tente novamente ou entre em contato com o suporte.</p>
+            <a href="/" class="btn btn-outline-dark mt-4 px-3 py-2 fs-5">Voltar para a Página Inicial</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

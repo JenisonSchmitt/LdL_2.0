@@ -138,6 +138,10 @@
   
   
   @media (max-width: 768px) {
+    .btn-secondary{
+        margin-right: 6%;
+    }
+      
     .img-wrapper {
       flex-direction: row; /* Alinha imagem e texto lado a lado */
       justify-content: center; /* Centraliza o conteúdo */
