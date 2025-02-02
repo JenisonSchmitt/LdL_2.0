@@ -59,7 +59,7 @@
                         <input type="hidden" name="quantidade_{{ product[0] }}" id="quantity_{{ product[0] }}" value="{{ product[7] }}" >
                         <input type="hidden" name="valor_total_{{ product[0] }}" id="valor_total_{{ product[0] }}" value="{{ product[3] * product[7] }}">
                         {% endfor %}
-                        <button type="submit" class="btn btn-primary px-4 pt-3 pb-3">Prosseguir Compra</button>
+                        <button type="submit" id="prosseguir-compra" class="btn btn-primary px-4 pt-3 pb-3">Prosseguir Compra</button>
                     </form><br><br>
                     <a href="/" class="btn btn-outline-dark px-1 pt-1 pb-1">Ver Mais</a>
                 </div>
@@ -75,5 +75,6 @@
 </section>
 <script src="../static/js/cart/details_cart.js"></script>
 <script src="../static/js/cart/format_values.js"></script>
+<script src="../static/js/cart/bloqueia_prosseguir_null.js"></script>
 
 {% endblock %}

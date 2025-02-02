@@ -15,7 +15,7 @@
                 <div class="col-md-6">
                     <label for="cep" class="form-label">Digite seu CEP:</label>
                     <div class="input-group">
-                        <input type="text" id="cep" name="cep" class="form-control" placeholder="00000-000" required>
+                        <input type="text" id="cep" name="cep" class="form-control" placeholder="00000-000" required maxlength="9">
                         <button class="btn btn-outline-secondary" type="button" id="cep-btn">
                             <iconify-icon icon="ic:outline-search"></iconify-icon>
                         </button>
@@ -46,10 +46,9 @@
                 <div style="max-width: 50vh; margin: auto;">
                     <label for="cep" id="shipping-options-label" class="form-label" style="display: none;">Informe a forma de envio:</label>
                     <select id="shipping-options" class="form-control" name="forma_envio" disabled required style="display: none;">
-                        <option>Selecione a forma de envio</option>
-                        <option value="100.00">Selecionar envio R$100,00</option>
-                        <option value="0.00">Combinar retirada (Tubarão/SC - Centro)</option>
+                        <option selected>Selecione a forma de envio</option>
                     </select>
+                    <input type="hidden" id="forma_envio_text" name="forma_envio_text">
                 </div>
             </div>        
             
@@ -85,10 +84,11 @@
         
             <div class="text-end">
                 <button id="btn-prosseguir" class="btn btn-primary px-4 pt-3 pb-3" type="submit" disabled>Prosseguir</button>
-                <a href="/cart" class="btn btn-outline-dark px-4 pt-3 pb-3">Voltar</a>
+                <a href="/" class="btn btn-outline-dark px-4 pt-3 pb-3">Voltar</a>
             </div>
         </form>
     </div>
 </section>
 <script src="../static/js/cart/shipping-method.js"></script>
+<script src="../static/js/shipping/shipping-method.js"></script>
 {% endblock %}

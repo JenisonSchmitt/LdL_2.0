@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect, flash, session, Blueprint
 import os
+import time
+from flask import Flask, render_template, request, redirect, flash, session, Blueprint
+from threading import Thread
 from skincare_routes import Skincare_Routes
 from maquiagem_routes import Maquiagem_Routes
 from produtos_routes import produtos, Produtos_Routes
@@ -7,6 +9,7 @@ from users_routes import users, Users_Routes
 from payments_routes import payments
 from login_required import login_required
 from conection import define_rota
+from shipping_routes import shipping
 import logging
 
 # logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
@@ -22,6 +25,7 @@ app.secret_key = os.urandom(24)
 app.register_blueprint(users)
 app.register_blueprint(produtos)
 app.register_blueprint(payments)
+app.register_blueprint(shipping)
 
 @app.route("/")
 def index():
@@ -82,5 +86,42 @@ def application(environ, start_response):
     start_response(status, headers)
     return [b"Meu app Python funcionando com WSGI!"]
 
+@app.route("/pedidos")
+@login_required
+def acessar_pedidos():
+    email = session['user_email']
+    
+    users_routes = Users_Routes()
+    
+    idUsuario = users_routes.getIdUserByEmail(email)
+    
+    idPagamentos = products.get_id_payment_for_user(idUsuario)
+    
+    return render_template("requested.html", idPagamentos = idPagamentos)
+
+def start_delete_task():
+    threadDB = Thread(target=delete_from_vendas_temporario)
+    threadDB.daemon = True 
+    threadDB.start()  
+    
+    threadLog = Thread(target=limpar_arquivo_log)
+    threadLog.daemon = True 
+    threadLog.start()  
+
+def delete_from_vendas_temporario():
+    while True:
+        products.delete_from_vendas_temporario()
+        time.sleep(43200)
+        
+def limpar_arquivo_log():
+    while True:
+        try:
+            with open('app.log', 'w') as arquivo:
+                pass
+        except Exception as e:
+            print(f"Erro ao limpar o arquivo 'app.log': {e}")
+        time.sleep(172800)
+
 if __name__ == "__main__":
+    start_delete_task()
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -107,7 +107,7 @@ class Produtos_Routes:
 
         query = """
             INSERT INTO vendas (id_produto, id_usuario, qtd_produto, dt_registro, valor_total_produto, temporario)
-            VALUES (%s, %s, %s, NOW(), %s, 1)
+            VALUES (%s, %s, %s, CONVERT_TZ(NOW(), '+00:00', '-03:00'), %s, 1)
         """
 
         try:
@@ -125,18 +125,18 @@ class Produtos_Routes:
             cursor.close()
             db.close()
     
-    def save_shipping_data(self, cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete, id_tabela):
+    def save_shipping_data(self, cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, transportadora, valor_total_compra, valor_frete, id_tabela):
         db = conectar_db()
         cursor = db.cursor()
         query = """
             UPDATE vendas 
-            SET cep = %s, rua = %s, bairro = %s, cidade = %s, estado = %s, numero = %s, complemento = %s, forma_envio = %s, 
-                valor_total_compra = %s, valor_frete = %s, dt_registro = NOW()
+            SET cep = %s, rua = %s, bairro = %s, cidade = %s, estado = %s, numero = %s, complemento = %s, forma_envio = %s, transportadora = %s,
+                valor_total_compra = %s, valor_frete = %s, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00')
             WHERE id = %s
         """
         try:
             for id in id_tabela:
-                cursor.execute(query, (cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete, id))
+                cursor.execute(query, (cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, transportadora, valor_total_compra, valor_frete, id))
             
             db.commit()
             return True
@@ -153,7 +153,7 @@ class Produtos_Routes:
         cursor = db.cursor()
 
         query = """
-            SELECT p.nome, p.tipo_produto, v.qtd_produto, v.forma_envio, v.cep, v.rua, v.bairro, v.cidade, v.estado, v.numero, v.complemento, v.valor_total_produto, v.valor_frete, v.valor_total_compra
+            SELECT p.nome, p.tipo_produto, v.qtd_produto, v.forma_envio, v.cep, v.rua, v.bairro, v.cidade, v.estado, v.numero, v.complemento, v.valor_total_produto, v.valor_frete, v.valor_total_compra, v.transportadora
             FROM vendas v
             JOIN produtos p ON v.id_produto = p.id
             WHERE v.id = %s
@@ -180,6 +180,7 @@ class Produtos_Routes:
                 valor_total_produto = produto[11]
                 valor_frete = produto[12]
                 valor_total_compra = produto[13]
+                transportadora = produto[14]
 
                 produto_decodificado = {
                     'nome_produto': nome_produto,
@@ -195,7 +196,8 @@ class Produtos_Routes:
                     'complemento': complemento,
                     'valor_total_produto': valor_total_produto,
                     'valor_frete': valor_frete,
-                    'valor_total_compra': valor_total_compra
+                    'valor_total_compra': valor_total_compra,
+                    'transportadora': transportadora
                 }
                 produtos_decodificados.append(produto_decodificado)
 
@@ -204,17 +206,17 @@ class Produtos_Routes:
 
         return produtos_decodificados
 
-    def set_payment_cart(self, id_tabela, forma_pgmt):
+    def set_payment_cart(self, id_tabela, forma_pgmt, id_pagamento):
         db = conectar_db()
         cursor = db.cursor()
         query = """
             UPDATE vendas
-            SET forma_pagamento = %s, temporario = 0, dt_registro = NOW()
+            SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s
             WHERE id = %s
         """
         try:
             for id in id_tabela:
-                cursor.execute(query, (forma_pgmt, id))
+                cursor.execute(query, (forma_pgmt, id_pagamento, id))
             
             db.commit()
             return True
@@ -225,6 +227,51 @@ class Produtos_Routes:
         finally:
             cursor.close()
             db.close()
+    
+    def get_id_payment_for_user(id_usuario):
+        db = conectar_db()
+        cursor = db.cursor()
+        
+        try:
+            query = """
+                SELECT v.id_pagamento, v.dt_registro, GROUP_CONCAT(p.nome SEPARATOR ', ') AS nomes_produtos, v.valor_total_compra, v.forma_pagamento, v.rua, v.numero, v.bairro, v.cidade, v.forma_envio
+                FROM vendas v
+                JOIN produtos p ON v.id_produto = p.id
+                WHERE v.id_usuario = %s AND temporario = 0
+                GROUP BY v.id_pagamento, v.dt_registro, v.valor_total_compra, v.forma_pagamento, v.rua, v.numero, v.bairro, v.cidade
+                ORDER BY v.dt_registro DESC
+            """
+            cursor.execute(query, (id_usuario,))
+            
+            resultados = cursor.fetchall()
+            
+            return resultados
+        except Exception as e:
+            print(f"Erro ao buscar IDs dos pagamentos: {e}")
+            return []
+        finally:
+            cursor.close()
+            db.close()
+            
+    def delete_from_vendas_temporario():
+        db = conectar_db()
+        cursor = db.cursor()
+        
+        try:
+            query = """
+                DELETE FROM vendas WHERE temporario = 1 AND id_pagamento = "" AND dt_registro <= DATE_SUB(CONVERT_TZ(NOW(), '+00:00', '-03:00'), INTERVAL 1 DAY);
+            """
+            cursor.execute(query)
+            db.commit() 
+            
+            return cursor.rowcount
+        except Exception as e:
+            db.rollback() 
+            print(f"Erro ao excluir vendas: {e}")
+            return 0 
+        finally:
+            cursor.close()
+            db.close()
 
 
 @produtos.route("/cart", methods=['POST'])
@@ -232,6 +279,9 @@ class Produtos_Routes:
 def cart():
     product_ids = json.loads(request.form['product_ids'])
     product_quantities = json.loads(request.form['product_quantities'])
+    
+    if not product_ids:
+        return render_template('cart.html', product_cart=[])
 
     produtoRouter = Produtos_Routes()
 
@@ -287,6 +337,8 @@ def continue_purchase():
 @produtos.route('/shipping-method', methods=['POST'])
 @login_required
 def shipping_method(): 
+    transportadora_texto = request.form.get('forma_envio_text')
+    transportadora = transportadora_texto.split(' - ')[0] + ' - ' + transportadora_texto.split(' - ')[1]
     id_tabela = request.form.getlist('id_tabela[]')
     cep = request.form.get('cep')
     rua = request.form.get('rua')
@@ -299,18 +351,18 @@ def shipping_method():
     valor_total_compra = request.form.get('final_total') 
     valor_frete = request.form.get('shipping_value')
 
-    if float(forma_envio) > 0:
+    if float(forma_envio.replace(',', '.')) > 0:
         forma_envio = "Envio"
     else:
         forma_envio = "Retirada"
 
     produtoRoute = Produtos_Routes()
     try:
-        resultado = produtoRoute.save_shipping_data(cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, valor_total_compra, valor_frete, id_tabela)
+        resultado = produtoRoute.save_shipping_data(cep, rua, bairro, cidade, estado, numero, complemento, forma_envio, transportadora, valor_total_compra, valor_frete, id_tabela)
         
         if resultado:
             session['id_tabela'] = id_tabela
-            return redirect(define_rota('/payments')) 
+            return redirect(define_rota('/payments#payments')) 
         else:
             flash("Houve um erro ao processar sua solicitação, tente novamente!", "danger")
             return redirect(define_rota('/')) 

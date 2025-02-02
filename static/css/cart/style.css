@@ -94,6 +94,13 @@
     max-width: 5vh;
 }
 
+.td-remove {
+    display: flex;           /* Ativa o Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    height: 100%;            /* Garante que ocupe toda a altura da célula */
+}
+
 .cart-align-qtd2::before {
     max-width: 5vh;
     content: "Quantidade";

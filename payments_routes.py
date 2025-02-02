@@ -6,9 +6,9 @@ from produtos_routes import Produtos_Routes
 
 payments = Blueprint('payments_routes', __name__)
 
+# mp = mercadopago.SDK("APP_USR-4600469553095867-013016-55bc599374c7634168cd16c281315305-2239560181")
 mp = mercadopago.SDK("TEST-4600469553095867-013016-8d645f3c4561f09c2f6a6b6e68ec5188-2239560181")
 SECRET_KEY = "5f98ab6376ab6a34b3a06211532f79caf05f32bb86d7d28405a6cb4b93b0793b"
-
 class Payments_Routes:
 
     @staticmethod
@@ -87,7 +87,7 @@ class Payments_Routes:
     
         produtoRoute = Produtos_Routes()
         
-        produtoRoute.set_payment_cart(id_tabela, payment_method)
+        produtoRoute.set_payment_cart(id_tabela, payment_method, payment_id)
         
         return render_template('sucess-payments.html', payment_method=payment_method)
 

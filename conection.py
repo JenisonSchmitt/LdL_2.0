@@ -11,7 +11,7 @@ def conectar_db():
         host="localhost",
         user="root",
         password="",
-        database="phpmyadmin"
+        database="lujinhadeluxo"
     )
 
 # def conectar_db():

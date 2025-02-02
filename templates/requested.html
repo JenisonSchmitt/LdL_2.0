@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Meus Pedidos{% endblock %}
+
+{% block content %}
+<section id="requested" class="my-5">
+    <div class="container my-5 py-5">
+        <h1 class="text-center mb-5 display-4 fw-bold">Meus Pedidos</h1>
+        <div class="row">
+            {% if idPagamentos %}
+                {% for id_pagamento in idPagamentos %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm p-4 rounded bg-white">
+                            <h3 class="card-title text-center mb-3">Pedido #{{ id_pagamento[0].decode('utf-8') }}</h3>
+                            <div class="card-body">
+                                <!-- Informações do Pedido -->
+                                <p class="card-text"><strong>Data:</strong> {{ id_pagamento[1].strftime('%d-%m-%Y %H:%M:%S') }}</p>
+                                <p class="card-text"><strong>Produtos:</strong> {{ id_pagamento[2].decode('utf-8') }}</p>
+                                <p class="card-text"><strong>Valor Total:</strong> R$ {{ id_pagamento[3]|string|replace('.', ',') }}</p> 
+                                <p class="card-text"><strong>Forma de Pagamento:</strong> {% if id_pagamento[4].decode('utf-8') == "credit_card" %}Cartão de Crédito {% else %}Outros{% endif %}</p>
+                                {% if id_pagamento[9].decode('utf-8') == 'Envio' %}
+                                <p class="card-text"><strong>Endereço de Entrega:</strong> {{ id_pagamento[5].decode('utf-8') }}, {{ id_pagamento[6].decode('utf-8') }}, {{ id_pagamento[7].decode('utf-8') }}, {{ id_pagamento[8].decode('utf-8') }}</p>
+                                {% else %}
+                                <p class="card-text"><strong>Produtos a ser Retirado no local designado!</strong></p>
+                                {% endif %}
+                                <a href="https://api.whatsapp.com/send?phone=48991383245&text=Ol%C3%A1,%20preciso%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20pedido%20{{ id_pagamento[0].decode('utf-8') }}" class="btn btn-outline-primary w-100 mt-3">Solicitar Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-info" role="alert">
+                        Nenhum pedido encontrado.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

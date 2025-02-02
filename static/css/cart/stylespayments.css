@@ -60,7 +60,7 @@
 }
 
 .max-width-div {
-    max-width: 40vh;
+    max-width: 50%;
 }
 
 .div-row-div {
@@ -85,90 +85,16 @@
 
 
 @media (max-width: 768px) {
-    .img-fluid {
-        max-width: 50px;
-    }
-
-    #pagamento h2 {
-        font-size: 2rem; 
-    }
-
-    #pagamento h4.color-pink {
-        font-size: 1.2rem; 
-    }
-
-    #produtos .card-title {
-        font-size: 1rem;
-    }
-
-    #produtos h3.secondary-font {
-        font-size: 0.9rem;
-    }
-
-    #produtos h3.pt-4 {
-        font-size: 0.8rem; 
-    }
-
-    #produtos h3.text-primary {
-        font-size: 0.9rem; 
-    }
-
-    #pagamento .form-label {
-        font-size: 0.8rem;
-    }
-
-    #pagamento .form-control {
-        font-size: 0.8rem; 
-    }
-
-    #pagamento .btn {
-        font-size: 0.9rem;
-    }
-
-    #pagamento .col-12.text-center button {
-        font-size: 0.9rem; 
-    }
-
-    .div-row-div {
-        display: block;
-        padding: 15px;
-    }
-
     .max-width-div {
-        max-width: 100%;
-        min-height: 100vh;
+        max-width: 99%;
     }
 
-    #produtos img {
-        max-width: 50px;
-        margin-right: 10px;
+    .margin-top-mobile {
+        margin-top: 5vh;
+    }
+    #produtos {
+        overflow: hidden; /* Evita que os produtos transbordem */
+        transition: min-height 0.3s ease; /* Adiciona uma transição suave */
     }
 
-    #produtos .isotope-container {
-        display: block;
-    }
-
-    #produtos .d-flex {
-        justify-content: flex-start;
-    }
-
-    #produtos .d-flex > div {
-        margin-bottom: 10px;
-    }
-
-    .col-md-4 {
-        max-width: 100%;
-        margin-bottom: 15px;
-    }
-
-    .form-control, .form-label {
-        width: 100%;
-    }
-
-    .margin-top-mobile{
-        margin-top:20%
-    }
-    
 }
-
-
