@@ -7,35 +7,12 @@ class Skincare_Routes:
         db = conectar_db()
         cursor = db.cursor()
 
-        query = "SELECT id, nome, valor, tipo_produto, imagem FROM produtos WHERE tipo_produto = 'Skincare' ORDER BY nome ASC LIMIT 8"
-        cursor.execute(query)
-        
-        produtos = cursor.fetchall()
-        cursor.close()
-        db.close()
-
-        produtos_decodificados = []
-        for produto in produtos:
-            id_produto = produto[0]
-            nome_produto = produto[1].decode('utf-8') if isinstance(produto[1], bytearray) else produto[1]
-            valor_produto = produto[2].decode('utf-8') if isinstance(produto[2], bytearray) else produto[2]
-            tipo_produto = produto[3].decode('utf-8') if isinstance(produto[3], bytearray) else produto[3]
-            imagem_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
-
-            produtos_decodificados.append((id_produto, nome_produto, valor_produto, imagem_produto))
-        
-        return produtos_decodificados
-        
-    def obter_produtos_skincare():
-        db = conectar_db()
-        cursor = db.cursor()
-
-        query = """
-            SELECT p.id, p.nome, p.valor, tp.nome, p.imagem AS tipo
-            FROM produtos p
-            INNER JOIN tipo_produtos tp ON p.tipo = tp.id
-            WHERE tp.categoria = 'Skincare' AND p.tipo_produto = 'Skincare'
-            ORDER BY p.nome ASC
+        query = """SELECT p.id, p.nome, p.valor, p.tipo_produto, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida
+        FROM produtos p LEFT JOIN vendas v ON p.id = v.id_produto
+        WHERE p.tipo_produto = 'Skincare' AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+        GROUP BY p.id
+        ORDER BY v.qtd_produto DESC
+        LIMIT 8;
         """
         cursor.execute(query)
         
@@ -50,8 +27,44 @@ class Skincare_Routes:
             valor_produto = produto[2].decode('utf-8') if isinstance(produto[2], bytearray) else produto[2]
             tipo_produto = produto[3].decode('utf-8') if isinstance(produto[3], bytearray) else produto[3]
             imagem_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
+            qtd_comprada = produto[5]
+            qtd_vendida = produto[6]
 
-            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto))
+            produtos_decodificados.append((id_produto, nome_produto, valor_produto, imagem_produto, qtd_comprada, qtd_vendida))
+        
+        return produtos_decodificados
+        
+    def obter_produtos_skincare():
+        db = conectar_db()
+        cursor = db.cursor()
+
+        query = """
+            SELECT p.id, p.nome, p.valor, tp.nome, p.imagem AS tipo, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida 
+            FROM produtos p 
+            LEFT JOIN vendas v ON p.id = v.id_produto 
+            INNER JOIN tipo_produtos tp ON p.tipo = tp.id 
+            WHERE tp.categoria = 'Skincare' AND p.tipo_produto = 'Skincare' AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+            GROUP BY p.id
+            ORDER BY p.nome ASC;
+        """
+        
+        cursor.execute(query)
+        
+        produtos = cursor.fetchall()
+        cursor.close()
+        db.close()
+
+        produtos_decodificados = []
+        for produto in produtos:
+            id_produto = produto[0]
+            nome_produto = produto[1].decode('utf-8') if isinstance(produto[1], bytearray) else produto[1]
+            valor_produto = produto[2].decode('utf-8') if isinstance(produto[2], bytearray) else produto[2]
+            tipo_produto = produto[3].decode('utf-8') if isinstance(produto[3], bytearray) else produto[3]
+            imagem_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
+            qtd_comprada = produto[5]
+            qtd_vendida = produto[6]
+
+            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto, qtd_comprada, qtd_vendida))
         
         return produtos_decodificados
     

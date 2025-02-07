@@ -1,6 +1,7 @@
 from conection import conectar_db, define_rota
 from flask import flash, Blueprint, request, redirect, session, render_template, url_for
 from login_required import login_required
+from decimal import Decimal
 import json
 from users_routes import Users_Routes
 
@@ -14,8 +15,15 @@ class Produtos_Routes:
     def obter_produtos():
         db = conectar_db()
         cursor = db.cursor()
-
-        query = "SELECT id, nome, valor, tipo_produto, imagem FROM produtos WHERE dt_cadastro >= '2025-01-01 00:00:00' ORDER BY dt_cadastro DESC LIMIT 8"
+        
+        query = """SELECT p.id, p.nome, p.valor, p.tipo_produto, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida
+        FROM produtos p LEFT JOIN vendas v ON p.id = v.id_produto
+        WHERE p.dt_cadastro >= '2025-01-01 00:00:00' AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+        GROUP BY p.id
+        ORDER BY p.dt_cadastro DESC
+        LIMIT 8;
+        """
+        
         cursor.execute(query)
         
         produtos = cursor.fetchall()
@@ -29,8 +37,10 @@ class Produtos_Routes:
             valor_produto = produto[2].decode('utf-8') if isinstance(produto[2], bytearray) else produto[2]
             tipo_produto = produto[3].decode('utf-8') if isinstance(produto[3], bytearray) else produto[3]
             imagem_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
+            qtd_comprada = produto[5]
+            qtd_vendida = produto[6]
 
-            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto))
+            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto, qtd_comprada, qtd_vendida))
         
         return produtos_decodificados
     
@@ -39,7 +49,12 @@ class Produtos_Routes:
         cursor = db.cursor()
         id = int(id)
 
-        query = "SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem FROM produtos p INNER JOIN tipo_produtos tp ON p.tipo = tp.id WHERE p.id = %s"
+        query = """SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida 
+        FROM produtos p 
+        LEFT JOIN vendas v ON p.id = v.id_produto 
+        INNER JOIN tipo_produtos tp ON p.tipo = tp.id 
+        WHERE p.id = %s AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL"""
+        
         cursor.execute(query, (id,))
 
         produtos = cursor.fetchall()
@@ -55,7 +70,10 @@ class Produtos_Routes:
             tipo_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
             tipo_produtos = produto[5].decode('utf-8') if isinstance(produto[5], bytearray) else produto[5]
             imagem_produto = produto[6].decode('utf-8') if isinstance(produto[6], bytearray) else produto[6]
-            produtos_decodificados.append((id_produto, nome_produto, descricao_produto, valor_produto, tipo_produto, tipo_produtos, imagem_produto))
+            qtd_comprada = produto[7]
+            qtd_vendida = produto[8]
+            
+            produtos_decodificados.append((id_produto, nome_produto, descricao_produto, valor_produto, tipo_produto, tipo_produtos, imagem_produto, qtd_comprada, qtd_vendida))
 
         return produtos_decodificados
     
@@ -67,10 +85,12 @@ class Produtos_Routes:
         placeholders = ', '.join(['%s'] * len(product_ids))
 
         query = f"""
-            SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem 
+            SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida 
             FROM produtos p 
+            LEFT JOIN vendas v ON p.id = v.id_produto 
             INNER JOIN tipo_produtos tp ON p.tipo = tp.id 
-            WHERE p.id IN ({placeholders})
+            WHERE p.id IN ({placeholders}) AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+            GROUP BY p.id;
         """
         cursor.execute(query, product_ids)
 
@@ -87,10 +107,11 @@ class Produtos_Routes:
             tipo_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
             tipo_produtos = produto[5].decode('utf-8') if isinstance(produto[5], bytearray) else produto[5]
             imagem_produto = produto[6].decode('utf-8') if isinstance(produto[6], bytearray) else produto[6]
+            qtd_disponivel = Decimal(produto[7]) - Decimal(produto[8])
 
             produtos_decodificados.append((
                 id_produto, nome_produto, descricao_produto, valor_produto, 
-                tipo_produto, tipo_produtos, imagem_produto
+                tipo_produto, tipo_produtos, imagem_produto, qtd_disponivel
             ))
 
         return produtos_decodificados
@@ -211,7 +232,29 @@ class Produtos_Routes:
         cursor = db.cursor()
         query = """
             UPDATE vendas
-            SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s
+            SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s, obs = 'OK'
+            WHERE id = %s
+        """
+        try:
+            for id in id_tabela:
+                cursor.execute(query, (forma_pgmt, id_pagamento, id))
+            
+            db.commit()
+            return True
+        except Exception as e:
+            db.rollback()
+            print(f"Erro ao salvar no banco: {e}")
+            return False
+        finally:
+            cursor.close()
+            db.close()
+            
+    def set_payment_pix(self, id_tabela, forma_pgmt, id_pagamento):
+        db = conectar_db()
+        cursor = db.cursor()
+        query = """
+            UPDATE vendas
+            SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s, obs = 'pendente'
             WHERE id = %s
         """
         try:
@@ -259,7 +302,7 @@ class Produtos_Routes:
         
         try:
             query = """
-                DELETE FROM vendas WHERE temporario = 1 AND id_pagamento = "" AND dt_registro <= DATE_SUB(CONVERT_TZ(NOW(), '+00:00', '-03:00'), INTERVAL 1 DAY);
+                DELETE FROM vendas WHERE temporario = 1 AND id_pagamento IS NULL AND dt_registro <= DATE_SUB(CONVERT_TZ(NOW(), '+00:00', '-03:00'), INTERVAL 1 DAY) AND obs IS NULL;
             """
             cursor.execute(query)
             db.commit() 
@@ -272,6 +315,49 @@ class Produtos_Routes:
         finally:
             cursor.close()
             db.close()
+            
+    def avise_me_quando_chegar(self, email, id_produto):
+        db = conectar_db()
+        cursor = db.cursor()
+    
+        idUser = usersRoutes.getIdUserByEmail(email)
+    
+        if idUser is None:
+            return False, None 
+    
+        query_tipo_produto = "SELECT tipo_produto FROM produtos WHERE id = %s"
+        
+        try:
+            cursor.execute(query_tipo_produto, (id_produto,))
+            tipo_produto = cursor.fetchone()
+            
+            if tipo_produto is None:
+                return False, None 
+            
+            tipo_produto = tipo_produto[0]  
+    
+
+            query_insert = """
+                INSERT INTO avise_quando_chegar (id_produto, id_usuario, dt_solicitacao)
+                VALUES (%s, %s, CONVERT_TZ(NOW(), '+00:00', '-03:00'))
+            """
+            
+            cursor.execute(query_insert, (id_produto, idUser))
+            db.commit()
+            
+            return True, tipo_produto
+            
+        except Exception as e:
+            db.rollback()
+            print(f"Erro ao salvar no banco: {e}")
+            return False, None  
+            
+        finally:
+            cursor.close()
+            db.close()
+
+
+        
 
 
 @produtos.route("/cart", methods=['POST'])
@@ -394,3 +480,29 @@ def payments_forms():
     except Exception as e:
         flash(f"Erro ao carregar os produtos: {str(e)}", "danger")
         return redirect(define_rota('/'))
+        
+@produtos.route('/avise/<int:id>')
+@login_required
+def avise_me(id):
+    email = session.get('user_email')
+    id_produto = id
+    
+    produtoRoute = Produtos_Routes()
+    
+    if not email:
+        flash("Erro: Nenhum Email encontrado na sessão.", "danger")
+        return redirect(define_rota('/'))
+    
+    sucesso, tipo_produto = produtoRoute.avise_me_quando_chegar(email, id_produto)
+    
+    if not sucesso:
+        flash("Erro: Algo deu errado ao tentar registrar o aviso.", "danger")
+        return redirect(define_rota('/'))
+    
+    flash("Você será avisado quando o produto estiver disponível.", "success")
+
+    if tipo_produto == "Maquiagem":
+        return redirect(define_rota('/maquiagem'))
+    else:
+        return redirect(define_rota('/skincare'))
+
