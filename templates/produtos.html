@@ -8,7 +8,7 @@
     <div class="container my-5 py-5">
 
         <div class="section-header d-md-flex justify-content-between align-items-center">
-            <h2 class="display-3 fw-normal">Maquiagens</h2>
+            <h2 class="display-3 fw-normal">Produtos</h2>
             <div class="mb-4 mb-md-0">
                 <p class="m-0">
                     {% for produtos in produtos %}
@@ -20,8 +20,8 @@
 
         <div class="isotope-container row">
             {% for produtos in produtos %}
+            {% if (produtos[7] - produtos[8]) > 0 %}
             <div class="item {{produtos[5]}}">
-
                 <div class="card position-relative d-flex">
                     <div class="row w-100">
                         <div class="col-md-6">
@@ -37,13 +37,88 @@
                         </div>
                         <div class="col-md-6 card-body">
                             <a style="text-align: left;">
-                                <h3 class="card-title pt-4 m-0 color-text">{{ produtos[1] }}</h3><br>
+                                <h3 class="card-title pt-4 m-0 color-text text-product-mobile">{{ produtos[1] }}</h3><br>
                             </a>
                             <div class="col-md-12 mt-3" style="text-align: left;">
-                                <h3>{{produtos[2]}}</h3><br>
+                                <h3 class="text-product-mobile">{{produtos[2]}}</h3><br>
                             </div>
                             <div class="card-text">
+                                <h3 class="secondary-font text-primary" style="text-align: left;">R$ {{produtos[3]}}</h3><br>
+                                <div style="text-align: left;">
+                                    <span class="rating secondary-font">
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                        5.0</span>
+                                </div><br>
+                                {% if produtos[9] %}
+                                <div class="variacoes-produto mt-4">
+                                    <h5 class="text-primary">Variações:</h5>
+                                    <select class="form-select" required onchange="updateProductNameAndId('{{ produtos[0] }}', this)">
+                                        <option value="0" selected>Selecione uma Opção</option>
+                                        {% for variacao in produtos[9] %}
+                                        <option value="{{ variacao[1] }}-{{ variacao[0] }}">{{ variacao[0] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div><br><br>
+                                
+                                <div id="carrinhoVariacao">
+                                    <div class="d-flex" style="justify-content: center; margin: auto;">
+                                        <a href="javascript:void(0);" class="btn-cart me-3 px-4 pt-3 pb-3" data-id="" data-name="{{ produtos[1] }}" data-price="{{ produtos[3] }}" id="addToCart-{{ produtos[0] }}">
+                                            <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                                        </a>
+                                        <a id="add-favorite" data-id="{{ produtos[0] }}" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 40px;">
+                                    <button onclick="window.history.back()" class="btn btn-primary px-4 py-2">Voltar</button>
+                                </div>
+                                {% else %}
+                                <div class="d-flex" style="justify-content: center; margin: auto;">
+                                    <a class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ produtos[0] }}" data-name="{{ produtos[1] }}" data-price="{{ produtos[3] }}">
+                                        <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                                    </a>
+                                    <a id="add-favorite" data-id="{{ produtos[0] }}" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                                </div>
+                                <div style="text-align: center; margin-top: 40px;">
+                                    <button onclick="window.history.back()" class="btn btn-primary px-4 py-2">Voltar</button>
+                                </div>
+                                {% endif %}
 
+                            </div>
+                            <div id="popup" class="popup-container">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="item {{produtos[5]}}">
+                <div class="card position-relative d-flex">
+                    <div class="row w-100">
+                        <div class="col-md-6">
+                            <a>
+                            {% if produtos[4] == "Maquiagem" %}
+                            <img src="../static/images/maquiagem/{{ produtos[1]|lower|replace(' ', '') }}.png"
+                                    class="img-fluid-products rounded-4 filter-product" alt="image">
+                            {% else %}
+                            <img src="../static/images/skincare/{{ produtos[1]|lower|replace(' ', '') }}.png"
+                                    class="img-fluid rounded-4 filter-product" alt="image">
+                            {% endif %}
+                            <div class="esgotado-text-product">Esgotado</div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 card-body">
+                            <a style="text-align: left;">
+                                <h3 class="card-title pt-4 m-0 color-text text-product-mobile">{{ produtos[1] }}</h3><br>
+                            </a>
+                            <div class="col-md-12 mt-3" style="text-align: left;">
+                                <h3 class="text-product-mobile">{{produtos[2]}}</h3><br>
+                            </div>
+                            <div class="card-text">
                                 <h3 class="secondary-font text-primary" style="text-align: left;">R$ {{produtos[3]}}</h3><br>
                                 <div style="text-align: left;">
                                     <span class="rating secondary-font">
@@ -55,20 +130,29 @@
                                         5.0</span>
                                 </div><br>
                                 <div class="d-flex" style="justify-content: center; margin: auto;">
-                                    <a class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ produtos[0] }}"
-                                        data-name="{{ produtos[1] }}" data-price="{{ produtos[3] }}">
-                                        <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                                    <a href="#" class="btn-avise me-3 px-4 pt-3 pb-3" data-id="{{ produtos[0] }}">
+                                        <h5 class="text-uppercase m-0">Avise-me</h5>
                                     </a>
-                                    <a class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled"
+                                    <a id="add-favorite" data-id="{{ produtos[0] }}" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled"
                                             class="fs-5"></iconify-icon></a>
                                 </div>
+                            </div>
+                            <div style="text-align: center; margin-top: 40px;">
+                                <button onclick="window.history.back()" class="btn btn-primary px-4 py-2">Voltar</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>        
     </div>
 </section>
+{% for produtos in produtos %}
+{% if produtos[9] %}
+<script src="../static/js/cart/variations_cart.js"></script>
+{% endif %}
+{% endfor %}
+
 {% endblock %}

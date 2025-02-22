@@ -1,0 +1,251 @@
+{% extends "admin/templates/baseAdmin.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <main class="tm-main">    
+            <div id="estatisticas" class="row tm-row container-fluid-dados">
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Estatísticas</h2>
+                
+                <article class="col-12 col-md-6 tm-post2">
+                    <hr class="tm-hr-primary">
+                    <h2 class="tm-pt-30 tm-color-primary tm-post-title">Vendas Últimos 7 dias</h2>
+                    <p class="estatistica-numero vendas">{{ vendas_ultimos_7_dias }}</p>
+                    <hr>
+                </article>
+            
+                <article class="col-12 col-md-6 tm-post2">
+                    <hr class="tm-hr-primary">
+                    <h2 class="tm-pt-30 tm-color-primary tm-post-title">Faturamento Últimos 7 dias</h2>
+                    <p class="estatistica-numero">{{ faturamento_ultimos_7_dias }}</p>
+                    <hr>
+                </article>
+            
+                <article class="col-12 col-md-6 tm-post2">
+                    <hr class="tm-hr-primary">
+                    <h2 class="tm-pt-30 tm-color-primary tm-post-title">Vendas totais</h2>
+                    <p class="estatistica-numero vendas">{{ vendas_totais }}</p>
+                    <hr>
+                </article>
+            
+                <article class="col-12 col-md-6 tm-post2">
+                    <hr class="tm-hr-primary">
+                    <h2 class="tm-pt-30 tm-color-primary tm-post-title">Faturamento Total</h2>
+                    <p class="estatistica-numero">{{ faturamento_total }}</p>
+                    <hr>
+                </article>
+            </div>
+            
+            <div id="vendas" class="row tm-row container-fluid-dados">
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Vendas</h2>
+
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/cadastrar-venda" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Vendas</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Área para realizar o cadastro de uma nova Venda
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/todas-as-vendas" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Todas as Vendas</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Verificar todas as vendas já executadas
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/vendas-por-cpf" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Vendas Por CPF</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Verificar todas as vendas já executadas por um CPF específico
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/gerar-os" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Gerar Ordem de Serviço</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Área para realizar a Ordem de Serviço
+                    </p>
+                    <hr>
+                </article>
+            </div>
+            <div id="produtos" class="row tm-row container-fluid-dados">
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Produtos</h2>
+
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/cadastrar-produto" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Produtos</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Área para realizar o cadastro de um novo produto
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/adicionar-produtos" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Adicionar Produtos</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Adicione novas quantidade compradas de produtos já existentes
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/todos-os-produtos" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Todos os Produtos</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Veja todas as informações sobre todos os produtos
+                    </p>
+                    <hr>
+                </article>
+            </div>
+            <div id="site" class="row tm-row container-fluid-dados">
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Site</h2>
+
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/cliques-venda-site" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cliques Venda Site</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Área para realizar o cadastro de um novo produto
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/alterar-produto-site" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Alterar Produto Site</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Adicione novas quantidade compradas de produtos já existentes
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/avisar-quando-chegar" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Avisar Quando Chegar</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Veja todas as informações sobre todos os produtos
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/cadastrar-cupom-desconto" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Cupom de Desconto</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Adicione novas quantidade compradas de produtos já existentes
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/excluir-cupom-desconto" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Excluir Cupom de Desconto</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Veja todas as informações sobre todos os produtos
+                    </p>
+                    <hr>
+                </article>
+            </div>
+            <div id="clientes" class="row tm-row container-fluid-dados">
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Clientes</h2>
+
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/cadastrar-cliente" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Cliente</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Área para realizar o cadastro de um novo cliente
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/todos-os-clientes" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Todos os Clientes</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Veja todos os clientes cadastrados
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/aniversariantes" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Aniversariantes da Semana</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Veja todos os Aniversariantes da Semana
+                    </p>
+                    <hr>
+                </article>
+            </div>
+        </main>
+    </div>
+{% endblock %}

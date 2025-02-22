@@ -10,6 +10,9 @@ from payments_routes import payments
 from login_required import login_required
 from conection import define_rota
 from shipping_routes import shipping
+from search_routes import search
+from favorites_routes import favorites
+from admin_routes import admin_bp
 import logging
 
 # logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
@@ -20,12 +23,15 @@ maquiagemproducts = Maquiagem_Routes
 products = Produtos_Routes
 
 template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
-app = Flask(__name__, template_folder=template_dir)
+app = Flask(__name__, template_folder=template_dir, static_folder='static')
 app.secret_key = os.urandom(24)
 app.register_blueprint(users)
 app.register_blueprint(produtos)
 app.register_blueprint(payments)
 app.register_blueprint(shipping)
+app.register_blueprint(search)
+app.register_blueprint(favorites)
+app.register_blueprint(admin_bp)
 
 @app.route("/")
 def index():
@@ -98,6 +104,10 @@ def acessar_pedidos():
     idPagamentos = products.get_id_payment_for_user(idUsuario)
     
     return render_template("requested.html", idPagamentos = idPagamentos)
+    
+@app.route("/about-us")
+def about_us():
+    return render_template("about-us.html")
 
 def start_delete_task():
     threadDB = Thread(target=delete_from_vendas_temporario)
@@ -116,7 +126,7 @@ def delete_from_vendas_temporario():
 def limpar_arquivo_log():
     while True:
         try:
-            with open('app.log', 'w') as arquivo:
+            with open('/home/u228502032/domains/testeecommerce.shop/public_html/app.log', 'w') as arquivo:
                 pass
         except Exception as e:
             print(f"Erro ao limpar o arquivo 'app.log': {e}")

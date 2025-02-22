@@ -48,6 +48,7 @@
       <div class="products-carousel swiper">
         <div class="swiper-wrapper">
           {% for skincare in skincare %}
+          {% if (skincare[4] - skincare[5]) > 0 %}
           <div class="swiper-slide">
             <div class="card position-relative">
               <a href="/produtos/{{skincare[0]}}#produto"><img src="../static/images/skincare/{{ skincare[1]|lower|replace(' ', '') }}.png" class="img-fluid rounded-4" alt="image"></a>
@@ -62,16 +63,52 @@
                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                     5.0</span>
                   <h3 class="secondary-font text-primary">R$ {{ skincare[2] }}</h3>
+                  {% if skincare[6] is none %}
                   <div class="d-flex flex-wrap mt-3">
                     <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ skincare[0] }}" data-name="{{ skincare[1] }}" data-price="{{ skincare[2] }}">
                       <h5 class="text-uppercase m-0">+ Carrinho</h5>
                     </a>
-                    <a href="#" class="btn-wishlist px-4 pt-3"><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                    <a  id="add-favorite" data-id="{{ skincare[0] }}"  class="btn-wishlist px-4 pt-3"><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                  {% else %}
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="/produtos/{{skincare[0]}}#produto" class="btn-cart2 me-3 px-4 pt-3 pb-3">
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a  id="add-favorite" data-id="{{ skincare[0] }}"  class="btn-wishlist px-4 pt-3"><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="/produtos/{{skincare[0]}}#produto"><img src="../static/images/skincare/{{ skincare[1]|lower|replace(' ', '') }}.png" class="img-fluid rounded-4 filter-product" alt="image"></a>
+              <div class="card-body p-0">
+                <div class="esgotado-text">Esgotado</div>
+                <a href="/produtos/{{skincare[0]}}#produto"><h3 class="card-title pt-4 m-0">{{ skincare[1] }}</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">R$ {{ skincare[2] }}</h3>
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-avise me-3 px-4 pt-3 pb-3">
+                        <h5 class="text-uppercase m-0">Avise-me</h5>
+                    </a>
+                    <a  id="add-favorite" data-id="{{ skincare[0] }}"  class="btn-wishlist px-4 pt-3"><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
       </div>
@@ -93,6 +130,40 @@
       <div class="products-carousel swiper">
         <div class="swiper-wrapper">
           {% for maquiagem in maquiagem %}
+          {% if (maquiagem[4] - maquiagem[5]) > 0 %}
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              <a href="/produtos/{{maquiagem[0]}}#produto"><img src="../static/images/maquiagem/{{ maquiagem[1]|lower|replace(' ', '') }}.png" class="img-fluid rounded-4" alt="image"></a>
+              <div class="card-body p-0"><a href="/produtos/{{maquiagem[0]}}#produto"> <h3 class="card-title pt-4 m-0">{{ maquiagem[1] }}</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">R$ {{ maquiagem[2] }}</h3>
+                  {% if maquiagem[6] is none %}
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ maquiagem[0] }}" data-name="{{ maquiagem[1] }}" data-price="{{ maquiagem[2] }}">
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a  id="add-favorite" data-id="{{ maquiagem[0] }}"  class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                  {% else %}
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="/produtos/{{maquiagem[0]}}#produto" class="btn-cart2 me-3 px-4 pt-3 pb-3">
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a  id="add-favorite" data-id="{{ maquiagem[0] }}"  class="btn-wishlist px-4 pt-3"><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
           <div class="swiper-slide">
             <div class="card position-relative">
               <a href="/produtos/{{maquiagem[0]}}#produto"><img src="../static/images/maquiagem/{{ maquiagem[1]|lower|replace(' ', '') }}.png" class="img-fluid rounded-4" alt="image"></a>
@@ -110,12 +181,13 @@
                     <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ maquiagem[0] }}" data-name="{{ maquiagem[1] }}" data-price="{{ maquiagem[2] }}">
                       <h5 class="text-uppercase m-0">+ Carrinho</h5>
                     </a>
-                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                    <a  id="add-favorite" data-id="{{ maquiagem[0] }}"  class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
       </div>
@@ -131,6 +203,44 @@
       <div class="products-carousel swiper">
         <div class="swiper-wrapper">
           {% for novidades in novidades %}
+          {% if (novidades[5] - novidades[6]) > 0 %}
+          <div class="swiper-slide">
+            <div class="card position-relative">
+              {% if novidades[3] == "Skincare" %}
+              <a href="/produtos/{{novidades[0]}}#produto"><img src="../static/images/skincare/{{ novidades[1]|lower|replace(' ', '') }}.png" class="img-fluid rounded-4" alt="image"></a>
+              {% else %}
+              <a href="/produtos/{{novidades[0]}}#produto"><img src="../static/images/maquiagem/{{ novidades[1]|lower|replace(' ', '') }}.png" class="img-fluid rounded-4" alt="image"></a>
+              {% endif %}
+              <div class="card-body p-0"><a href="/produtos/{{novidades[0]}}#produto"> <h3 class="card-title pt-4 m-0">{{ novidades[1] }}</h3></a>
+                <div class="card-text">
+                  <span class="rating secondary-font">
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                    5.0</span>
+                  <h3 class="secondary-font text-primary">R$ {{ novidades[2] }}</h3>
+                  {% if novidades[7] is none %}
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ novidades[0] }}" data-name="{{ novidades[1] }}" data-price="{{ novidades[2] }}">
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a id="add-favorite" data-id="{{ novidades[0] }}"  class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                  {% else %}
+                  <div class="d-flex flex-wrap mt-3">
+                    <a href="/produtos/{{novidades[0]}}#produto" class="btn-cart2 me-3 px-4 pt-3 pb-3">
+                      <h5 class="text-uppercase m-0">+ Carrinho</h5>
+                    </a>
+                    <a id="add-favorite" data-id="{{ novidades[0] }}"  class="btn-wishlist px-4 pt-3"><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
           <div class="swiper-slide">
             <div class="card position-relative">
               {% if novidades[3] == "Skincare" %}
@@ -152,12 +262,13 @@
                     <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3" data-id="{{ novidades[0] }}" data-name="{{ novidades[1] }}" data-price="{{ novidades[2] }}">
                       <h5 class="text-uppercase m-0">+ Carrinho</h5>
                     </a>
-                    <a href="#" class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
+                    <a id="add-favorite" data-id="{{ novidades[0] }}"  class="btn-wishlist px-4 pt-3 "><iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon></a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
       </div>
@@ -181,7 +292,7 @@
       </div>
     </div>
   </section>
-  <section id="register" style="background: url('images/background-img.png') no-repeat;">
+  <section id="register">
     <div class="container ">
       <div class="row my-5 py-5">
         <div class="offset-md-3 col-md-6 my-5 ">

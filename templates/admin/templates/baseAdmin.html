@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="imagex/png" href="{{ url_for('static', filename='/staticAdmin/images/geral/icone.ico') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDL - Administrativo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}"> 
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/staticAdmin/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/staticAdmin/css/templatemo-xtra-blog.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/staticAdmin/css/estatisticas.css') }}">
+</head>
+<body>
+    <header class="tm-header" id="tm-header">
+        <div class="tm-header-wrapper" id="tm-header-wrapper">
+            <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#603F8B" d="M15 4H1V2h14zm0 5H1V7h14zM1 14h14v-2H1z"/></svg>
+            </button>
+            <div class="tm-site-header">
+                <div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-times fa-2x"><img src="../static/images/geral/logo_.png" style="max-width: 100px;"></i></div>            
+                <h1 class="text-center">LDL</h1>
+            </div>
+            <nav class="tm-nav" id="tm-nav">            
+                <ul>
+                    <li class="tm-nav-item"><a href="#estatisticas" class="tm-nav-link" data-target="estatisticas">
+                        <i class="fas fa-home"></i>
+                        Estatísticas
+                    </a></li>
+                    <li class="tm-nav-item"><a href="#vendas" class="tm-nav-link" data-target="vendas">
+                        <i class="fas fa-home"></i>
+                        Vendas
+                    </a></li>
+                    <li class="tm-nav-item"><a href="#produtos" class="tm-nav-link" data-target="produtos">
+                        <i class="fas fa-users"></i>
+                        Produtos
+                    </a></li>
+                    <li class="tm-nav-item"><a href="#site" class="tm-nav-link" data-target="site">
+                        <i class="far fa-comments"></i>
+                        Site
+                    </a></li>
+                    <li class="tm-nav-item"><a href="#clientes" class="tm-nav-link" data-target="clientes">
+                        <i class="far fa-comments"></i>
+                        Clientes
+                    </a></li>
+                    <li class="tm-nav-item2"><a href="/" class="tm-nav-link2">
+                        <i class="far fa-comments"></i>
+                        Retornar ao Site
+                    </a></li>
+                </ul>
+            </nav>
+            <footer>
+                <div class="copyright">
+                    <p class="secondary-font" style="color: white">© 2025 LDL. Todos os direitos reservados.</p>
+                </div>
+            </footer>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <main class="tm-main">
+            {% block content %}
+            <!-- Conteúdo será injetado aqui -->
+            {% endblock %}
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='/staticAdmin/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/staticAdmin/js/templatemo-script.js') }}"></script>
+    <script src="{{ url_for('static', filename='/staticAdmin/js/click-option.js') }}"></script>
+</body>
+</html>

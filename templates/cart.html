@@ -39,11 +39,14 @@
                             <td class="cart-align-itens-price">R$ {{ product[3] }}</td>
                             <td class="cart-align-itens-quantity cart-align-qtd">
                                 <input type="number" class="form-control quantity-input" 
-                                       value="{{ product[7] }}" 
+                                       value="{{ product[12] }}" 
                                        id="quantity_{{ product[0] }}" 
-                                       data-id="{{ product[0] }}">
+                                       data-id="{{ product[0] }}"
+                                       min="1" 
+                                       max="{{ product[7] }}">
+                                <p id="stock-limit-msg_{{ product[0] }}" style="color: red; font-size: 10px; display: none;">Produto com limite no estoque atingido</p>
                             </td>
-                            <td class="total-price cart-align-qtd" name="valor_total_{{ product[0] }}"  data-price="{{ product[3] }}"><strong> R$ {{ product[3] * product[7] }} </strong></td>                            
+                            <td class="total-price cart-align-qtd" name="valor_total_{{ product[0] }}"  data-price="{{ product[3] }}"><strong> R$ {{ product[3] * product[12] }} </strong></td>                            
                             <td>
                                 <a class="btn btn-danger remove-item cart-align-qtd" data-id="{{ product[0] }}"><iconify-icon icon="fluent:delete-16-regular"></iconify-icon></a>
                             </td>
@@ -56,8 +59,13 @@
                     <form id="purchase-form" action="/continue-purchase#shipping" method="POST">
                         {% for product in product_cart %}
                         <input type="hidden" name="id_produto_{{ product[0] }}" value="{{ product[0] }}">
-                        <input type="hidden" name="quantidade_{{ product[0] }}" id="quantity_{{ product[0] }}" value="{{ product[7] }}" >
-                        <input type="hidden" name="valor_total_{{ product[0] }}" id="valor_total_{{ product[0] }}" value="{{ product[3] * product[7] }}">
+                        <input type="hidden" name="quantidade_{{ product[0] }}" id="quantity_{{ product[0] }}" value="{{ product[12] }}" >
+                        <input type="hidden" name="valor_total_{{ product[0] }}" id="valor_total_{{ product[0] }}" value="{{ product[3] * product[12] }}">
+                        
+                        <input type="hidden" name="peso_{{ product[0] }}" id="peso_{{ product[0] }}" value="{{ product[8] }}" >
+                        <input type="hidden" name="altura_{{ product[0] }}" id="altura_{{ product[0] }}" value="{{ product[9] }}" >
+                        <input type="hidden" name="largura_{{ product[0] }}" id="largura_{{ product[0] }}" value="{{ product[10] }}" >
+                        <input type="hidden" name="comprimento_{{ product[0] }}" id="comprimento_{{ product[0] }}" value="{{ product[11] }}" >
                         {% endfor %}
                         <button type="submit" id="prosseguir-compra" class="btn btn-primary px-4 pt-3 pb-3">Prosseguir Compra</button>
                     </form><br><br>
@@ -76,5 +84,32 @@
 <script src="../static/js/cart/details_cart.js"></script>
 <script src="../static/js/cart/format_values.js"></script>
 <script src="../static/js/cart/bloqueia_prosseguir_null.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Para cada input de quantidade
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+
+    quantityInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            // Pega o ID do produto
+            const productId = this.dataset.id;
+            // Pega o valor de max (limite de estoque)
+            const maxStock = parseInt(this.getAttribute('max'));
+            // Pega o valor atual da quantidade no input
+            const quantity = parseInt(this.value);
+            // Pega o elemento de mensagem
+            const messageElement = document.getElementById('stock-limit-msg_' + productId);
+
+            // Se a quantidade for igual ao limite de estoque
+            if (quantity === maxStock) {
+                messageElement.style.display = 'block';  // Exibe a mensagem
+            } else {
+                messageElement.style.display = 'none';   // Oculta a mensagem
+            }
+        });
+    });
+});
+
+</script>
 
 {% endblock %}

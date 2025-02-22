@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 import requests
 import json
 
@@ -8,6 +8,12 @@ SECRET_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNzk4N
 
 @shipping.route('/calculate_shipping', methods=['POST'])
 def calculate_shipping():
+    altura = round(session.get('altura_total', 0), 2)
+    largura = round(session.get('largura_total', 0), 2)
+    comprimento = round(session.get('comprimento_total', 0), 2)
+    peso = round(session.get('peso_total', 0), 2)
+    peso = peso / 1000
+    
     cep = request.json.get('cep')
     if not cep:
         return jsonify({'error': 'CEP não fornecido'}), 400
@@ -15,7 +21,7 @@ def calculate_shipping():
     payload = {
         "from": {"postal_code": "88701270"},
         "to": {"postal_code": cep},
-        "package": {"height": 6, "width": 11, "length": 16, "weight": 0.5}
+        "package": {"height": altura, "width": largura, "length": comprimento, "weight": peso}
     }
 
     headers = {
@@ -31,6 +37,11 @@ def calculate_shipping():
         return jsonify({'error': 'Erro ao fazer a requisição'}), 500
 
     if response.status_code == 200:
+        session['peso_total'] = 0
+        session['largura_total'] = 0
+        session['altura_total'] = 0
+        session['comprimento_total'] = 0
+        
         shipping_options = response.json()
 
         # Filtrar as opções que não contêm o erro

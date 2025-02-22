@@ -1,0 +1,59 @@
+#estatisticas {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.tm-post {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tm-post-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.estatistica-numero {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #007bff;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+    margin: 10px 0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.estatistica-numero.vendas {
+    color: #70a57d; 
+    background-color: #d4edda;
+    font-size: 3rem;
+    border: 2px solid #a6dfb3;
+}
+
+.tm-hr-primary {
+    border-color: #dee2e6;
+    margin-top: 20px;
+}
+
+
+@media (max-width: 767px) {
+    
+    .estatistica-numero {
+        font-size: 20px;
+    }
+    
+    .estatistica-numero.vendas {
+        font-size: 20px;
+
+    }
+    
+}

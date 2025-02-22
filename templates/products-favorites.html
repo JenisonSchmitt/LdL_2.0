@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Produtos Favoritos{% endblock %}
+
+{% block content %}
+<section id="products" class="my-5">
+    <div class="container my-5 py-5">
+        <h1 class="text-center mb-5 display-4 fw-bold">Produtos Favoritos</h1>
+        <div class="row">
+            {% if produtos_favoritos %}
+                {% for produtos_favoritos in produtos_favoritos %}
+                    <div class="col-md-4 mb-4">
+                        {% if produtos_favoritos[4] == "Maquiagem" %}
+                            <div class="card shadow-sm p-4 rounded bg-white">
+                                <a href="/remove-favorites/{{ produtos_favoritos[0] }}" class="btn-close position-absolute top-0 end-0 m-2"></a>
+                                <a href="/produtos/{{produtos_favoritos[0]}}#produto" data-id="{{produtos_favoritos[0] }}">
+                                <h3 class="card-title text-center mb-3" style="color: #FFA4DB">{{ produtos_favoritos[1] }}</h3>
+                                <div class="card-body">
+                                    <img src="../static/images/maquiagem/{{ produtos_favoritos[1]|lower|replace(' ', '') }}.png" class="img-fluid-products-favorites rounded-4" alt="image">
+                                    <p class="card-text-favorites"><strong> {{ produtos_favoritos[2].decode('utf-8') }} </strong></p>
+                                    <p class="card-text-favorites-2"><strong>R$ {{ produtos_favoritos[3] }} </strong></p>
+                                </div>
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="card shadow-sm p-4 rounded bg-white">
+                                <h3 class="card-title text-center mb-3" style="color: #FFA4DB">{{ produtos_favoritos[1] }}</h3>
+                                <a href="/remove-favorites/{{ produtos_favoritos[0] }}" class="btn-close position-absolute top-0 end-0 m-2"></a>
+                                <a href="/produtos/{{produtos_favoritos[0]}}#produto">
+                                <div class="card-body">
+                                    <img src="../static/images/skincare/{{ produtos_favoritos[1]|lower|replace(' ', '') }}.png" class="img-fluid-products-favorites rounded-4" alt="image">
+                                    <p class="card-text-favorites"><strong> {{ produtos_favoritos[2].decode('utf-8') }} </strong></p>
+                                    <p class="card-text-favorites-2"><strong>R$ {{ produtos_favoritos[3] }} </strong></p>
+                                </div>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-info" role="alert">
+                        Nenhum Produto Favorito encontrado.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<script src="../static/js/user/redirect_favorites.js"></script>
+
+{% endblock %}

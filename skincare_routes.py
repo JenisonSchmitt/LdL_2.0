@@ -7,7 +7,7 @@ class Skincare_Routes:
         db = conectar_db()
         cursor = db.cursor()
 
-        query = """SELECT p.id, p.nome, p.valor, p.tipo_produto, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida
+        query = """SELECT p.id, p.nome, p.valor, p.tipo_produto, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.variacao
         FROM produtos p LEFT JOIN vendas v ON p.id = v.id_produto
         WHERE p.tipo_produto = 'Skincare' AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
         GROUP BY p.id
@@ -29,8 +29,9 @@ class Skincare_Routes:
             imagem_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
             qtd_comprada = produto[5]
             qtd_vendida = produto[6]
+            variacao = produto[7].decode('utf-8') if isinstance(produto[7], bytearray) else produto[7]
 
-            produtos_decodificados.append((id_produto, nome_produto, valor_produto, imagem_produto, qtd_comprada, qtd_vendida))
+            produtos_decodificados.append((id_produto, nome_produto, valor_produto, imagem_produto, qtd_comprada, qtd_vendida, variacao))
         
         return produtos_decodificados
         
@@ -39,7 +40,7 @@ class Skincare_Routes:
         cursor = db.cursor()
 
         query = """
-            SELECT p.id, p.nome, p.valor, tp.nome, p.imagem AS tipo, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida 
+            SELECT p.id, p.nome, p.valor, tp.nome, p.imagem AS tipo, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.variacao
             FROM produtos p 
             LEFT JOIN vendas v ON p.id = v.id_produto 
             INNER JOIN tipo_produtos tp ON p.tipo = tp.id 
@@ -63,8 +64,9 @@ class Skincare_Routes:
             imagem_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
             qtd_comprada = produto[5]
             qtd_vendida = produto[6]
+            variacao = produto[7].decode('utf-8') if isinstance(produto[7], bytearray) else produto[7]
 
-            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto, qtd_comprada, qtd_vendida))
+            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto, qtd_comprada, qtd_vendida, variacao))
         
         return produtos_decodificados
     

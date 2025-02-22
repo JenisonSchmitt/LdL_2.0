@@ -10,7 +10,7 @@
         <h2 class="display-3 fw-normal">Pagamento</h2>
     </div>
 
-    <form action="/make-payment" method="POST" class="row g-3 justify-content-center">
+    <form id="formulariopagamento" method="POST" class="row g-3 justify-content-center">
         <div id="pagamento" class="div-row-div">
 
             <div class="col-12 mb-4 text-center">
@@ -126,12 +126,15 @@
             </div>
 
             <div class="col-12 text-center mt-4">
-                <button type="submit" class="btn btn-primary px-4 pt-3 pb-3" style="margin-top: 10%;">Prosseguir para Pagamento</button>
+                <button type="button" class="btn btn-primary px-4 pt-3 pb-3" id="proceedPaymentBtn" style="margin-top: 10%;">Prosseguir para Pagamento</button>
+                <button type="submit" class="btn btn-primary px-4 pt-3 pb-3" id="submitPaymentBtn" style="margin-top: 10%; display: none"></button> 
+                <button type="submit" class="btn btn-primary px-4 pt-3 pb-3" id="submitPaymentBtnPix" style="margin-top: 10%; display: none"></button> 
             </div>
         </div>
     </form>
 </div>
+
 <script src="../static/js/cart/resume_cart_mobile.js"></script>
 <script src="../static/js/cart/payments.js"></script>
-
+<script src="../static/js/paymentsPix/pix_or_cart.js"></script>
 {% endblock %}

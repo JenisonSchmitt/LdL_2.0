@@ -16,7 +16,7 @@ class Produtos_Routes:
         db = conectar_db()
         cursor = db.cursor()
         
-        query = """SELECT p.id, p.nome, p.valor, p.tipo_produto, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida
+        query = """SELECT p.id, p.nome, p.valor, p.tipo_produto, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.variacao
         FROM produtos p LEFT JOIN vendas v ON p.id = v.id_produto
         WHERE p.dt_cadastro >= '2025-01-01 00:00:00' AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
         GROUP BY p.id
@@ -39,8 +39,9 @@ class Produtos_Routes:
             imagem_produto = produto[4].decode('utf-8') if isinstance(produto[4], bytearray) else produto[4]
             qtd_comprada = produto[5]
             qtd_vendida = produto[6]
+            variacao = produto[7].decode('utf-8') if isinstance(produto[7], bytearray) else produto[7]
 
-            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto, qtd_comprada, qtd_vendida))
+            produtos_decodificados.append((id_produto, nome_produto, valor_produto, tipo_produto, imagem_produto, qtd_comprada, qtd_vendida, variacao))
         
         return produtos_decodificados
     
@@ -48,20 +49,21 @@ class Produtos_Routes:
         db = conectar_db()
         cursor = db.cursor()
         id = int(id)
-
-        query = """SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida 
-        FROM produtos p 
-        LEFT JOIN vendas v ON p.id = v.id_produto 
-        INNER JOIN tipo_produtos tp ON p.tipo = tp.id 
-        WHERE p.id = %s AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL"""
+        
+        query = """SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.variacao
+        FROM produtos p
+        LEFT JOIN vendas v ON p.id = v.id_produto
+        INNER JOIN tipo_produtos tp ON p.tipo = tp.id
+        WHERE p.id = %s AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+        GROUP BY p.id, tp.nome"""
         
         cursor.execute(query, (id,))
-
         produtos = cursor.fetchall()
+        
         cursor.close()
-        db.close()
-
+        
         produtos_decodificados = []
+        
         for produto in produtos:
             id_produto = produto[0]
             nome_produto = produto[1].decode('utf-8') if isinstance(produto[1], bytearray) else produto[1]
@@ -72,20 +74,50 @@ class Produtos_Routes:
             imagem_produto = produto[6].decode('utf-8') if isinstance(produto[6], bytearray) else produto[6]
             qtd_comprada = produto[7]
             qtd_vendida = produto[8]
+            variacao_produto = produto[9].decode('utf-8') if isinstance(produto[9], bytearray) else produto[9]  # Coluna que contém os IDs das variações
             
-            produtos_decodificados.append((id_produto, nome_produto, descricao_produto, valor_produto, tipo_produto, tipo_produtos, imagem_produto, qtd_comprada, qtd_vendida))
-
+        variacoes = []
+        if variacao_produto:
+            ids_variacoes = variacao_produto.split(', ') if variacao_produto else []
+            
+            for id_variacao in ids_variacoes:
+                query_variacao = """SELECT p.id, p.nome, p.qtd_comprada
+                            FROM produtos p
+                            LEFT JOIN vendas v ON p.id = v.id_produto
+                            WHERE p.id = %s AND v.temporario = 0 AND v.obs = 'OK'
+                            GROUP BY p.id, p.nome, p.qtd_comprada
+                            HAVING p.qtd_comprada > COALESCE(SUM(v.qtd_produto), 0)"""
+                cursor = db.cursor() 
+                cursor.execute(query_variacao, (id_variacao,))
+                variacao_resultado = cursor.fetchone()
+                
+                if variacao_resultado:
+                    nome_variacao_completo = variacao_resultado[1].decode('utf-8') if isinstance(variacao_resultado[1], bytearray) else variacao_resultado[1]
+                    id_variacao = variacao_resultado[0]
+                    
+                    if nome_produto in nome_variacao_completo:
+                        nome_variacao = nome_variacao_completo.replace(nome_produto, "").strip(" -")
+                    else:
+                        nome_variacao = nome_variacao_completo
+                    
+                    variacoes.append((nome_variacao, id_variacao)) 
+        
+            cursor.close()
+        
+        produtos_decodificados.append((id_produto, nome_produto, descricao_produto, valor_produto, tipo_produto, tipo_produtos, imagem_produto, qtd_comprada, qtd_vendida, variacoes))
+                
+        db.close()
+        
         return produtos_decodificados
     
     def get_products_cart(self, product_ids):
         db = conectar_db()
         cursor = db.cursor()
 
-        # Gera placeholders para a quantidade de IDs fornecidos, ex: (%s, %s, %s)
         placeholders = ', '.join(['%s'] * len(product_ids))
 
         query = f"""
-            SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida 
+            SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.peso, p.altura, p.largura, p.comprimento
             FROM produtos p 
             LEFT JOIN vendas v ON p.id = v.id_produto 
             INNER JOIN tipo_produtos tp ON p.tipo = tp.id 
@@ -108,10 +140,15 @@ class Produtos_Routes:
             tipo_produtos = produto[5].decode('utf-8') if isinstance(produto[5], bytearray) else produto[5]
             imagem_produto = produto[6].decode('utf-8') if isinstance(produto[6], bytearray) else produto[6]
             qtd_disponivel = Decimal(produto[7]) - Decimal(produto[8])
+            peso = produto[9]
+            altura = produto[10]
+            largura = produto[11]
+            comprimento = produto[12]
 
             produtos_decodificados.append((
                 id_produto, nome_produto, descricao_produto, valor_produto, 
-                tipo_produto, tipo_produtos, imagem_produto, qtd_disponivel
+                tipo_produto, tipo_produtos, imagem_produto, qtd_disponivel,
+                peso, altura, largura, comprimento
             ))
 
         return produtos_decodificados
@@ -135,9 +172,8 @@ class Produtos_Routes:
             cursor.execute(query, (id_produto, idUser, qtd_produto, valor_total_produto))
             db.commit()
 
-            # Obtendo o ID gerado pela última inserção
             id_gerado = cursor.lastrowid
-            return id_gerado  # Retorna o ID gerado
+            return id_gerado  
         except Exception as e:
             db.rollback()
             print(f"Erro ao salvar no banco: {e}")
@@ -390,15 +426,33 @@ def continue_purchase():
     email = session.get('user_email')
     ids_gerados = []
     
+    peso_total = 0
+    largura_total = 0
+    altura_total = 0
+    comprimento_total = 0
+    
     for key in request.form:
         if key.startswith("id_produto_"):
             produto_id = request.form[key]
             quantidade = request.form.get(f"quantidade_{produto_id}")
             valor_total = request.form.get(f"valor_total_{produto_id}")
             
+            peso = float(request.form.get(f"peso_{produto_id}", 0))
+            largura = float(request.form.get(f"largura_{produto_id}", 0)) 
+            altura = float(request.form.get(f"altura_{produto_id}", 0)) 
+            comprimento = float(request.form.get(f"comprimento_{produto_id}", 0)) 
+            
+            # Acumulando os totais
+            peso_total += peso * int(quantidade)  
+            largura_total += largura * int(quantidade) 
+            altura_total += altura * int(quantidade) 
+            comprimento_total += comprimento * int(quantidade) 
+            
+            session['peso_total'] = peso_total
+            
             # Converter valor_total para o formato correto
             if valor_total:
-                valor_total = float(valor_total.replace(',', '.'))  # Transforma "75,60" em 75.60
+                valor_total = float(valor_total.replace(',', '.')) 
 
             produtos.append({
                 "id_produto": produto_id,
@@ -407,6 +461,11 @@ def continue_purchase():
             })
 
     produtoRoute = Produtos_Routes()
+        
+    session['peso_total'] = peso_total
+    session['largura_total'] = largura_total
+    session['altura_total'] = altura_total
+    session['comprimento_total'] = comprimento_total
     
     for produto in produtos:        
         resultado = produtoRoute.save_first_data_cart(produto['id_produto'], produto['quantidade'], produto['valor_total'], email)

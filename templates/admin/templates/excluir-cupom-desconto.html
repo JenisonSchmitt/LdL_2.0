@@ -1,0 +1,38 @@
+{% extends "admin/templates/baseAdmin_2.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <main class="tm-main">    
+            <div id="produtos" class="row tm-row">
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Produtos</h2>
+
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/cadastrar-produto" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Produtos</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Área para realizar o cadastro de um novo produto
+                    </p>
+                    <hr>
+                </article>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/redirect-admin/todos-os-produtos" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
+                        </div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Todos os Produtos</h2>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        Veja todas as informações sobre todos os produtos
+                    </p>
+                    <hr>
+                </article>
+            </div>
+        </main>
+    </div>
+{% endblock %}
