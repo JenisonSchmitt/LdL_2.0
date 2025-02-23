@@ -1,0 +1,57 @@
+#sugestoesproduto,
+#sugestoes-cliente {
+    display: none;
+    position: absolute;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    max-width: 300px;
+}
+
+.sugestao-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    max-width: 300px;
+}
+
+.mensagem-vazia {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: #888;
+}
+
+.sugestao-select-cliente {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.mensagem-vazia-cliente {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: #888;
+}
+
+
+
+@media (max-width: 709px) {
+
+    .sugestao-select, .sugestao-select-cliente {
+        max-width: 250px;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+    }
+}

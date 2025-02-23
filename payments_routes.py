@@ -73,9 +73,9 @@ class Payments_Routes:
         preference_data = {
             "items": [item],
             "back_urls": {
-                "success": define_rota('/sucess-payments'),
-                "failure": define_rota('/error-payments'),
-                "pending": define_rota('/pending-payments'),
+                "success": define_rota('/sucess-payments-pix'),
+                "failure": define_rota('/error-payments-pix'),
+                "pending": define_rota('/pending-payments-pix'),
             },
             "auto_return": "approved",
             "payment_methods": {
@@ -172,6 +172,53 @@ class Payments_Routes:
         produtoRoute = Produtos_Routes()
         
         produtoRoute.set_payment_pix(id_tabela, payment_method, payment_id)
+        
+        return render_template('pending-payments.html')
+        
+
+    @staticmethod
+    @login_required
+    @payments.route('/sucess-payments-pix')
+    def sucess_payments_pix():
+        payment_id = request.args.get('payment_id')
+        payment = mp.payment().get(payment_id)
+        
+        payment_method = payment.get('response', {}).get('payment_method', {}).get('type', 'Indefinido')
+        valor_pago = payment.get('response', {}).get('transaction_amount', 0)  
+        print(valor_pago)
+        
+        id_tabela = session.get('id_tabela')
+
+        if not id_tabela:
+            flash("Erro: Nenhum ID de tabela encontrado na sessão.", "danger")
+            return redirect(define_rota('/'))
+        
+        produtoRoute = Produtos_Routes()
+        produtoRoute.set_payment_pix(id_tabela, payment_method, payment_id, valor_pago)
+        
+        return render_template('sucess-payments.html', payment_method=payment_method)
+
+
+    @staticmethod
+    @login_required
+    @payments.route('/pending-payments-pix')
+    def pending_payments_pix():
+        payment_id = request.args.get('payment_id')
+        payment = mp.payment().get(payment_id)
+    
+        payment_method = payment.get('response', {}).get('payment_method', {}).get('type', 'Indefinido')
+        valor_pago = payment.get('response', {}).get('transaction_amount', 0)  
+        print(valor_pago)
+        
+        id_tabela = session.get('id_tabela')
+
+        if not id_tabela:
+            flash("Erro: Nenhum ID de tabela encontrado na sessão.", "danger")
+            return redirect(define_rota('/'))
+    
+        produtoRoute = Produtos_Routes()
+        
+        produtoRoute.set_payment_pix(id_tabela, payment_method, payment_id, valor_pago)
         
         return render_template('pending-payments.html')
         

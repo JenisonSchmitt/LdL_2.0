@@ -6,7 +6,7 @@
             <div class="row tm-row">
                 <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Produto</h2>
                 
-                <form action="/admin/cadastrar-produto" method="POST" enctype="multipart/form-data">
+                <form action="/cadastrar-produto-insert" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nome">Nome do Produto</label>
                         <input type="text" class="form-control" id="nome" name="nome" required>
@@ -18,15 +18,60 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="preco">Preço</label>
-                        <input type="number" class="form-control" id="preco" name="preco" step="0.01" required>
+                        <label for="valor">Valor</label>
+                        <input type="text" class="form-control" id="valor" name="valor" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="quantidade">Quantidade em Estoque</label>
-                        <input type="number" class="form-control" id="quantidade" name="quantidade" required>
+                        <label for="Tipo">Tipo de Produto</label>
+                        <select class="form-control" id="Tipo" name="Tipo" required>
+                            <option value="">Selecione um tipo</option>
+                            {% for tipo in tipos_produto %}
+                                <option value="{{ tipo['id_tipo_produto'] }}">{{ tipo['nome_tipo_produto'] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipo_produto">Categoria</label>
+                        <select class="form-control" id="tipo_produto" name="tipo_produto" required>
+                            <option value="">Selecione um Tipo</option>
+                            {% for categoria in categorias_produto %}
+                                <option value="{{ categoria['categoria_tipo_produto'] }}">{{ categoria['categoria_tipo_produto'] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipo">Há Variações?</label>
+                        <input type="number" class="form-control" id="variacoes" name="variacoes">
                     </div>
                     
+                    <div class="form-group">
+                        <label for="qtd_comprada">Quantidade Comprada</label>
+                        <input type="number" class="form-control" id="qtd_comprada" name="qtd_comprada" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="peso">Peso (gr)</label>
+                        <input type="number" class="form-control" id="peso" name="peso" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="altura">Altura (cm)</label>
+                        <input type="number" class="form-control" id="altura" name="altura" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="largura">Largura (cm)</label>
+                        <input type="number" class="form-control" id="largura" name="largura" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comprimento">Comprimento (cm)</label>
+                        <input type="number" class="form-control" id="comprimento" name="comprimento" step="0.01" required>
+                    </div>
+
                     <div class="form-group">
                         <label for="imagem">Imagem do Produto</label>
                         <input type="file" class="form-control-file" id="imagem" name="imagem" required>

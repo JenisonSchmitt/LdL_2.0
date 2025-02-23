@@ -56,6 +56,27 @@
             </footer>
         </div>
     </header>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        <div class="tm-post2" id="flash-messages" style="margin-left: 30%">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} fade show" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function() {
+            let flashMessages = document.getElementById('flash-messages');
+            if (flashMessages) {
+                flashMessages.style.transition = "opacity 0.5s ease";
+                flashMessages.style.opacity = "0";
+                setTimeout(() => flashMessages.remove(), 500); // Remove completamente após o efeito
+            }
+            }, 3000);
+        </script>
+        {% endif %}
+    {% endwith %}  
 
     <div class="container-fluid">
         <main class="tm-main">

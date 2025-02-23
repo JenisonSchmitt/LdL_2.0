@@ -285,17 +285,17 @@ class Produtos_Routes:
             cursor.close()
             db.close()
             
-    def set_payment_pix(self, id_tabela, forma_pgmt, id_pagamento):
+    def set_payment_pix(self, id_tabela, forma_pgmt, id_pagamento, valor_pago):
         db = conectar_db()
         cursor = db.cursor()
         query = """
             UPDATE vendas
-            SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s, obs = 'pendente'
+            SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s, obs = 'pendente', valor_total_compra = %s
             WHERE id = %s
         """
         try:
             for id in id_tabela:
-                cursor.execute(query, (forma_pgmt, id_pagamento, id))
+                cursor.execute(query, (forma_pgmt, id_pagamento, valor_pago, id))
             
             db.commit()
             return True
@@ -313,7 +313,7 @@ class Produtos_Routes:
         
         try:
             query = """
-                SELECT v.id_pagamento, v.dt_registro, GROUP_CONCAT(p.nome SEPARATOR ', ') AS nomes_produtos, v.valor_total_compra, v.forma_pagamento, v.rua, v.numero, v.bairro, v.cidade, v.forma_envio
+                SELECT v.id_pagamento, v.dt_registro, GROUP_CONCAT(p.nome SEPARATOR ', ') AS nomes_produtos, v.valor_total_compra, v.forma_pagamento, v.rua, v.numero, v.bairro, v.cidade, v.forma_envio, v.obs
                 FROM vendas v
                 JOIN produtos p ON v.id_produto = p.id
                 WHERE v.id_usuario = %s AND temporario = 0

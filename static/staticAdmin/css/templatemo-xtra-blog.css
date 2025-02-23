@@ -376,7 +376,9 @@ video {
 .form-control {
     height: 45px;
     border-color: #603F8B;
-    border-radius: 0;
+    border-radius: 10px;
+    min-width: 500px;
+    max-width: 500px;
 }
 
 .tm-comment-form { max-width: 360px; }
@@ -514,6 +516,7 @@ a:hover figcaption { color: #056767; }
 /* Hide sidebar */
 @media (max-width: 991px) {
     .tm-post { margin-bottom: 0px; }
+
     .tm-header {
         width: 320px;
         left: -320px;        
@@ -570,6 +573,12 @@ a:hover figcaption { color: #056767; }
         width: 70%;
         max-width: 375px;
         margin-right: 15px;
+    }
+
+    
+    .form-control {
+        min-width: 300px;
+        max-width: 300px;
     }
 
     .tm-search-form { justify-content: flex-start; }

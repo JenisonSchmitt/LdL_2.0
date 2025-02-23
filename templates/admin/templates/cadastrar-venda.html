@@ -4,32 +4,60 @@
     <div class="container-fluid">
         <main class="tm-main">    
             <div class="row tm-row">
-                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Produto</h2>
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Venda</h2>
                 
-                <form action="/admin/cadastrar-produto" method="POST" enctype="multipart/form-data">
+                <form action="/cadastrar-venda-insert" method="POST">
                     <div class="form-group">
-                        <label for="nome">Nome do Produto</label>
-                        <input type="text" class="form-control" id="nome" name="nome" required>
+                        <label for="cliente">Cliente</label>
+                        <input type="text" class="form-control" id="cliente" name="cliente" required>
+                        <ul id="sugestoescliente" class="list-group" style="display: none; position: absolute; z-index: 1000;"></ul>
+                        <input type="hidden" id="cliente_id" name="cliente_id">
+                    </div>
+                
+                    <div id="produtos-container">
+                        <div class="produto-item form-group">
+                            <label for="produto">Produto</label>
+                            <input type="text" class="form-control produto" name="produto" required>
+                            <ul class="sugestoesproduto list-group" style="display: none; position: absolute; z-index: 1000;"></ul>                            
+                            <div class="form-group">
+                                <label for="qtdproduto">Quantidade do Produto</label>
+                                <input type="number" class="form-control qtdproduto" name="qtdproduto[]" required>
+                                <input type="hidden" class="produto_id" name="produto_id[]">
+                                <input type="hidden" class="produto_valor" name="produto_valor[]">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <svg id="add-product" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 20 20"><path fill="#603F8B" d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2zm-1 11a10 10 0 1 1 0-20a10 10 0 0 1 0 20m0-2a8 8 0 1 0 0-16a8 8 0 0 0 0 16"/></svg>
+                    
+                    <hr>
+                    
+                    <div class="form-group">
+                        <label for="envio">Tipo de Envio</label>
+                        <select class="form-control" id="envio" name="envio" required>
+                            <option value="">Selecione um tipo</option>
+                            <option value="Envio">Envio</option>
+                            <option value="Retirada">Retirada</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="descricao">Descrição</label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                        <label for="valorfrete">Valor Frete</label>
+                        <input type="text" class="form-control" id="valor" name="valorfrete">
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="preco">Preço</label>
-                        <input type="number" class="form-control" id="preco" name="preco" step="0.01" required>
+                        <label for="forma_pgt">Forma de Pagamento</label>
+                        <select class="form-control" id="forma_pgt" name="forma_pgt" required>
+                            <option value="">Selecione um tipo</option>
+                            <option value="credit_card">Cartão de Crédito</option>
+                            <option value="bank_transfer">Pix</option>
+                        </select>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="quantidade">Quantidade em Estoque</label>
-                        <input type="number" class="form-control" id="quantidade" name="quantidade" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="imagem">Imagem do Produto</label>
-                        <input type="file" class="form-control-file" id="imagem" name="imagem" required>
+                        <label for="valor_total">Valor Total da Compra</label>
+                        <input type="text" class="form-control" id="valor_total" name="valor_total" readonly>
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
@@ -37,4 +65,8 @@
             </div>
         </main>
     </div>
+<script src="{{ url_for('static', filename='/staticAdmin/js/search-products.js') }}"></script>
+<script src="{{ url_for('static', filename='/staticAdmin/js/search-users.js') }}"></script>
+<script src="{{ url_for('static', filename='/staticAdmin/js/valor-venda.js') }}"></script>
+<script src="{{ url_for('static', filename='/staticAdmin/js/envio-ou-retirada.js') }}"></script>
 {% endblock %}

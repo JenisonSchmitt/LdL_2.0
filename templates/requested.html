@@ -17,6 +17,11 @@
                                 <p class="card-text"><strong>Produtos:</strong> {{ id_pagamento[2].decode('utf-8') }}</p>
                                 <p class="card-text"><strong>Valor Total:</strong> R$ {{ id_pagamento[3]|string|replace('.', ',') }}</p> 
                                 <p class="card-text"><strong>Forma de Pagamento:</strong> {% if id_pagamento[4].decode('utf-8') == "credit_card" %}Cartão de Crédito {% elif id_pagamento[4].decode('utf-8') == "bank_transfer" %}PIX {% else %}Outros{% endif %}</p>
+                                {% if id_pagamento[10].decode('utf-8') == 'OK' %}
+                                <p class="card-text"><strong>Status Pagamento:</strong> Aprovado</p>
+                                {% else %}
+                                <p class="card-text"><strong>Status Pagamento:</strong> Pendente</p>
+                                {% endif %}
                                 {% if id_pagamento[9].decode('utf-8') == 'Envio' %}
                                 <p class="card-text"><strong>Endereço de Entrega:</strong> {{ id_pagamento[5].decode('utf-8') }}, {{ id_pagamento[6].decode('utf-8') }}, {{ id_pagamento[7].decode('utf-8') }}, {{ id_pagamento[8].decode('utf-8') }}</p>
                                 {% else %}
