@@ -57,11 +57,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     shippingSelect.innerHTML = '';
 
                     const fixedSelected = document.createElement('option');
+                    const fixedOption1 = document.createElement('option');
                     const fixedOption = document.createElement('option');
                     fixedSelected.textContent = "Selecione a forma de envio";
                     fixedSelected.selected = true;
                     fixedSelected.disabled = true;
                     shippingSelect.appendChild(fixedSelected);
+                    
+                    fixedOption1.value = "0.00";
+                    fixedOption1.textContent = "Combinar retirada R$0,00 (Tubarão/SC - Centro)";
+                    shippingSelect.appendChild(fixedOption1);
 
                     data.forEach(option => {
                         const optionElementWithImage = document.createElement('option');

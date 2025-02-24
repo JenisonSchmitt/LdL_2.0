@@ -74,7 +74,7 @@ class Payments_Routes:
             "items": [item],
             "back_urls": {
                 "success": define_rota('/sucess-payments-pix'),
-                "failure": define_rota('/error-payments-pix'),
+                "failure": define_rota('/error-payments'),
                 "pending": define_rota('/pending-payments-pix'),
             },
             "auto_return": "approved",

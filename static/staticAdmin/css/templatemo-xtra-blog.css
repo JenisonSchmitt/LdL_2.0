@@ -658,3 +658,45 @@ a:hover figcaption { color: #056767; }
 @media (max-width: 380px) {
     .tm-person img { max-width: 120px; }
 }
+
+
+.pagination-controls {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination-controls button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #603F8B;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+    background-color: #4A2C6D; /* Cor mais escura para o hover */
+    transform: scale(1.05); /* Efeito de zoom suave */
+}
+
+.pagination-controls button:active:not(:disabled) {
+    transform: scale(0.95); /* Efeito de clique */
+}
+
+.pagination-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #ccc; /* Cor neutra para botões desabilitados */
+    color: #666;
+}
+
+#pagina-atual {
+    font-weight: bold;
+    margin: 0 10px;
+    font-size: 16px;
+    color: #603F8B; /* Cor do texto do indicador de página */
+}

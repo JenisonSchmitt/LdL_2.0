@@ -15,8 +15,8 @@ from favorites_routes import favorites
 from admin_routes import admin_bp
 import logging
 
-# logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
-# logging.info('Iniciando o app.py...')
+logging.basicConfig(filename='/home/u228502032/domains/testeecommerce.shop/public_html/app.log', level=logging.INFO)
+logging.info('Iniciando o app.py...')
 
 skincareproducts = Skincare_Routes
 maquiagemproducts = Maquiagem_Routes

@@ -1,32 +1,19 @@
 {% extends "admin/templates/baseAdmin_2.html" %}
-
 {% block content %}
     <div class="container-fluid">
         <main class="tm-main">    
-            <div class="row tm-row">
-                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Vendas Por CPF</h2>
-                
-                <form action="/vendas-por-clientes-admin" method="POST">
-                    <div class="form-group">
-                        <label for="cliente">Cliente</label>
-                        <input type="text" class="form-control" id="cliente" name="cliente" required>
-                        <ul id="sugestoescliente" class="list-group" style="display: none; position: absolute; z-index: 1000;"></ul>
-                        <input type="hidden" id="cliente_id" name="cliente_id">
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">Procurar</button>
-                </form>
-            </div>
-            <div class="row tm-row">
-                {% if todas_as_vendas_cliente %}  <!-- Verifica se a variável existe e não está vazia -->
-                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Lista de Vendas Por cliente</h2>
+            <div id="produtos" class="row tm-row">
+                <div id="top" class="col-12 tm-post">
+                    <h2 class="tm-pt-30 tm-color-primary tm-post-title">Pagamentos Pendentes</h2>
                     <div class="table-responsive">
                         <table id="tabela-produtos" class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th><strong>Ações</strong></th>
                                     <th><strong>ID</strong></th>
                                     <th><strong>Produto</strong></th>
                                     <th><strong>Cliente</strong></th>
+                                    <th><strong>Valor Total Compra</strong></th>
                                     <th><strong>Qtd. Comprada</strong></th>
                                     <th><strong>Data</strong></th>
                                     <th><strong>Forma Envio</strong></th>
@@ -39,7 +26,6 @@
                                     <th><strong>Número</strong></th>
                                     <th><strong>Complemento</strong></th>
                                     <th><strong>Valor Frete</strong></th>
-                                    <th><strong>Valor Total Compra</strong></th>
                                     <th><strong>ID Pagamento</strong></th>
                                     <th><strong>Forma Pagamento</strong></th>
                                     <th><strong>Temporário</strong></th>
@@ -47,11 +33,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for venda in todas_as_vendas_cliente %}
+                                {% for venda in pagamento %}
                                 <tr>
+                                    <td>
+                                        <form action="/aceitar-pagamento-pix-admin" method="POST" style="display: inline;">
+                                            <input type="hidden" name="id_pagamento" value="{{ venda[18] }}">
+                                            <button type="submit" class="btn btn-success btn-sm">Aceitar</button>
+                                        </form>
+                                    </td>
                                     <td>{{ venda[0] if venda[0] is not none else '-' }}</td>
                                     <td>{{ venda[2] if venda[2] is not none else '-' }}</td>
                                     <td>{{ venda[4] if venda[4] is not none else '-' }}</td>
+                                    <td><strong>R$ {{ venda[17] if venda[17] is not none else '-' }}</strong></td>
                                     <td>{{ venda[5] if venda[5] is not none else '-' }}</td>
                                     <td>{{ venda[6] if venda[6] is not none else '-' }}</td>
                                     <td>{{ venda[7] if venda[7] is not none else '-' }}</td>
@@ -64,7 +57,6 @@
                                     <td>{{ venda[14] if venda[14] is not none else '-' }}</td>
                                     <td>{{ venda[15] if venda[15] is not none else '-' }}</td>
                                     <td>{{ venda[16] if venda[16] is not none else '-' }}</td>
-                                    <td>{{ venda[17] if venda[17] is not none else '-' }}</td>
                                     <td>{{ venda[18] if venda[18] is not none else '-' }}</td>
                                     <td>{% if venda[19] == "bank_transfer" %} PIX {% elif venda[19] == "credit_card" %} Cartão de Crédito {% else %}Outros{% endif %}</td>
                                     <td>{% if venda[20] == 0 %} Não {% else %} Sim {% endif %}</td>
@@ -74,17 +66,15 @@
                             </tbody>
                         </table>
                     </div>
-                {% else %}
-                <h4 class="tm-pt-30 tm-color-primary tm-post-title">Nenhuma venda a mostrar</h4>
-                {% endif %}
-            </div>
-            <div class="pagination-controls">
-                <button id="btn-anterior" disabled>Anterior</button>
-                <span id="pagina-atual">1</span>
-                <button id="btn-proximo">Próximo</button>
+
+                    <div class="pagination-controls">
+                        <button id="btn-anterior" disabled>Anterior</button>
+                        <span id="pagina-atual">1</span>
+                        <button id="btn-proximo">Próximo</button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
-<script src="{{ url_for('static', filename='/staticAdmin/js/search-users.js') }}"></script>
-<script src="{{ url_for('static', filename='/staticAdmin/js/pagination.js') }}"></script>
+    <script src="{{ url_for('static', filename='/staticAdmin/js/pagination.js') }}"></script>
 {% endblock %}

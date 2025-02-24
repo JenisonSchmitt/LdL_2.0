@@ -4,37 +4,30 @@
     <div class="container-fluid">
         <main class="tm-main">    
             <div class="row tm-row">
-                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Produto</h2>
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Adicionar Qtd produtos</h2>
                 
-                <form action="/admin/cadastrar-produto" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="nome">Nome do Produto</label>
-                        <input type="text" class="form-control" id="nome" name="nome" required>
+                <form action="/quantidade-produto-update" method="POST">
+                    <div id="produtos-container">
+                        <div class="produto-item form-group">
+                            <label for="produto">Produto</label>
+                            <input type="text" class="form-control produto" name="produto" required>
+                            <ul class="sugestoesproduto list-group" style="display: none; position: absolute; z-index: 1000;"></ul>                            
+                            <input type="hidden" class="produto_id" name="produto_id">
+                            <br>
+                            <label for="qtd_add">Qtd Atual:</label>
+                            <input type="number" class="produto_qtd form-control" name="produto_qtd" readonly="">
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="descricao">Descrição</label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                        <label for="qtd_add">Adicionar:</label>
+                        <input type="text" class="form-control" id="qtd_add" name="qtd_add">
                     </div>
                     
-                    <div class="form-group">
-                        <label for="preco">Preço</label>
-                        <input type="number" class="form-control" id="preco" name="preco" step="0.01" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="quantidade">Quantidade em Estoque</label>
-                        <input type="number" class="form-control" id="quantidade" name="quantidade" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="imagem">Imagem do Produto</label>
-                        <input type="file" class="form-control-file" id="imagem" name="imagem" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary">Atualizar</button>
                 </form>
             </div>
         </main>
     </div>
+    <script src="{{ url_for('static', filename='staticAdmin/js/search-products-update.js') }}"></script>
 {% endblock %}

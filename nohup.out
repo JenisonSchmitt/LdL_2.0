@@ -1,0 +1,170 @@
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://193.203.175.11:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 216-098-011
+127.0.0.1 - - [19/Jan/2025 14:56:48] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 14:56:48] "[36mGET /static/images/skincare/máscarafacialdetox.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[33mGET /images/background-img.png HTTP/1.1[0m" 404 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/feedback/feedback3.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/feedback/feedback2.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/feedback/feedback1.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/maquiagem/máscaradecílios.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/home/extra1.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/maquiagem/baselíquida.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/maquiagem/batommatte.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/maquiagem/delineadorlíquido.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/skincare/hidratantefacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/skincare/protetorsolarfps50.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/maquiagem/paletadesombras.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/skincare/geldelimpezafacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:51] "[36mGET /static/images/skincare/sérumanti-idade.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:52] "GET /skincare HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 14:56:52] "[36mGET /static/images/skincare/máscarafacialdetox.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:52] "[36mGET /static/images/skincare/geldelimpezafacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:52] "[36mGET /static/images/skincare/hidratantefacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:52] "[36mGET /static/images/skincare/sérumanti-idade.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:52] "[36mGET /static/images/skincare/protetorsolarfps50.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:58] "GET /maquiagem HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 14:56:58] "[36mGET /static/images/maquiagem/delineadorlíquido.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:58] "[36mGET /static/images/maquiagem/paletadesombras.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:58] "[36mGET /static/images/maquiagem/máscaradecílios.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:58] "[36mGET /static/images/maquiagem/batommatte.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:56:58] "[36mGET /static/images/maquiagem/baselíquida.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:01] "GET /skincare HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 14:57:01] "[36mGET /static/images/skincare/máscarafacialdetox.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:01] "[36mGET /static/images/skincare/geldelimpezafacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:01] "[36mGET /static/images/skincare/sérumanti-idade.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:01] "[36mGET /static/images/skincare/hidratantefacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:01] "[36mGET /static/images/skincare/protetorsolarfps50.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:20] "GET /skincare HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 14:57:20] "[36mGET /static/images/skincare/máscarafacialdetox.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:20] "[36mGET /static/images/skincare/geldelimpezafacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:20] "[36mGET /static/images/skincare/sérumanti-idade.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:20] "[36mGET /static/images/skincare/hidratantefacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 14:57:20] "[36mGET /static/images/skincare/protetorsolarfps50.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/css/vendor.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/css/home/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/js/home/select_value_category.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/js/jquery-1.11.0.min.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/js/home/next_prev_button.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/js/plugins.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/js/script.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/geral/logo_.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/home/home1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/home/home2.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/home/home3.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/skincare/máscarafacialdetox.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/skincare/geldelimpezafacial.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/skincare/sérumanti-idade.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/skincare/protetorsolarfps50.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/skincare/hidratantefacial.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/maquiagem/delineadorlíquido.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/maquiagem/paletadesombras.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/maquiagem/máscaradecílios.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/maquiagem/batommatte.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/maquiagem/baselíquida.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/home/extra1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/feedback/feedback1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/feedback/feedback2.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "GET /static/images/feedback/feedback3.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:09:56] "[33mGET /images/background-img.png HTTP/1.1[0m" 404 -
+127.0.0.1 - - [19/Jan/2025 15:09:57] "GET /static/images/geral/icone.ico HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/css/vendor.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/css/home/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/js/home/select_value_category.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/js/home/next_prev_button.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/js/jquery-1.11.0.min.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/js/plugins.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/js/script.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/images/geral/logo_.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/images/home/home1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:34] "GET /static/images/home/home2.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/home/home3.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/skincare/máscarafacialdetox.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/skincare/geldelimpezafacial.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/skincare/sérumanti-idade.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/skincare/protetorsolarfps50.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/skincare/hidratantefacial.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/maquiagem/delineadorlíquido.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/maquiagem/paletadesombras.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/maquiagem/máscaradecílios.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/maquiagem/batommatte.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/maquiagem/baselíquida.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/home/extra1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/feedback/feedback1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/feedback/feedback2.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/feedback/feedback3.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "[33mGET /images/background-img.png HTTP/1.1[0m" 404 -
+127.0.0.1 - - [19/Jan/2025 15:10:35] "GET /static/images/geral/icone.ico HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:52] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/css/vendor.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/css/home/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/js/home/next_prev_button.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/js/jquery-1.11.0.min.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/js/home/select_value_category.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/js/plugins.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/js/script.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/geral/logo_.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/home/home1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/home/home2.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/home/home3.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/skincare/máscarafacialdetox.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/skincare/geldelimpezafacial.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/maquiagem/batommatte.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/maquiagem/delineadorlíquido.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/maquiagem/máscaradecílios.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/skincare/protetorsolarfps50.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/maquiagem/paletadesombras.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/skincare/sérumanti-idade.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/maquiagem/baselíquida.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/skincare/hidratantefacial.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/home/extra1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/feedback/feedback1.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "[33mGET /images/background-img.png HTTP/1.1[0m" 404 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/feedback/feedback2.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:10:53] "GET /static/images/feedback/feedback3.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:11:20] "GET /skincare HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/css/vendor.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/css/home/style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/js/home/select_value_category.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/js/home/next_prev_button.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/geral/logo_.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/home/home1.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/home/home2.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/home/home3.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/js/jquery-1.11.0.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/js/plugins.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/skincare/geldelimpezafacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/skincare/máscarafacialdetox.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/skincare/sérumanti-idade.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/skincare/hidratantefacial.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Jan/2025 15:11:21] "[36mGET /static/images/skincare/protetorsolarfps50.png HTTP/1.1[0m" 304 -
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on

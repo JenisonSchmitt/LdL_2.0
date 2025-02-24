@@ -115,12 +115,33 @@
                         
                         {% endif %}
                 
+                        {% if discount|int == 1 %}
+                            {% set valor_produto = produtos[0].valor_total_compra|float %}
+                            {% set valor_com_desconto = valor_produto * 0.9 %}
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <label for="valor-final" class="form-label color-purple font-weight-semibold" style="font-size: 20px">
+                                        Valor Total com Desconto:
+                                        <input type="hidden" class="form-control text-center font-weight-bold" id="valor-final" name="valor-final" value="{{ valor_com_desconto }}" readonly>
+                                        {{ "R$ %.2f"|format(valor_com_desconto)|replace('.', ',') }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <br><br>
+                                    <p class=" font-weight-semibold" style="color: #603F8B">Desconto pela Primeira Compra aplicado!</p>
+                                </div>
+                            </div>
+                        {% else %}
+
                         <div class="row mt-3">
                             <div class="col-12">
                                 <label for="valor-final" class="form-label color-purple font-weight-semibold" style="font-size: 20px">Valor Total:
                                 <input type="hidden" class="form-control text-center font-weight-bold" id="valor-final" name="valor-final" value="{{produtos[0].valor_total_compra}}" readonly>{{ produtos[0].valor_total_compra|string|replace('.', ',') }}</label>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

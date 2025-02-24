@@ -266,21 +266,45 @@ class Produtos_Routes:
     def set_payment_cart(self, id_tabela, forma_pgmt, id_pagamento):
         db = conectar_db()
         cursor = db.cursor()
-        query = """
-            UPDATE vendas
-            SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s, obs = 'OK'
-            WHERE id = %s
-        """
+    
         try:
+            update_vendas_query = """
+                UPDATE vendas
+                SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s, obs = 'OK'
+                WHERE id = %s;
+            """
+    
+            get_usuario_query = """
+                SELECT id_usuario
+                FROM vendas
+                WHERE id = %s;
+            """
+    
+            update_usuario_query = """
+                UPDATE usuarios
+                SET first_buy = 0
+                WHERE id = %s;
+            """
+    
             for id in id_tabela:
-                cursor.execute(query, (forma_pgmt, id_pagamento, id))
-            
+                cursor.execute(update_vendas_query, (forma_pgmt, id_pagamento, id))
+    
+                cursor.execute(get_usuario_query, (id,))
+                resultado = cursor.fetchone()
+    
+                if resultado:
+                    id_usuario = resultado[0]
+    
+                    cursor.execute(update_usuario_query, (id_usuario,))
+    
             db.commit()
             return True
+    
         except Exception as e:
             db.rollback()
             print(f"Erro ao salvar no banco: {e}")
             return False
+    
         finally:
             cursor.close()
             db.close()
@@ -288,21 +312,45 @@ class Produtos_Routes:
     def set_payment_pix(self, id_tabela, forma_pgmt, id_pagamento, valor_pago):
         db = conectar_db()
         cursor = db.cursor()
-        query = """
-            UPDATE vendas
-            SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s, obs = 'pendente', valor_total_compra = %s
-            WHERE id = %s
-        """
+    
         try:
+            update_vendas_query = """
+                UPDATE vendas
+                SET forma_pagamento = %s, temporario = 0, dt_registro = CONVERT_TZ(NOW(), '+00:00', '-03:00'), id_pagamento = %s, obs = 'pendente', valor_total_compra = %s
+                WHERE id = %s;
+            """
+    
+            get_usuario_query = """
+                SELECT id_usuario
+                FROM vendas
+                WHERE id = %s;
+            """
+    
+            update_usuario_query = """
+                UPDATE usuarios
+                SET first_buy = 0
+                WHERE id = %s;
+            """
+    
             for id in id_tabela:
-                cursor.execute(query, (forma_pgmt, id_pagamento, valor_pago, id))
-            
+                cursor.execute(update_vendas_query, (forma_pgmt, id_pagamento, valor_pago, id))
+    
+                cursor.execute(get_usuario_query, (id,))
+                resultado = cursor.fetchone()
+    
+                if resultado:
+                    id_usuario = resultado[0]
+    
+                    cursor.execute(update_usuario_query, (id_usuario,))
+    
             db.commit()
             return True
+    
         except Exception as e:
             db.rollback()
             print(f"Erro ao salvar no banco: {e}")
             return False
+    
         finally:
             cursor.close()
             db.close()
@@ -392,8 +440,29 @@ class Produtos_Routes:
             cursor.close()
             db.close()
 
-
+    def get_discount_client(self, email):
+        db = conectar_db()
+        cursor = db.cursor()
+    
+        query = """
+            SELECT first_buy
+            FROM usuarios 
+            WHERE email = %s;
+        """
         
+        try:
+            cursor.execute(query, (email,))
+            resultado = cursor.fetchone()
+            if resultado:
+                return resultado[0]
+            else:
+                return None
+        except mysql.connector.Error as err:
+            print(f"Erro ao executar a query: {err}")
+            return None
+        finally:
+            cursor.close()
+            db.close()
 
 
 @produtos.route("/cart", methods=['POST'])
@@ -520,18 +589,21 @@ def shipping_method():
 @login_required
 def payments_forms():
     id_tabela = session.get('id_tabela')
+    email = session.get('user_email')
     
     if not id_tabela:
         flash("Erro: Nenhum ID de tabela encontrado na sessão.", "danger")
         return redirect(define_rota('/'))
     
     produtoRoute = Produtos_Routes()
+    
+    discount = produtoRoute.get_discount_client(email)
 
     try:
         produtos = produtoRoute.get_products_for_payments(id_tabela)
         
         if produtos:
-            return render_template('payments.html', produtos=produtos)
+            return render_template('payments.html', produtos=produtos, discount=discount)
         else:
             flash("Nenhum produto encontrado para o pagamento.", "danger")
             return redirect(define_rota('/'))

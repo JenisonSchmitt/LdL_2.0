@@ -1,38 +1,57 @@
 {% extends "admin/templates/baseAdmin_2.html" %}
-
 {% block content %}
     <div class="container-fluid">
         <main class="tm-main">    
             <div id="produtos" class="row tm-row">
-                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Produtos</h2>
+                <div id="top" class="col-12 tm-post">
+                    <h2 class="tm-pt-30 tm-color-primary tm-post-title">Lista de Produtos</h2>
+                    <div class="table-responsive">
+                    <table id="tabela-produtos" class="table table-bordered">
+                        <thead>
+                            <tr >
+                                <th><strong>ID</strong></th>
+                                <th><strong>Nome</strong></th>
+                                <th><strong>Valor</strong></th>
+                                <th><strong>Tipo de Produto</strong></th>
+                                <th><strong>Qtd. Comprada</strong></th>
+                                <th><strong>Variação</strong></th>
+                                <th><strong>Tipo</strong></th>
+                                <th><strong>Peso</strong></th>
+                                <th><strong>Altura</strong></th>
+                                <th><strong>Largura</strong></th>
+                                <th><strong>Comprimento</strong></th>
+                                <th><strong>Qtd. Restante</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for produto in todos_os_produtos %}
+                            <tr>
+                                <td>{{ produto[0] if produto[0] is not none else '-'}}</td>
+                                <td>{{ produto[1] if produto[1] is not none else '-'}}</td>
+                                <td>{{ produto[3] if produto[3] is not none else '-'}}</td>
+                                <td>{{ produto[4] if produto[4] is not none else '-'}}</td>
+                                <td>{{ produto[6] if produto[6] is not none else '-'}}</td>
+                                <td>{{ produto[7] if produto[7] is not none else '-'}}</td>
+                                <td>{{ produto[8] if produto[8] is not none else '-'}}</td>
+                                <td>{{ produto[10] if produto[10] is not none else '-'}}</td>
+                                <td>{{ produto[11] if produto[11] is not none else '-'}}</td>
+                                <td>{{ produto[12] if produto[12] is not none else '-'}}</td>
+                                <td>{{ produto[13] if produto[13] is not none else '-'}}</td>
+                                <td><strong>{{ produto[15] }}</strong></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
 
-                <article class="col-12 col-md-6 tm-post">
-                    <hr class="tm-hr-primary">
-                    <a href="/redirect-admin/cadastrar-produto" class="effect-lily tm-post-link tm-pt-60">
-                        <div class="tm-post-link-inner">
-                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
-                        </div>
-                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Produtos</h2>
-                    </a>                    
-                    <p class="tm-pt-30">
-                        Área para realizar o cadastro de um novo produto
-                    </p>
-                    <hr>
-                </article>
-                <article class="col-12 col-md-6 tm-post">
-                    <hr class="tm-hr-primary">
-                    <a href="/redirect-admin/todos-os-produtos" class="effect-lily tm-post-link tm-pt-60">
-                        <div class="tm-post-link-inner">
-                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
-                        </div>
-                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Todos os Produtos</h2>
-                    </a>                    
-                    <p class="tm-pt-30">
-                        Veja todas as informações sobre todos os produtos
-                    </p>
-                    <hr>
-                </article>
+                    <div class="pagination-controls">
+                        <button id="btn-anterior" disabled>Anterior</button>
+                        <span id="pagina-atual">1</span>
+                        <button id="btn-proximo">Próximo</button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
+<script src="{{ url_for('static', filename='/staticAdmin/js/pagination.js') }}"></script>
 {% endblock %}
