@@ -1,0 +1,110 @@
+.recibo-container {
+    font-family: 'Arial', sans-serif;
+    width: 100%;
+    max-width: 650px; 
+    margin: 20px auto;
+    padding: 30px;
+    border: 2px solid #603F8B;
+    border-radius: 10px;
+    background: #F9F3EC;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    box-sizing: border-box; 
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #603F8B;
+}
+.header img {
+    width: 120px;
+    margin-bottom: 10px;
+}
+.header h1 {
+    margin: 0;
+    color: #603F8B;
+    font-size: 28px;
+    text-transform: uppercase;
+}
+.header p {
+    margin: 5px 0;
+    color: #333;
+    font-size: 14px;
+}
+h2 {
+    text-align: center;
+    margin: 0;
+    color: #603F8B;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+h3 {
+    color: #603F8B;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #FFA4DB;
+    padding-bottom: 5px;
+}
+.info, .envio {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #603F8B;
+    border-radius: 5px;
+    background: #fff;
+}
+.info p, .envio p {
+    margin: 8px 0;
+    color: #333;
+    font-size: 16px;
+}
+.info p strong, .envio p strong {
+    color: #603F8B;
+}
+.total {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+    color: #603F8B;
+}
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #603F8B;
+    color: #333;
+    font-size: 14px;
+}
+.print-btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 25px;
+    background-color: #603F8B;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+.print-btn:hover {
+    background-color: #4A2F6B;
+}
+@media print {
+    .recibo-container {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
+
+    .info p, .envio p {
+        word-wrap: break-word; 
+    }
+
+    .info, .envio {
+        overflow-wrap: break-word;
+    }
+}

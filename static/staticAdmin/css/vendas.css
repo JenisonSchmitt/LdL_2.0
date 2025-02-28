@@ -44,43 +44,35 @@
 
 
 
-@media (max-width: 709px) {
-
-    .sugestao-select, .sugestao-select-cliente {
-        max-width: 250px;
-        padding: 8px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        cursor: pointer;
-    }
-    .table-responsive {
-        min-width: 200px;
-        max-width: 300px;
-        -webkit-overflow-scrolling: touch; 
-    }
-    
-    #tabela-produtos {
-        min-width: 200px; 
-        max-width: 300px;
-    }
-    
-}
-
 .table-responsive {
-    min-width: 1200px;
+    min-width: 1200px; 
+    max-width: 1200px; 
     overflow-x: auto; 
     -webkit-overflow-scrolling: touch; 
     margin-bottom: 20px; 
 }
 
 #tabela-produtos {
+    width: 100%; 
     min-width: 800px; 
-    white-space: nowrap;
+    white-space: nowrap; 
 }
 
 #tabela-produtos th,
 #tabela-produtos td {
     padding: 8px; 
     text-align: left; 
+}
+
+@media (max-width: 768px) {
+    #tabela-produtos th,
+    #tabela-produtos td {
+        font-size: 14px; 
+        padding: 6px;
+    }
+
+    .table-responsive {
+        min-width: 300px;
+        max-width: 300px;
+    }
 }

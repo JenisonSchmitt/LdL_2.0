@@ -2,6 +2,7 @@ from flask import flash, Blueprint, request, redirect, session
 import mysql.connector
 from conection import conectar_db, define_rota
 from login_required import login_required
+from emails_routes import Email_Routes
 
 users = Blueprint('users_routes', __name__)
 
@@ -24,6 +25,7 @@ class Users_Routes:
 
             flash('Usuário cadastrado com sucesso!', 'success')
             session['user_email'] = email
+            Email_Routes.enviar_email_conta_nova()
         except Exception as e:
             flash(f'Erro ao cadastrar usuário: {str(e)}', 'danger')
         finally:

@@ -4,6 +4,7 @@ from login_required import login_required
 from decimal import Decimal
 import json
 from users_routes import Users_Routes
+from emails_routes import Email_Routes
 
 usersRoutes = Users_Routes()
 
@@ -11,17 +12,18 @@ produtos = Blueprint('produtos_routes', __name__)
 
 class Produtos_Routes:
     
-    # Função para buscar os produtos mais vendidos
+    # Função para buscar os produtos mais novos
     def obter_produtos():
         db = conectar_db()
         cursor = db.cursor()
         
         query = """SELECT p.id, p.nome, p.valor, p.tipo_produto, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.variacao
-        FROM produtos p LEFT JOIN vendas v ON p.id = v.id_produto
-        WHERE p.dt_cadastro >= '2025-01-01 00:00:00' AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
-        GROUP BY p.id
-        ORDER BY p.dt_cadastro DESC
-        LIMIT 8;
+            FROM produtos p 
+            LEFT JOIN vendas v ON p.id = v.id_produto AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+            WHERE p.dt_cadastro >= '2025-01-01 00:00:00'
+            GROUP BY p.id
+            ORDER BY p.dt_cadastro DESC
+            LIMIT 8;
         """
         
         cursor.execute(query)
@@ -52,9 +54,9 @@ class Produtos_Routes:
         
         query = """SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.variacao
         FROM produtos p
-        LEFT JOIN vendas v ON p.id = v.id_produto
+        LEFT JOIN vendas v ON p.id = v.id_produto AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
         INNER JOIN tipo_produtos tp ON p.tipo = tp.id
-        WHERE p.id = %s AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+        WHERE p.id = %s
         GROUP BY p.id, tp.nome"""
         
         cursor.execute(query, (id,))
@@ -119,9 +121,9 @@ class Produtos_Routes:
         query = f"""
             SELECT p.id, p.nome, p.descricao, p.valor, p.tipo_produto, tp.nome, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.peso, p.altura, p.largura, p.comprimento
             FROM produtos p 
-            LEFT JOIN vendas v ON p.id = v.id_produto 
+            LEFT JOIN vendas v ON p.id = v.id_produto AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
             INNER JOIN tipo_produtos tp ON p.tipo = tp.id 
-            WHERE p.id IN ({placeholders}) AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+            WHERE p.id IN ({placeholders})
             GROUP BY p.id;
         """
         cursor.execute(query, product_ids)
@@ -298,6 +300,7 @@ class Produtos_Routes:
                     cursor.execute(update_usuario_query, (id_usuario,))
     
             db.commit()
+            Email_Routes.enviar_email_compra_cartao(id_tabela)
             return True
     
         except Exception as e:
@@ -344,6 +347,7 @@ class Produtos_Routes:
                     cursor.execute(update_usuario_query, (id_usuario,))
     
             db.commit()
+            Email_Routes.enviar_email_compra_pix(id_tabela)
             return True
     
         except Exception as e:
@@ -457,7 +461,7 @@ class Produtos_Routes:
                 return resultado[0]
             else:
                 return None
-        except mysql.connector.Error as err:
+        except cursor.Error as err:
             print(f"Erro ao executar a query: {err}")
             return None
         finally:

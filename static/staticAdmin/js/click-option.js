@@ -9,11 +9,19 @@ function showSection(targetId) {
     }
 }
 
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
 document.querySelectorAll('.tm-nav-link').forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault(); 
         const target = this.getAttribute('data-target'); 
         showSection(target); 
+
+        if (isMobile()) {
+            document.getElementById('navbar-toggler').click();
+        }
     });
 });
 

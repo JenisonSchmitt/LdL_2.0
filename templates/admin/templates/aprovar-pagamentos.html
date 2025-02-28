@@ -11,7 +11,6 @@
                                 <tr>
                                     <th><strong>Ações</strong></th>
                                     <th><strong>ID</strong></th>
-                                    <th><strong>Produto</strong></th>
                                     <th><strong>Cliente</strong></th>
                                     <th><strong>Valor Total Compra</strong></th>
                                     <th><strong>Qtd. Comprada</strong></th>
@@ -42,7 +41,6 @@
                                         </form>
                                     </td>
                                     <td>{{ venda[0] if venda[0] is not none else '-' }}</td>
-                                    <td>{{ venda[2] if venda[2] is not none else '-' }}</td>
                                     <td>{{ venda[4] if venda[4] is not none else '-' }}</td>
                                     <td><strong>R$ {{ venda[17] if venda[17] is not none else '-' }}</strong></td>
                                     <td>{{ venda[5] if venda[5] is not none else '-' }}</td>

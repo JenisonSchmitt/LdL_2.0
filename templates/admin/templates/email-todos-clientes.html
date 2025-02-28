@@ -1,0 +1,40 @@
+{% extends "admin/templates/baseAdmin_2.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <main class="tm-main">    
+            <div class="row tm-row">
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Enviar um E-mail Geral</h2>
+                
+                <form action="/send-email-client" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="assunto">Assunto: </label>
+                        <textarea class="form-control" id="assunto" name="assunto" rows="2" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="titulo">Título: </label>
+                        <textarea class="form-control" id="titulo" name="titulo" rows="2" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="texto1">Texto1: </label>
+                        <textarea class="form-control" id="texto1" name="texto1" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="texto2">Texto2:</label>
+                        <textarea class="form-control" id="texto2" name="texto2" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkemail">Link: </label>
+                        <textarea class="form-control" id="linkemail" name="linkemail" rows="2" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </main>
+    </div>
+{% endblock %}

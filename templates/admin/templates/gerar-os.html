@@ -3,36 +3,75 @@
 {% block content %}
     <div class="container-fluid">
         <main class="tm-main">    
-            <div id="produtos" class="row tm-row">
-                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Produtos</h2>
-
-                <article class="col-12 col-md-6 tm-post">
-                    <hr class="tm-hr-primary">
-                    <a href="/redirect-admin/cadastrar-produto" class="effect-lily tm-post-link tm-pt-60">
-                        <div class="tm-post-link-inner">
-                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
-                        </div>
-                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Cadastrar Produtos</h2>
-                    </a>                    
-                    <p class="tm-pt-30">
-                        Área para realizar o cadastro de um novo produto
-                    </p>
-                    <hr>
-                </article>
-                <article class="col-12 col-md-6 tm-post">
-                    <hr class="tm-hr-primary">
-                    <a href="/redirect-admin/todos-os-produtos" class="effect-lily tm-post-link tm-pt-60">
-                        <div class="tm-post-link-inner">
-                            <img src="../static/images/geral/logo_.png" alt="Image" class="img-fluid">                            
-                        </div>
-                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">Todos os Produtos</h2>
-                    </a>                    
-                    <p class="tm-pt-30">
-                        Veja todas as informações sobre todos os produtos
-                    </p>
-                    <hr>
-                </article>
+            <div class="row tm-row">
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Gerar OS</h2>
+                
+                <form action="/id_pagamento-por-clientes-admin" method="POST">
+                    <div class="form-group">
+                        <label for="cliente">Cliente</label>
+                        <input type="text" class="form-control" id="cliente" name="cliente" required>
+                        <ul id="sugestoescliente" class="list-group" style="display: none; position: absolute; z-index: 1000;"></ul>
+                        <input type="hidden" id="cliente_id" name="cliente_id">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Procurar</button>
+                </form>
+            </div>
+            <div class="row tm-row">
+                {% if id_pagamentos %} 
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title">Lista de Vendas Por cliente</h2>
+                    <div class="table-responsive">
+                        <table id="tabela-produtos" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th><strong>Ações</strong></th>
+                                    <th><strong>ID</strong></th>
+                                    <th><strong>Cliente</strong></th>
+                                    <th><strong>Data</strong></th>
+                                    <th><strong>Valor Total Compra</strong></th>
+                                    <th><strong>Envio</strong></th>
+                                    <th><strong>Transportadora</strong></th>
+                                    <th><strong>Valor Frete</strong></th>
+                                    <th><strong>Forma de Pagamento</strong></th>
+                                    <th><strong>Temporario</strong></th>
+                                    <th><strong>Observação</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for venda in id_pagamentos %}
+                                <tr>
+                                    <td>
+                                        <form action="/gerar-os-pagamento-admin" method="POST" style="display: inline;">
+                                            <input type="hidden" name="id_pagamento" value="{{ venda[0] }}">
+                                            <button type="submit" class="btn btn-success btn-sm">Gerar OS</button>
+                                        </form>
+                                    </td>
+                                    <td>{{ venda[0] if venda[0] is not none else '-' }}</td>
+                                    <td>{{ venda[9] if venda[9] is not none else '-' }}</td>
+                                    <td>{{ venda[1] if venda[1] is not none else '-' }}</td>
+                                    <td>{{ venda[2] if venda[2] is not none else '-' }}</td>
+                                    <td>{{ venda[3] if venda[3] is not none else '-' }}</td>
+                                    <td>{{ venda[4] if venda[4] is not none else '-' }}</td>
+                                    <td>{{ venda[5] if venda[5] is not none else '-' }}</td>
+                                    <td>{% if venda[6] == "bank_transfer" %} PIX {% elif venda[6] == "credit_card" %} Cartão de Crédito {% else %}Outros{% endif %}</td>
+                                    <td>{% if venda[7] == 0 %} Não {% else %} Sim {% endif %}</td>
+                                    <td>{{ venda[8] if venda[8] is not none else '-' }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                <h4 class="tm-pt-30 tm-color-primary tm-post-title">Nenhuma venda a mostrar</h4>
+                {% endif %}
+            </div>
+            <div class="pagination-controls">
+                <button id="btn-anterior" disabled>Anterior</button>
+                <span id="pagina-atual">1</span>
+                <button id="btn-proximo">Próximo</button>
             </div>
         </main>
     </div>
+<script src="{{ url_for('static', filename='/staticAdmin/js/search-users.js') }}"></script>
+<script src="{{ url_for('static', filename='/staticAdmin/js/pagination.js') }}"></script>
 {% endblock %}

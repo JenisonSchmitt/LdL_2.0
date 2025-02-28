@@ -8,8 +8,9 @@ class Skincare_Routes:
         cursor = db.cursor()
 
         query = """SELECT p.id, p.nome, p.valor, p.tipo_produto, p.imagem, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.variacao
-        FROM produtos p LEFT JOIN vendas v ON p.id = v.id_produto
-        WHERE p.tipo_produto = 'Skincare' AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+        FROM produtos p 
+        LEFT JOIN vendas v ON p.id = v.id_produto AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+        WHERE p.tipo_produto = 'Skincare'
         GROUP BY p.id
         ORDER BY v.qtd_produto DESC
         LIMIT 8;
@@ -42,9 +43,9 @@ class Skincare_Routes:
         query = """
             SELECT p.id, p.nome, p.valor, tp.nome, p.imagem AS tipo, p.qtd_comprada, COALESCE(SUM(v.qtd_produto), 0) AS qtd_vendida, p.variacao
             FROM produtos p 
-            LEFT JOIN vendas v ON p.id = v.id_produto 
+            LEFT JOIN vendas v ON p.id = v.id_produto AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
             INNER JOIN tipo_produtos tp ON p.tipo = tp.id 
-            WHERE tp.categoria = 'Skincare' AND p.tipo_produto = 'Skincare' AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+            WHERE tp.categoria = 'Skincare' AND p.tipo_produto = 'Skincare'
             GROUP BY p.id
             ORDER BY p.nome ASC;
         """

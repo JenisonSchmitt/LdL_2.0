@@ -2,7 +2,9 @@ from flask import Blueprint, render_template, request, flash, redirect, jsonify
 from login_required import login_required_admin
 from conection import conectar_db, define_rota
 from datetime import datetime, timedelta
+from emails_routes import Email_Routes
 import os
+import unicodedata
 import random
 
 admin_bp = Blueprint('admin', __name__)
@@ -99,9 +101,9 @@ class Admin_Routes:
         try:
             query = """
             INSERT INTO produtos (nome, descricao, valor, tipo_produto, dt_cadastro, qtd_comprada, variacao, tipo, peso, altura, largura, comprimento, imagem)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, CONVERT_TZ(NOW(), '+00:00', '-03:00'), %s, %s, %s, %s, %s, %s, %s, %s);
             """
-            valores = (nome, descricao, valor, tipo_produto, dt_cadastro, qtd_comprada, variacao, tipo, peso, altura, largura, comprimento, imagem)
+            valores = (nome, descricao, valor, tipo_produto, qtd_comprada, variacao, tipo, peso, altura, largura, comprimento, imagem)
             cursor.execute(query, valores)
             db.commit()
 
@@ -198,10 +200,10 @@ class Admin_Routes:
                 INSERT INTO vendas (
                     id_produto, id_usuario, qtd_produto, dt_registro, forma_envio, transportadora, cep, rua, bairro, cidade, estado, numero, complemento,
                     valor_total_produto, valor_frete, valor_total_compra, forma_pagamento, temporario, obs, id_pagamento
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ) VALUES (%s, %s, %s, CONVERT_TZ(NOW(), '+00:00', '-03:00'), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             valores = (
-                id_produto, id_usuario, qtd_produto, dt_registro, forma_envio, transportadora, cep, rua, bairro, cidade, estado, numero, complemento,
+                id_produto, id_usuario, qtd_produto, forma_envio, transportadora, cep, rua, bairro, cidade, estado, numero, complemento,
                 valor_total_produto, valor_frete, valor_total_compra, forma_pagamento, temporario, obs, id_pagamento
             )
 
@@ -428,7 +430,7 @@ class Admin_Routes:
             complemento = venda[15].decode('utf-8') if isinstance(venda[15], bytearray) else venda[15]
             valor_frete = venda[16]
             valor_total_compra = venda[17]
-            id_pagamento = venda[18].decode('utf-8') if isinstance(venda[15], bytearray) else venda[15]
+            id_pagamento = venda[18].decode('utf-8') if isinstance(venda[18], bytearray) else venda[18]
             forma_pagamento = venda[19].decode('utf-8') if isinstance(venda[19], bytearray) else venda[19]
             temporario = venda[20]
             obs = venda[21].decode('utf-8') if isinstance(venda[21], bytearray) else venda[21]
@@ -453,7 +455,7 @@ class Admin_Routes:
             cursor.execute(query, parameters) 
             db.commit()
 
-
+            Email_Routes.enviar_email_conta_nova()
             return True
         except Exception as e:
             flash(f'Erro ao cadastrar usuário: {str(e)}', 'danger')
@@ -608,6 +610,8 @@ class Admin_Routes:
                 v.obs = 'pendente'
                 AND v.id_pagamento IS NOT NULL
                 AND v.forma_pagamento = 'bank_transfer'
+            GROUP BY
+                v.id_pagamento
             ORDER BY
                 v.dt_registro DESC;
         """
@@ -638,7 +642,7 @@ class Admin_Routes:
             bairro = venda[11].decode('utf-8') if isinstance(venda[11], bytearray) else venda[11]
             cidade = venda[12].decode('utf-8') if isinstance(venda[12], bytearray) else venda[12]
             estado = venda[13].decode('utf-8') if isinstance(venda[13], bytearray) else venda[13]
-            numero = venda[14]
+            numero = venda[14].decode('utf-8') if isinstance(venda[14], bytearray) else venda[14]
             complemento = venda[15].decode('utf-8') if isinstance(venda[15], bytearray) else venda[15]
             valor_frete = venda[16]
             valor_total_compra = venda[17]
@@ -676,7 +680,122 @@ class Admin_Routes:
         finally:
             cursor.close()
             db.close()
+
+    @staticmethod
+    def obter_todos_id_pagamentos_cliente(cliente_id):
+        db = conectar_db()
+        cursor = db.cursor()
+                
+        query = """
+            SELECT
+                v.id_pagamento, v.dt_registro, v.forma_envio, v.transportadora, v.valor_frete, v.valor_total_compra, v.forma_pagamento, v.temporario, v.obs, u.nome AS nome_usuario
+            FROM
+                vendas v
+            JOIN
+                usuarios u ON v.id_usuario = u.id
+            WHERE
+                v.obs = "OK"
+                AND v.id_pagamento IS NOT NULL
+                AND v.forma_pagamento IS NOT NULL
+                AND v.id_usuario = %s
+            GROUP BY
+                v.id_pagamento, v.dt_registro, v.forma_envio, v.transportadora, v.valor_frete, v.valor_total_compra, v.forma_pagamento, v.temporario, v.obs, u.nome
+            ORDER BY
+                v.dt_registro DESC;
+        """
+
+        try:
+            cursor.execute(query, (cliente_id,)) 
+            vendas = cursor.fetchall() 
+        except mysql.connector.Error as err:
+            print(f"Erro ao executar a query: {err}")
+            return []
+        finally:
+            cursor.close()
+            db.close()
+    
+        vendas_decodificados = []
+        for venda in vendas:
+            id_pagamento = venda[0].decode('utf-8') if isinstance(venda[0], bytearray) else venda[0]
+            dt_registro = venda[1]
+            forma_envio = venda[2].decode('utf-8') if isinstance(venda[2], bytearray) else venda[2]
+            transportadora = venda[3].decode('utf-8') if isinstance(venda[3], bytearray) else venda[3]
+            valor_frete = venda[4]
+            valor_total_compra = venda[5]
+            forma_pagamento = venda[6].decode('utf-8') if isinstance(venda[6], bytearray) else venda[6]
+            temporario = venda[7]
+            obs = venda[8].decode('utf-8') if isinstance(venda[8], bytearray) else venda[8]
+            cliente = venda[9].decode('utf-8') if isinstance(venda[9], bytearray) else venda[9]
+    
+            vendas_decodificados.append((id_pagamento, dt_registro, valor_total_compra, forma_envio, transportadora, valor_frete, forma_pagamento, temporario, obs, cliente))
         
+        return vendas_decodificados
+    
+    @staticmethod
+    def obter_todas_as_infos_os(id_pagamento):
+        db = conectar_db()
+        cursor = db.cursor()
+        
+        query = """
+            SELECT
+                v.id AS id_venda, v.id_produto, p.nome AS nome_produto, v.id_usuario, u.nome AS nome_usuario, v.qtd_produto, v.dt_registro, v.forma_envio,
+                v.transportadora, v.cep, v.rua, v.bairro, v.cidade, v.estado, v.numero, v.complemento, v.valor_frete, v.valor_total_compra, v.id_pagamento, v.forma_pagamento,
+                v.temporario, v.obs, v.qtd_produto
+            FROM
+                vendas v
+            JOIN
+                produtos p ON v.id_produto = p.id
+            JOIN
+                usuarios u ON v.id_usuario = u.id
+            WHERE
+                v.obs = "OK"
+                AND v.id_pagamento IS NOT NULL
+                AND v.forma_pagamento IS NOT NULL
+                AND id_pagamento = %s
+            ORDER BY
+                v.dt_registro DESC;
+        """
+        
+        try:
+            cursor.execute(query, (id_pagamento,)) 
+            vendas = cursor.fetchall() 
+        except mysql.connector.Error as err:
+            print(f"Erro ao executar a query: {err}")
+            return []
+        finally:
+            cursor.close()
+            db.close()
+    
+        vendas_decodificados = []
+        for venda in vendas:
+            id_venda = venda[0]
+            id_produto = venda[1]
+            nome_produto = venda[2].decode('utf-8') if isinstance(venda[2], bytearray) else venda[2]
+            id_usuario = venda[3]
+            nome_usuario = venda[4].decode('utf-8') if isinstance(venda[4], bytearray) else venda[4]
+            qtd_produto = venda[5]
+            dt_registro = venda[6]
+            forma_envio = venda[7].decode('utf-8') if isinstance(venda[7], bytearray) else venda[7]
+            transportadora = venda[8].decode('utf-8') if isinstance(venda[8], bytearray) else venda[8]
+            cep = venda[9].decode('utf-8') if isinstance(venda[9], bytearray) else venda[9]
+            rua = venda[10].decode('utf-8') if isinstance(venda[10], bytearray) else venda[10]
+            bairro = venda[11].decode('utf-8') if isinstance(venda[11], bytearray) else venda[11]
+            cidade = venda[12].decode('utf-8') if isinstance(venda[12], bytearray) else venda[12]
+            estado = venda[13].decode('utf-8') if isinstance(venda[13], bytearray) else venda[13]
+            numero = venda[14].decode('utf-8') if isinstance(venda[14], bytearray) else venda[14]
+            complemento = venda[15].decode('utf-8') if isinstance(venda[15], bytearray) else venda[15]
+            valor_frete = venda[16]
+            valor_total_compra = venda[17]
+            id_pagamento = venda[18].decode('utf-8') if isinstance(venda[18], bytearray) else venda[18]
+            forma_pagamento = venda[19].decode('utf-8') if isinstance(venda[19], bytearray) else venda[19]
+            temporario = venda[20]
+            obs = venda[21].decode('utf-8') if isinstance(venda[21], bytearray) else venda[21]
+    
+            vendas_decodificados.append((id_venda, id_produto, nome_produto, id_usuario, nome_usuario, qtd_produto, dt_registro, forma_envio, transportadora, cep, rua,
+                bairro, cidade, estado, numero, complemento, valor_frete, valor_total_compra, id_pagamento, forma_pagamento, temporario, obs))
+        
+        return vendas_decodificados
+    
 @admin_bp.route("/admin")
 @login_required_admin
 def admin_home():
@@ -712,13 +831,33 @@ def todas_as_vendas_admin():
 def todas_as_vendas_admin_cliente():
     if request.method == "POST":
         cliente_id = request.form.get('cliente_id')
-        print(cliente_id)
         todas_as_vendas_cliente = Admin_Routes.obter_todas_as_vendas_cliente(cliente_id)
-        print(todas_as_vendas_cliente)
 
         return render_template('admin/templates/vendas-por-cpf.html', todas_as_vendas_cliente=todas_as_vendas_cliente)
     else:
         return render_template('admin/templates/vendas-por-cpf.html', todas_as_vendas_cliente=None)
+
+@admin_bp.route("/id_pagamento-por-clientes-admin", methods=["GET", "POST"])
+@login_required_admin
+def id_pagamento_admin_cliente():
+    if request.method == "POST":
+        cliente_id = request.form.get('cliente_id')
+        id_pagamentos = Admin_Routes.obter_todos_id_pagamentos_cliente(cliente_id)
+
+        return render_template('admin/templates/gerar-os.html', id_pagamentos=id_pagamentos)
+    else:
+        return render_template('admin/templates/gerar-os.html', id_pagamentos=None)
+
+@admin_bp.route("/gerar-os-pagamento-admin", methods=["GET", "POST"])
+@login_required_admin
+def gerar_os_pagamento_admin():
+    if request.method == "POST":
+        id_pagamento = request.form.get('id_pagamento')
+        os_gerada_pagamentos = Admin_Routes.obter_todas_as_infos_os(id_pagamento)
+
+        return render_template('admin/templates/os-gerada.html', os_gerada_pagamentos=os_gerada_pagamentos)
+    else:
+        return render_template('admin/templates/os-gerada.html', os_gerada_pagamentos=None)
 
 @admin_bp.route("/cadastrar-produto-admin")
 @login_required_admin
@@ -756,7 +895,7 @@ def cadastrar_produto_insert():
         tipo_produto = request.form.get('tipo_produto')
         dt_cadastro = datetime.now()
         qtd_comprada = int(request.form.get('qtd_comprada'))
-        variacao = int(request.form.get('variacoes')) if request.form.get('variacoes') else 0
+        variacao = int(request.form.get('variacoes')) if request.form.get('variacoes') else None
         tipo = request.form.get('Tipo')
         peso = float(request.form.get('peso'))
         altura = float(request.form.get('altura'))
@@ -765,26 +904,34 @@ def cadastrar_produto_insert():
         
         imagem = request.files['imagem']
         imagem_filename = None
+        
         if imagem and imagem.filename:
-            upload_dir = "/public_html/static/images/"
+            nome_imagem = nome.strip()
+            nome_imagem = nome_imagem.replace(" ", "").lower()  # Remover espaços e colocar em minúsculo
+            
+            if tipo_produto == "Maquiagem":
+                upload_dir = os.path.join(os.getcwd(), 'static/images/maquiagem/')
+            else:
+                upload_dir = os.path.join(os.getcwd(), 'static/images/skincare/')
             if not os.path.exists(upload_dir):
                 os.makedirs(upload_dir)
-
-            imagem_filename = os.path.join(upload_dir, imagem.filename)
+            imagem_filename = os.path.join(upload_dir, f"{nome_imagem}.png")
             imagem.save(imagem_filename)
 
         sucesso = Admin_Routes.inserir_produto(nome, descricao, valor, tipo_produto, dt_cadastro, qtd_comprada, variacao, tipo, peso, altura, largura, comprimento, imagem_filename)
 
         if sucesso:
             flash("Produto cadastrado com sucesso!", "success")
+            return redirect(define_rota('/admin'))
         else:
             flash("Erro ao cadastrar produto. Tente novamente.", "danger")
+            return redirect(define_rota('/admin'))
     
     except Exception as e:
         print(f"Erro ao processar cadastro: {e}")
         flash("Erro interno ao cadastrar produto.", "danger")
+        return redirect(define_rota('/admin'))
 
-    return redirect(define_rota('/admin'))
 
 @admin_bp.route("/submit-create-user-admin", methods=['POST'])
 @login_required_admin
@@ -907,6 +1054,7 @@ def cadastrar_venda_admin():
         numero_aleatorio = random.randint(1000000, 9999999)
         id_pagamento = "LDL" + str(numero_aleatorio)
         
+        
         if forma_envio == 'Envio':
             transportadora = "Transportadora - Melhor Envio"
         else:
@@ -918,13 +1066,17 @@ def cadastrar_venda_admin():
                 id_produto, id_usuario, qtd_produto, dt_registro, forma_envio, transportadora, cep, rua, bairro, cidade, estado, numero, complemento,
                 valor_total_produto, valor_frete, valor_total_compra, forma_pagamento, temporario, obs, id_pagamento
             )
-
+            
             if not insert_vendas:
                 flash("Erro ao processar Venda!", "danger")
                 return redirect(define_rota('/admin'))
+            else:
+                
+                id_tabela = Email_Routes.get_infos_venda_email_admin(id_pagamento)
+                Email_Routes.enviar_email_compra_cartao_admin(id_tabela)
 
-        flash("Venda cadastrada com sucesso!", "success")
-        return redirect(define_rota('/admin'))
+                flash("Venda cadastrada com sucesso!", "success")
+                return redirect(define_rota('/admin'))
 
     except Exception as e:
         print(f"Erro ao cadastrar venda: {e}")
@@ -960,7 +1112,6 @@ def cadastrar_produto_admin_update():
 @login_required_admin
 def aprovar_pagamento_pix():
     pagamento = Admin_Routes.obter_todos_pagamentos_pendentes()
-    print(pagamento)
     return render_template('admin/templates/aprovar-pagamentos.html', pagamento=pagamento)   
     
 @admin_bp.route("/aceitar-pagamento-pix-admin", methods=["POST"])

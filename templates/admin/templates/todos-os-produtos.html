@@ -11,6 +11,7 @@
                             <tr >
                                 <th><strong>ID</strong></th>
                                 <th><strong>Nome</strong></th>
+                                <th><strong>Qtd. Restante</strong></th>
                                 <th><strong>Valor</strong></th>
                                 <th><strong>Tipo de Produto</strong></th>
                                 <th><strong>Qtd. Comprada</strong></th>
@@ -20,7 +21,6 @@
                                 <th><strong>Altura</strong></th>
                                 <th><strong>Largura</strong></th>
                                 <th><strong>Comprimento</strong></th>
-                                <th><strong>Qtd. Restante</strong></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +28,7 @@
                             <tr>
                                 <td>{{ produto[0] if produto[0] is not none else '-'}}</td>
                                 <td>{{ produto[1] if produto[1] is not none else '-'}}</td>
+                                <td><strong>{{ produto[15] }}</strong></td>
                                 <td>{{ produto[3] if produto[3] is not none else '-'}}</td>
                                 <td>{{ produto[4] if produto[4] is not none else '-'}}</td>
                                 <td>{{ produto[6] if produto[6] is not none else '-'}}</td>
@@ -37,7 +38,6 @@
                                 <td>{{ produto[11] if produto[11] is not none else '-'}}</td>
                                 <td>{{ produto[12] if produto[12] is not none else '-'}}</td>
                                 <td>{{ produto[13] if produto[13] is not none else '-'}}</td>
-                                <td><strong>{{ produto[15] }}</strong></td>
                             </tr>
                             {% endfor %}
                         </tbody>
