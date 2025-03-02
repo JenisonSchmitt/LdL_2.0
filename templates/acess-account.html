@@ -40,6 +40,10 @@
                     <h4 class="mb-3 color-pink">Endereço</h4>
                     <div class="row">
                         <div class="col-md-4 mx-auto">
+                            <label for="cep" class="form-label color-purple">CEP</label>
+                            <input type="text" class="form-control" id="cep" name="cep" value="{{ usuario[9] or 'Sem Registro' }}">
+                        </div>
+                        <div class="col-md-4 mx-auto">
                             <label for="rua" class="form-label color-purple">Rua</label>
                             <input type="text" class="form-control" id="rua" name="rua" value="{{ usuario[6] or 'Sem Registro' }}">
                         </div>
@@ -47,15 +51,11 @@
                             <label for="numero" class="form-label color-purple">Número</label>
                             <input type="number" class="form-control" id="numero" name="numero" value="{{ usuario[7] or 'Sem Registro' }}">
                         </div>
-                        <div class="col-md-4 mx-auto">
-                            <label for="complemento" class="form-label color-purple">Complemento</label>
-                            <input type="text" class="form-control" id="complemento" name="complemento" value="{{ usuario[8] or 'Sem Registro' }}">
-                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-4 mx-auto">
-                            <label for="cep" class="form-label color-purple">CEP</label>
-                            <input type="text" class="form-control" id="cep" name="cep" value="{{ usuario[9] or 'Sem Registro' }}">
+                            <label for="complemento" class="form-label color-purple">Complemento</label>
+                            <input type="text" class="form-control" id="complemento" name="complemento" value="{{ usuario[8] or 'Sem Registro' }}">
                         </div>
                         <div class="col-md-4 mx-auto">
                             <label for="cidade" class="form-label color-purple">Cidade</label>
@@ -79,4 +79,5 @@
 </section>
 
 <script src="../static/js/user/create_new_user.js"></script>
+<script src="../static/js/user/search_cep.js"></script>
 {% endblock %}
