@@ -461,7 +461,7 @@ class Produtos_Routes:
                 return resultado[0]
             else:
                 return None
-        except cursor.Error as err:
+        except mysql.connector.Error as err:
             print(f"Erro ao executar a query: {err}")
             return None
         finally:

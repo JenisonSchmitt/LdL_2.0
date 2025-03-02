@@ -244,9 +244,7 @@ class Admin_Routes:
                 (p.qtd_comprada - COALESCE(SUM(v.qtd_produto), 0)) AS quantidade_restante
             FROM 
                 produtos p 
-            LEFT JOIN 
-                vendas v ON p.id = v.id_produto 
-            WHERE v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
+            LEFT JOIN vendas v ON p.id = v.id_produto AND v.obs IS NOT NULL AND v.id_pagamento IS NOT NULL AND v.forma_pagamento IS NOT NULL
             GROUP BY 
                 p.id 
             ORDER BY 
@@ -932,7 +930,6 @@ def cadastrar_produto_insert():
         flash("Erro interno ao cadastrar produto.", "danger")
         return redirect(define_rota('/admin'))
 
-
 @admin_bp.route("/submit-create-user-admin", methods=['POST'])
 @login_required_admin
 def cadastrar_cliente_admin_insert():
@@ -1070,13 +1067,16 @@ def cadastrar_venda_admin():
             if not insert_vendas:
                 flash("Erro ao processar Venda!", "danger")
                 return redirect(define_rota('/admin'))
-            else:
-                
-                id_tabela = Email_Routes.get_infos_venda_email_admin(id_pagamento)
-                Email_Routes.enviar_email_compra_cartao_admin(id_tabela)
 
-                flash("Venda cadastrada com sucesso!", "success")
-                return redirect(define_rota('/admin'))
+        id_tabela = Email_Routes.get_infos_venda_email_admin(id_pagamento)
+
+        id_tabela = str(id_tabela).replace(',', '')
+
+        Email_Routes.enviar_email_compra_cartao_admin(id_tabela)
+
+        
+        flash("Venda cadastrada com sucesso!", "success")
+        return redirect(define_rota('/admin'))
 
     except Exception as e:
         print(f"Erro ao cadastrar venda: {e}")

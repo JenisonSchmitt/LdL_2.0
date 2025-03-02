@@ -212,24 +212,24 @@ class Email_Routes:
             print(f"Erro ao enviar e-mails: {e}", "error")
         
         return ""  
-    
+        
     @staticmethod
     def get_infos_venda_email_admin(id_pagamento):
         db = conectar_db()
+        id_pagamento = str(id_pagamento)
         cursor = db.cursor()
         try:
-            query = "SELECT id FROM vendas WHERE id_pagamento = %s"
-            
+            query = "SELECT id FROM vendas WHERE id_pagamento = %s LIMIT 1;"
             cursor.execute(query, (id_pagamento,))
             result = cursor.fetchone()
             
-            print(result)
+
             if result:
                 id_venda = result[0]
-                return (id_venda)
+                return id_venda
             else:
                 return None
-                    
+                        
         except Exception as e:
             print(f"Erro ao consultar o banco de dados: {str(e)}")
             return None
