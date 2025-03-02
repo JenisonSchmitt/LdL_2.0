@@ -73,7 +73,6 @@ class Users_Routes:
         db = conectar_db()  
         cursor = db.cursor()
         try:
-            # Busca o hash da senha, id e nível do usuário no banco de dados
             query = '''
                 SELECT senha, id, nivel FROM usuarios WHERE email = %s
             '''
@@ -83,13 +82,10 @@ class Users_Routes:
             if result:
                 hash_senha_armazenado = result[0]  # Hash da senha armazenada
                 user_id = result[1]  # ID do usuário
-                user_nivel = result[2]  # Nível do usuário
+                user_nivel = result[2].decode('utf-8')   # Nível do usuário
 
-                # Verifica se a senha fornecida corresponde ao hash armazenado
-                # Converte a senha fornecida para bytes (com o prefixo)
                 senha_bytes = (PREFIXO + senha).encode('utf-8')
                 
-                # Converte o hash armazenado para bytes (se ainda não for)
                 if isinstance(hash_senha_armazenado, str):
                     hash_senha_armazenado = hash_senha_armazenado.encode('utf-8')
 
@@ -100,7 +96,6 @@ class Users_Routes:
                         'nivel': user_nivel
                     }
             
-            # Se o usuário não for encontrado ou a senha estiver incorreta
             return {
                 'success': False,
                 'message': 'E-mail ou senha incorretos.'
@@ -294,7 +289,6 @@ def submit_login_user():
     if resultado['success']:
         session['user_email'] = email
         nivel = resultado['nivel']
-
         if nivel == "Admin":
             session['user_id'] = resultado['id']
             session['user_nivel'] = resultado['nivel']
