@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 02/03/2025 às 19:35
+-- Tempo de geração: 06/03/2025 às 22:52
 -- Versão do servidor: 10.11.10-MariaDB
 -- Versão do PHP: 7.2.34
 
@@ -260,7 +260,7 @@ INSERT INTO `usuarios` (`id`, `CPF`, `nome`, `telefone`, `email`, `nascimento`, 
 (7, '025.467.510-77', 'Natiele conceição Gonzaga', '(47) 99244-0461', 'natielegonzaga91@gmail.com', '1991-07-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 1, 'User', '2025-02-24 18:51:10'),
 (8, '031.194.742-58', 'Marina Luna de Souza alves', '(48) 99684-8159', 'marinalunasa@gmail.com', '2000-02-19', 'Rua Anita Garibaldi ', 251, 'Ap 404', '88701270', 'Tubarão ', 'SC', '$2b$12$YqhoEOISh42hbvEXmnohzeBqAigq8L6.yWkdYzvWW8Hf63yOieJ86', '[\"252\"]', 0, 'Admin', '2025-02-24 18:51:10'),
 (9, '035.303.832-60', 'Samuel Pereira Laurentino ', '(48) 99680-4384', 'enderecospl@gmail.com', '2001-02-26', NULL, NULL, NULL, NULL, NULL, NULL, '', '', 1, 'User', '2025-02-24 18:51:10'),
-(10, '036.219.272-39', 'Luisa Jacqueline Silva Vieira de Lima', '(48) 98831-2992', 'luisa.jcq@icloud.com', '2000-05-16', NULL, NULL, NULL, NULL, NULL, NULL, '$2b$12$.qzuQ3yqYkImWJxKMdVD7ONSYYQOIR1wxlKr5ypjxZ0/B69UEGftW', '', 1, 'User', '2025-02-24 18:51:10'),
+(10, '036.219.272-39', 'Luisa Jacqueline Silva Vieira de Lima', '(48) 98831-2992', 'luisa.jcq@icloud.com', '2000-05-16', 'Rua Nossa Senhora da Piedade', 256, 'Ap 102', '88701200', 'Tubarão', 'SC', '$2b$12$.qzuQ3yqYkImWJxKMdVD7ONSYYQOIR1wxlKr5ypjxZ0/B69UEGftW', '[\"244\"]', 0, 'User', '2025-02-24 18:51:10'),
 (11, '040.306.920-36', 'Bárbara Lara ', '(51) 98054-8769', 'dbarbaralara@gmail.com', '1998-03-05', 'Rua Thomé da Silva número 106 Fábio Silva tubarão 88702740', NULL, NULL, NULL, NULL, NULL, '$2b$12$aTvn62yBl7H.WRkbZbKlP.PwoNLlnOQ9gwizPd9pSm0cY1nkUzOvq', '', 1, 'User', '2025-02-24 18:51:10'),
 (12, '044.490.649-50', 'Cristiane Ramos Martinho', '(48) 99653-4794', 'cristiane_martinho@hotmail.com', '1983-07-16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 1, 'User', '2025-02-24 18:51:10'),
 (13, '045.667.409-86', 'Beatriz Lemos Poletto', '(47) 99676-6017', 'beatriz_poletto@hotmail.com', '1984-12-25', NULL, NULL, NULL, NULL, NULL, NULL, '$2b$12$vs9ceTyDlFNDDAn6r1VdwOWOn5B.GSmgfZiu2WymxawXmX5cutQj6', '', 1, 'User', '2025-02-24 18:51:10'),
@@ -277,7 +277,7 @@ INSERT INTO `usuarios` (`id`, `CPF`, `nome`, `telefone`, `email`, `nascimento`, 
 (24, '078.088.939-86', 'Felipe Torquato Mendes (Hortência)', '(48) 99647-7110', 'naotemhortencia@gmail.com', '1969-02-13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 1, 'User', '2025-02-24 18:51:10'),
 (25, '084.532.359-88', 'Bruna Boaventura Falacio', '(48) 99935-8635', 'brunabfalacio.357@gmail.com', '1993-06-08', 'Rua Luiz Medeiros, 231. Loteamento Jardim América', NULL, NULL, NULL, NULL, NULL, '$2b$12$6feAI.7dPigqMkvNo1xdmePuwTYUOXueXPZLpZMURaWp7.PLfiKVy', '', 1, 'User', '2025-02-24 18:51:10'),
 (26, '085.758.816-80', 'Alexsandra da Silva', '(48) 99968-9382', 'alexsandraferraz372019@gmail.con', '1981-06-27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 1, 'User', '2025-02-24 18:51:10'),
-(27, '093.817.699-40', 'Kelvin Eduardo Rosa Gonçalves ', '(48) 98850-4225', 'diflow@icloud.com', '1995-12-07', NULL, NULL, NULL, NULL, NULL, NULL, '', '', 1, 'User', '2025-02-24 18:51:10'),
+(27, '093.817.699-40', 'Kelvin Eduardo Rosa Gonçalves ', '(48) 98850-4225', 'diflow@icloud.com', '1995-12-07', 'Sem Registro', 0, 'Sem Registro', 'Sem Regist', 'Sem Registro', 'Sem Registro', '$2b$12$PxJqbbWCy90i6bSacrHibuVbucc0NWzubHNf2iDPq0To/keuNruSS', '', 1, 'User', '2025-02-24 18:51:10'),
 (28, '100.000.000-00', 'Kelly', '(92) 99510-4159', 'naotemkelly@gmail.com', '2000-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 1, 'User', '2025-02-24 18:51:10'),
 (29, '102.393.039-03', 'Jenison Schmitt', '(48) 99172-3006', 'schmitt.jeni02@outlook.com', '2001-06-30', 'Rua Anita Garibaldi', 251, 'Apt 404', '88701270', 'Tubarão', 'SC', '$2b$12$RuAOBGSAx0ZfhBR.T9tQVurmwyVnchS6Bx.gCv/BtHv4kjQFD1vwa', '[]', 0, 'Admin', '2025-02-24 18:51:10'),
 (30, '102.505.639-67', 'Thayra Hellen', '(47) 99618-3426', 'thayrahellennn@gmail.com', '1997-03-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 1, 'User', '2025-02-24 18:51:10'),
@@ -469,7 +469,11 @@ INSERT INTO `vendas` (`id`, `id_produto`, `id_usuario`, `qtd_produto`, `dt_regis
 (1303, 167, 8, 1, '2025-03-02 16:11:37', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701270', 'Rua Anita Garibaldi ', 'Bairro', 'Tubarão ', 'SC', '251', 'Ap 404', 19.99, 0.00, 116.84, 'LDL3567589', 'credit_card', 0, 'OK'),
 (1304, 242, 8, 1, '2025-03-02 16:11:37', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701270', 'Rua Anita Garibaldi ', 'Bairro', 'Tubarão ', 'SC', '251', 'Ap 404', 14.99, 0.00, 116.84, 'LDL3567589', 'credit_card', 0, 'OK'),
 (1305, 269, 8, 1, '2025-03-02 16:11:37', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701270', 'Rua Anita Garibaldi ', 'Bairro', 'Tubarão ', 'SC', '251', 'Ap 404', 19.99, 0.00, 116.84, 'LDL3567589', 'credit_card', 0, 'OK'),
-(1306, 269, 8, 3, '2025-03-02 16:12:07', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701270', 'Rua Anita Garibaldi ', 'Bairro', 'Tubarão ', 'SC', '251', 'Ap 404', 59.97, 0.00, 59.97, 'LDL9160998', 'credit_card', 0, 'OK');
+(1306, 269, 8, 3, '2025-03-02 16:12:07', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701270', 'Rua Anita Garibaldi ', 'Bairro', 'Tubarão ', 'SC', '251', 'Ap 404', 59.97, 0.00, 59.97, 'LDL9160998', 'credit_card', 0, 'OK'),
+(1307, 261, 29, 1, '2025-03-02 16:48:19', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701-270', 'Rua Anita Garibaldi', 'Centro', 'Tubarão', 'SC', '251', 'Apt 404', 12.99, 0.00, 12.99, '103538593233', 'credit_card', 0, 'OK'),
+(1315, 253, 10, 1, '2025-03-05 10:07:40', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701-200', 'Rua Nossa Senhora da Piedade', 'Centro', 'Tubarão', 'SC', '256', 'Ap 102', 14.99, 0.00, 30.75, '103766179485', 'bank_transfer', 0, 'OK'),
+(1316, 137, 10, 1, '2025-03-05 10:07:40', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701-200', 'Rua Nossa Senhora da Piedade', 'Centro', 'Tubarão', 'SC', '256', 'Ap 102', 8.99, 0.00, 30.75, '103766179485', 'bank_transfer', 0, 'OK'),
+(1317, 244, 10, 1, '2025-03-05 10:07:40', 'Retirada', 'Combinar retirada R$0,00 (Tubarão/SC - Centro)', '88701-200', 'Rua Nossa Senhora da Piedade', 'Centro', 'Tubarão', 'SC', '256', 'Ap 102', 11.99, 0.00, 30.75, '103766179485', 'bank_transfer', 0, 'OK');
 
 --
 -- Índices para tabelas despejadas
@@ -538,13 +542,13 @@ ALTER TABLE `tipo_produtos`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1307;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1318;
 
 --
 -- Restrições para tabelas despejadas

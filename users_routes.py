@@ -275,7 +275,7 @@ def submit_rec_user():
         return redirect(define_rota('/'))
     else:
         flash("Erro ao recuperar senha, tente novamente.", "danger")
-        return redirect(define_rota('/rec-senha'))
+        return redirect(define_rota('/esqueci-senha'))
         
 @users.route("/submit_login_user", methods=["POST"])
 def submit_login_user():
